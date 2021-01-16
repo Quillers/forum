@@ -1,0 +1,88 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+}
+
+h1 {
+  text-align: center;
+  padding: 2vw;
+  font-size: 4vw;
+}
+
+h2 {
+  padding: 0.5vw;
+  font-size: 2vw;
+}
+
+ul {
+  list-style: circle outside;
+}
+
+li {
+  font-size: 1vw;
+  padding: 0.5vw;
+}
+
+/*---------------- TOPIC ----------------*/
+.topic {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  padding: 1vw;
+  background-color: blue;
+}
+.topic__name {
+  padding: 1vw;
+  margin: 1vw;
+  background-color: green;
+  min-height: 2vw;
+}
+.topic__allMessages {
+  padding: 1vw;
+  margin: 1vw;
+  background-color: yellow;
+  height: 100%;
+}
+.topic__allMessages__message {
+  padding: 1vw;
+  margin: 1vw;
+  background-color: pink;
+  height: 100%;
+}
+.topic__formContainer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 1vw;
+  background-color: lightgrey;
+  min-height: 10vw;
+  display: flex;
+}
+.topic__formContainer__form {
+  padding: 0.5vw;
+  margin: 1vw;
+  background-color: orange;
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+.topic__formContainer__form__textarea {
+  padding: 0.5%;
+  margin: 1%;
+  background-color: violet;
+  height: 98%;
+  width: 99%;
+}
+.topic__formContainer__form__button {
+  padding: 0.5vw;
+  margin: 1%;
+  background-color: lightseagreen;
+  height: 60px;
+  width: 9%;
+}
+
+/*------------ Message ----------------*/

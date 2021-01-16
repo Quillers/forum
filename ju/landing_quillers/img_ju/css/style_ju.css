@@ -1,0 +1,69 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+img {
+  display: block;
+}
+
+button {
+  border-radius: 10px;
+}
+
+.container {
+  position: relative;
+  min-height: 2160px;
+  background: #efece0;
+  z-index: 2;
+}
+.container > img {
+  position: absolute;
+  transform: rotate(180deg);
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0.2;
+  z-index: 1;
+}
+.container .header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  z-index: 2;
+}
+.container .header .title,
+.container .header .subtitle,
+.container .header .neumorph {
+  font-family: "Audiowide", cursive;
+}
+.container .title {
+  position: absolute;
+  top: 100px;
+  font-size: 288px;
+}
+.container .subtitle {
+  font-size: 64px;
+  text-align: center;
+}
+.container .neumorph {
+  border: none;
+  margin: 250px 0;
+  font-size: 64px;
+  width: 1082px;
+  height: 144px;
+  background-color: #efece0;
+  box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.25), -30px -30px 60px white;
+  z-index: 2;
+}
+.container .card .avatar {
+  width: 100px;
+}
+.container .card .avatar__1 {
+  background: blabla;
+}
+.container .card .avatar__2 {
+  background: blabla;
+}
