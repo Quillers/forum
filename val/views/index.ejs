@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="/stylesheets/index/reset.css" />
+      <link rel="stylesheet" href="/stylesheets/index/style.css" />
+      <title>Forum</title>
+   </head>
+   <body>
+      <header class="header">
+         <h1 id="title">Coucou <%= test%></h1>
+      </header>
+      <main>
+         <div id="message-list" class="message__list">
+            <article class="message">
+               <header class="message__header">
+                  <h3 class="message__author">Valentin</h3>
+               </header>
+               <section class="message__main">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Deserunt saepe laborum sint aperiam soluta doloribus quasi
+                  ipsum dolor necessitatibus sit!
+               </section>
+               <footer class="message__footer">
+                  <p>Poste le <time datetime="2021-01-15T19:00">19:00</time></p>
+               </footer>
+            </article>
+            <article class="message">
+               <header class="message__header">
+                  <h3 class="message__author">Valentin</h3>
+               </header>
+               <section class="message__main">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Deserunt saepe laborum sint aperiam soluta doloribus quasi
+                  ipsum dolor necessitatibus sit!
+               </section>
+               <footer class="message__footer">
+                  <p>Poste le <time datetime="2021-01-15T19:00">19:00</time></p>
+               </footer>
+            </article>
+            <article class="message">
+               <header class="message__header">
+                  <h3 class="message__author">Valentin</h3>
+               </header>
+               <section class="message__main">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Deserunt saepe laborum sint aperiam soluta doloribus quasi
+                  ipsum dolor necessitatibus sit!
+               </section>
+               <footer class="message__footer">
+                  <p>Poste le <time datetime="2021-01-15T19:00">19:00</time></p>
+               </footer>
+            </article>
+         </div>
+
+         <form id="message-form" class="message__form">
+            <label for="message">Repondre:</label>
+            <textarea
+               name="message"
+               id="message"
+               class="message__area"
+               placeholder="type your message here"
+            ></textarea>
+            <label for="username">ton pseudo</label>
+            <input type="text" id="username" name="username" class="message__username">
+            <button class="btn__submit" type="submit">Poster</button>
+         </form>
+      </main>
+      <footer class="footer"></footer>
+      <script src="/js/index/app.js"></script>
+   </body>
+</html>
