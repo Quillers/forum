@@ -81,5 +81,3 @@ export class Topic {
     this.window.appendChild(topicFormContainer)
   }
 }
-
-export { Topic }
