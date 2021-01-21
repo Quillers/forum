@@ -1,0 +1,20 @@
+{
+  "name": "creation",
+  "content": [
+    {
+      "messageContent": "Salut, je suis un message en cours de création",
+      "author": "SuperDev",
+      "date": "Lundi 18 janvier 2021"
+    },
+    {
+      "messageContent": "Salut, je suis un 2eme message en cours de création",
+      "author": "MegaDev",
+      "date": "Mardi 18 janvier 2021"
+    },
+    {
+      "messageContent": "Salut, je suis un 3ème message en cours de création",
+      "author": "GigaDev",
+      "date": "Mercredi 18 janvier 2021"
+    }
+  ]
+}
