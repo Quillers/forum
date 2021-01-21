@@ -7,10 +7,8 @@ const path = require('path');
 class MessageTable {
     constructor(url) {
         this.baseUrl = url;
-        console.log(this.baseUrl);
         this.messages = my_readFile.getJSONData(url);
         this.currentId = this.messages.length;
-        
     }
     addMessageToBase(data) {
         data.id = this.currentId;
