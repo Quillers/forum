@@ -13,7 +13,7 @@ const formSubmitHandler = function(e) {
 
 }
 
-form.addEventListener('submit', formSubmitHandler);
+//form.addEventListener('submit', formSubmitHandler);
 
 
 class Message {
