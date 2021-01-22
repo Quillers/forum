@@ -4,14 +4,15 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "node-dev index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dayjs": "^1.10.3",
     "ejs": "^3.1.5",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "node-dev": "^6.2.0"
   },
   "description": ""
 }

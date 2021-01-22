@@ -1,6 +1,9 @@
-import { MessageItem } from './MessageItem.js';
 import { Message } from './Message.js';
 
+/**
+ * Représente un sujet, contient une liste d'objet message et / ou un fichier
+ * json, fait le lien avec un fichier json qui stock les messages sur le server.
+ */
 export class Topic {
   constructor(name) {
     this.name = 'creation';
@@ -29,8 +32,8 @@ export class Topic {
   }
 
   // Ajout du nouveau message dans le fichier json
-  addMessage(messageItem) {
-    this.messageList.push(messageItem);
+  addMessage(Message) {
+    this.messageList.push(Message);
   }
 
   // si besoin Formatage de la liste en json,
@@ -47,10 +50,12 @@ export class Topic {
 
     // On affiche le contenu du fichier json
     this.jsonFile['content'].forEach((message) => {
-      const messageItem = new MessageItem(
-        new Message(message.messageContent, message.author)
+      const oldMessage = new Message(
+        message.topicName,
+        message.author,
+        message.messageContent
       );
-      this.messageContainer.appendChild(messageItem.messageItemRender());
+      this.messageContainer.appendChild(oldMessage.createHtml());
     });
   }
 }

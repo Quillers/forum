@@ -1,4 +1,4 @@
-<%- include('./partials/header', {title}) %>
+<%- include('./partials/header', {title, cssFile}) %>
 
 <header class="header">
   <h1 id="title"><%= topicName %></h1>
@@ -30,7 +30,12 @@
     <% } %>
   </div>
 
-  <form id="message-form" class="message__form">
+  <form
+    method="POST"
+    action="/post/creation"
+    id="message-form"
+    class="message__form"
+  >
     <label for="message">Repondre:</label>
     <textarea
       name="message"

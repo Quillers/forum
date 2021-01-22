@@ -1,11 +1,11 @@
 "use strict";
 
 /*---------- Imports --------------*/
-var path = require('path');
-
 var express = require('express');
 
 var topicRouteur = require('./my_modules/topicRouteur');
+
+var mw = require('./my_modules/mw');
 /*----------- Variables -------------*/
 
 
@@ -16,18 +16,24 @@ var port = 3000;
 
 app.set('views', './views'); // On utilise ejs comme moteur de templates
 
-app.set('view engine', 'ejs'); // public est le dossier par défaut.
+app.set('view engine', 'ejs'); // On indique d'utiliser le module de parsing pour récup les formulaires.
+
+app.use(express.urlencoded({
+  extended: true
+})); // public est le dossier par défaut.
 
 app.use(express["static"]('./public')); // On utilise le routeur défini
 
-app.use(topicRouteur); // On lance le serveur
+app.use(topicRouteur); // On envoi 404 si la requête arrive jusqu'ici :
+
+app.use(mw.throw404); // On lance le serveur
 
 app.listen(port, function () {
   console.log('serveur lancé sur le port ' + port);
 });
-/*----------------------------------------------------*/
+/*---------------------------------------------------*/
 
-/*-------------------------------------------------*/
+/*---------------------------------------------------*/
 // Le principe à ce stade :
 // FRONTEND
 // On arrive sur la page index, choix :

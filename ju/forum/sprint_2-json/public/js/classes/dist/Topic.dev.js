@@ -5,8 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Topic = void 0;
 
-var _MessageItem = require("./MessageItem.js");
-
 var _Message = require("./Message.js");
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -15,6 +13,10 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+/**
+ * Représente un sujet, contient une liste d'objet message et / ou un fichier
+ * json, fait le lien avec un fichier json qui stock les messages sur le server.
+ */
 var Topic =
 /*#__PURE__*/
 function () {
@@ -48,8 +50,8 @@ function () {
 
   }, {
     key: "addMessage",
-    value: function addMessage(messageItem) {
-      this.messageList.push(messageItem);
+    value: function addMessage(Message) {
+      this.messageList.push(Message);
     } // si besoin Formatage de la liste en json,
     // une boucle qui recrée des MessageItem ?
 
@@ -68,9 +70,9 @@ function () {
       this.messageContainer.textContent = ''; // On affiche le contenu du fichier json
 
       this.jsonFile['content'].forEach(function (message) {
-        var messageItem = new _MessageItem.MessageItem(new _Message.Message(message.messageContent, message.author));
+        var oldMessage = new _Message.Message(message.topicName, message.author, message.messageContent);
 
-        _this.messageContainer.appendChild(messageItem.messageItemRender());
+        _this.messageContainer.appendChild(oldMessage.createHtml());
       });
     }
   }]);
