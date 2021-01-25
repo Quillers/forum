@@ -23,6 +23,9 @@ app.set('view engine', 'ejs');
 //set the static file directory
 app.use(express.static('public'));
 
+// We create a Global variable where we store the categories list (that s ok bc it will only be modified by the admins)
+app.locals.categories = require('./my_modules/database/categories.json');
+
 //use the router
 
 app.use(router)

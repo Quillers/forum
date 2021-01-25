@@ -28,6 +28,7 @@ const writeJSONFile = {
 
         //then we write the new data in the file
         fs.writeFileSync(filePath, JSON.stringify(writeJSONFile.fileData));
+        return writeJSONFile.fileData;
     },
 }
 

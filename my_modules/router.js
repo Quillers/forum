@@ -7,8 +7,8 @@ const path = require('path');
 // import database functionality
 const MessageDB = require('./database/Database');
 
-const postMW = require('./middlewares/postMessageMW');
-const getMW = require('./middlewares/getMessagesMW');
+const postMW = require('./middlewares/postMW');
+const getMW = require('./middlewares/getMW');
 
 /* 
 ** set the router
@@ -20,36 +20,34 @@ const router = express.Router();
 ** GET REQUESTS
 */
 
-router.get('/', getMW.fetchMessagesDB, (request, response) => {
-    if (typeof request.body === undefined) {
-        console.log("body n'existe pas");
-    } else {
-        console.log(request.body);
-    }
-   
+
+router.get('/', (request, response) => {
+    // Renvoi la page d'accueil avec les catégories en dynamique
+    // dans la nav, l'objet categories.json est stocké dans 
+    // app.locals.categories
+    response.render('index');
+});
+
+router.get('/categories/:categoryName', getMW.getCategoryId, getMW.fetchTopicsDB, (request, response) => {
+    // console.log(response.locals.topics);
+    response.render('category', { topics: response.locals.topics, categoryName: request.params.categoryName });
+});
+
+router.get('/topics/:categoryName/:topicName',  getMW.fetchMessagesDB, (request, response) => {
+
     //and then i render them
 
-    response.render('index', {  messages: response.locals.messages });
+    response.render('topic', {  messages: response.locals.messages });
 });
 
 /* 
 ** POST REQUESTS
 */
 
-
-router.post('/', postMW.validateResponseForm, postMW.insertMessageDB, (request, response) => {
-    //send the response everyting went well + link back to thread
-    // response.send(`
-    // <h1>Message Bien enregistre</h1>
-    //     <a href="/">Retourner a la liste des sujets</a>
-    //     `);
-    // response.render('index', { messages:  MessageDB.getMessagesFromBase()});
-    if (typeof request.body === undefined) {
-        console.log("body n'existe pas");
-    } else {
-        console.log(request.body);
-    }
-    response.redirect('/');
+router.post('/topics/:categoryName/:topicName', postMW.validateResponseForm, postMW.insertMessageDB, (request, response) => {
+   //TODO
+   //
+    response.redirect(`/topics/${request.params.categoryName}/${request.params.topicName}`);
 });
 
 module.exports = router;
