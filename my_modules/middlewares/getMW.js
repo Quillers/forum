@@ -7,7 +7,11 @@ const TopicsDB = require('../database/Database');
 
 
 /*
-**  CATEGORIES/HOMEPAGE 
+**  CATEGORIES MIDDLEWARES => HOMEPAGE
+*/
+
+/*
+**  TOPICS MIDDLEWARES => CATEGORY.ejs
 */
 
 // middleware to get the correct category id from name
@@ -38,7 +42,7 @@ const fetchTopicsDB = (request, response, next) => {
     next();
 }
 /*
-** MESSAGES
+** MESSAGES MIDDLEWARES => TOPIC.ejs
 */
 
 // middleware the fetches all the messages from DB

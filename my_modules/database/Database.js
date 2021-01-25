@@ -2,7 +2,9 @@ const my_readFile = require('../readFile');
 const my_writeFile = require('../writeFile');
 const path = require('path');
 
-
+/**
+ * Is all the messages from Database, one 
+ */
 class MessageTable {
     constructor(url) {
         this.baseUrl = url;
