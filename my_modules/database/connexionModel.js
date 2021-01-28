@@ -38,11 +38,15 @@ module.exports = {
             // ici mettre les valeurs d'identification dans la session
             response.render('index', {
               loggedIn: true,
+              info: request.session.info,
             });
             //
           } else {
             //
-            response.redirect('/connexion');
+            response.render('connexion', {
+              loggedIn: false,
+              info: "erreur dans l'enchainement des flash-backs...",
+            });
           }
         } else {
           console.log('error de la query : ', error);
@@ -99,7 +103,7 @@ module.exports = {
         try {
           client.query(queryPseudo, (error, results) => {
             //
-            if (results.rows) {
+            if (!results.rows) {
               // On continue les vérifs,
               response.render('createAccount', {
                 info: 'c bon on peut continuer',
