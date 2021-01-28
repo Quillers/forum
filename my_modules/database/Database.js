@@ -3,8 +3,10 @@ const my_writeFile = require('../writeFile');
 const path = require('path');
 
 /**
- * Is all the messages from Database, one 
+ * Contains all the messages from Database, one instance 
+ * refresh content with the getMessage method (spoiler: inheritance)
  */
+
 class MessageTable {
     constructor(url) {
         this.baseUrl = url;
@@ -23,7 +25,10 @@ class MessageTable {
     }
 }
 
-
+/**
+ * Contains all the topics from Database, one instance 
+ * refresh content with the getTopics method (spoiler: inheritance)
+ */
 class TopicsTable {
     constructor(url) {
         this.categories = require('./categories.json');

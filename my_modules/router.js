@@ -41,6 +41,12 @@ router.get('/topics/:categoryName/:topicName',  getMW.fetchMessagesDB, (request,
 ** POST REQUESTS
 */
 
+router.post('/topics/:categoryName/post', postMW.validateTopicForm, postMW.setCategoryIdInPost, postMW.insertTopicDB, (request, response) => {
+    //TODO
+    //
+     response.redirect(`/categories/${request.params.categoryName}`);
+ });
+
 router.post('/topics/:categoryName/:topicName', postMW.validateResponseForm, postMW.insertMessageDB, (request, response) => {
    //TODO
    //

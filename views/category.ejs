@@ -8,4 +8,32 @@
    <% }); %>
 </ul>
 
+<form method="post" action="/topics/<%=  categoryName %>/post" id="topic-form" class="topic__form">
+    <label for="topic__username">ton pseudo</label>
+    <input
+       type="text"
+       id="topic__username"
+       name="topic__username"
+       class="topic__username"
+    />
+    <label for="topic__title">Titre de votre topic</label>
+    <input
+    type="text"
+       name="topic__title"
+       id="topic__title"
+       class="topic__title"
+       placeholder="title of your topic..."
+    >
+   
+    <label for="topic__title">Titre de votre topic</label>
+    <textarea
+       name="topic__desc"
+       id="topic__desc"
+       class="topic__area"
+       placeholder="Describe your topic..."
+    ></textarea>
+    <button class="btn__submit" type="submit">Poster</button>
+ </form>
+</main>
+
 <%- include("partials/footer.ejs") %>

@@ -115,3 +115,25 @@ main {
     
     background-color: black;
 }
+
+.topic__form {
+    width:80vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.topic__area {
+    height: 100px;
+    margin: 1rem 0;
+}
+
+.topic__title {
+    width: 50%;
+    margin: 1rem 0;
+    width: 10rem;
+}
+
+.topic__username {
+    margin: 1rem 0;
+    width: 10rem;
+}
