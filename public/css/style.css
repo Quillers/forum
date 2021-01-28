@@ -19,6 +19,15 @@ html {
     padding: 1rem;
 
 }
+a {
+    color: inherit;
+    text-decoration: none;
+}
+#title {
+    font-weight: bold;
+    font-size: 2rem;
+    padding: 1rem;
+}
 
 .header nav ul {
     display: flex;
@@ -41,11 +50,15 @@ html {
 }
 
 main {
-   
-    
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.main__topic__title {
+    font-weight: bold;
+    margin: 1rem;
+    font-size: 1.5rem;
 }
 
 .message__list {

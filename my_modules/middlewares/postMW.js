@@ -70,6 +70,9 @@ const validateResponseForm = (request, response, next) => {
             <a href="/">Retourner a la liste des sujets</a>
             `);
     } else {
+        //we add the Id of the topic to messageData object
+        messageData.topicId = +request.params.topicId;
+        //we store the message data in the reponse local to pass it to next middleware
         response.locals.validatedData = messageData;
         next();
     }
@@ -78,6 +81,7 @@ const validateResponseForm = (request, response, next) => {
 // this middleware is called after the data has been validated, to be added to the database
 
 const insertMessageDB = (request, response, next) => {
+
     //Here I populate the database
     messageTable.addMessageToBase(response.locals.validatedData);
     next();

@@ -19,9 +19,8 @@ class MessageTable {
         this.currentId++;
         this.messages = my_writeFile.writeFile(this.baseUrl, data);
     }
-    getMessagesFromBase() {
-        this.messages = my_readFile.getJSONData(this.baseUrl);
-        return this.messages;
+    getMessagesFromBase(topicId) {
+        return this.messages.filter(message => message.topicId === topicId);
     }
 }
 
@@ -41,6 +40,9 @@ class TopicsTable {
         data.timeStamp = Date();
         this.topics = my_writeFile.writeFile(this.baseUrl, data);
         this.currentId++;
+    }
+    fetchById(topicId) {
+        return this.topics.find(topic => topic.id === topicId);
     }
     getTopicsFromBase(categoryId) {
         return this.topics.filter(topic => topic.categoryId === categoryId);

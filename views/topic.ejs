@@ -2,11 +2,22 @@
     <%- include("partials/header.ejs") %>
 
       
-         <% if (messages.length === 0) { %>
-         <h2>Il n'y a aucun message de poste</h2>
-         <% } else { %>
+        <h2 class="main__topic__title" ><%= topic.title %> </h2>
 
          <div id="message-list" class="message__list">
+           <!-- description of the thread is set as the first message -->
+            <article class="message">
+               <header class="message__header">
+                  <h3 class="message__author"><%= topic.author %></h3>
+               </header>
+               <section class="message__main">
+                  <%= topic.topicDesc %>
+               </section>
+               <footer class="message__footer">
+                  <p>Poste le <time><%= topic.timeStamp %></time></p>
+               </footer>
+            </article>
+           <!-- We loop through all the messages to display them -->
            
             <% for (message of messages) { %>
            
@@ -24,11 +35,11 @@
            
             <% } %>
          
-         <% } %>
 
          </div>
+           <!-- form to post messages-->
 
-         <form method="post" action="/" id="message-form" class="message__form">
+         <form method="post" action="<%= postUrl %> " id="message-form" class="message__form">
             <label for="message">Repondre:</label>
             <textarea
                name="message"

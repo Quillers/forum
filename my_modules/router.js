@@ -32,9 +32,9 @@ router.get('/categories/:categoryName', getMW.getCategoryId, getMW.fetchTopicsDB
     response.render('category', { topics: response.locals.topics, categoryName: request.params.categoryName });
 });
 
-router.get('/topics/:categoryName/:topicName',  getMW.fetchMessagesDB, (request, response) => {
+router.get('/topics/:categoryName/:topicId', getMW.fetchTopicById, getMW.fetchMessagesDB, (request, response) => {
     // idem
-    response.render('topic', {  messages: response.locals.messages });
+    response.render('topic', {  topic: response.locals.topic, messages: response.locals.messages, postUrl: request.url + '/post'  });
 });
 
 /* 
@@ -47,10 +47,10 @@ router.post('/topics/:categoryName/post', postMW.validateTopicForm, postMW.setCa
      response.redirect(`/categories/${request.params.categoryName}`);
  });
 
-router.post('/topics/:categoryName/:topicName', postMW.validateResponseForm, postMW.insertMessageDB, (request, response) => {
+router.post('/topics/:categoryName/:topicId/post', postMW.validateResponseForm, postMW.insertMessageDB, (request, response) => {
    //TODO
    //
-    response.redirect(`/topics/${request.params.categoryName}/${request.params.topicName}`);
+    response.redirect(`/topics/${request.params.categoryName}/${request.params.topicId}`);
 });
 
 module.exports = router;
