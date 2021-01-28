@@ -1,22 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <link rel="stylesheet" href="/stylesheets/reset.css" />
-      <link rel="stylesheet" href="/stylesheets/style.css" />
-      <title>Forum</title>
-   </head>
-   <body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/connexion.css" />
+    <title>Forum</title>
+  </head>
+  <body>
     <header class="header">
-        <h1 id="title">Quill'Forum</h1>
-        <nav>
-           <ul>
-              <% categories.forEach(category => {%>
-                 
-               <li><a href="/categories/<%= category.name %> "> <%= category.name %>  </a></li>
+      <h1 id="title">Quill'Forum</h1>
+      <nav>
+        <ul>
+          <li><a href="/connexion"> Connexion </a></li>
 
-               <% }); %> 
-           </ul>
-        </nav>
-     </header>
+          <% categories.forEach(category => {%>
+
+          <li
+            ><a href="/categories/<%= category.name %> ">
+              <%= category.name %>
+            </a></li
+          >
+
+          <% }); %>
+        </ul>
+      </nav>
+    </header>
+  </body></html
+>
+
+<!--  -->
+<% if (loggedIn) { %>
+<div class="connexion_loggedIn">Connecté !</div>
+<% } %>
+<div class="connexion_info"><%= info %></div>

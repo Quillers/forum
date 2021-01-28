@@ -1,0 +1,15 @@
+.connexion__formContainer {
+  display: flex;
+  justify-content: center;
+  width: 70vw;
+  margin-top: 10vw;
+}
+.connexion__form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.connexion__form__item {
+  padding: 1vw;
+  margin: 1vw;
+}
