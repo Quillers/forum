@@ -1,0 +1,29 @@
+<%- include("partials/header.ejs", categories) %>
+
+<!-- On amis les catégories dans le header, reste à
+   mettre les sujets principaux dans l'accueil ? -->
+
+<div class="connexion__formContainer">
+  <form action="/postConnexion/stdLogin" method="POST" class="connexion__form">
+    <label for="pseudo" class="connexion__form__item">Pseudo</label>
+    <input
+      type="text"
+      name="pseudo"
+      class="connexion__form__item"
+      id="pseudo"
+    />
+    <label for="password" class="connexion__form__item">Mot de passe</label>
+    <input
+      type="password"
+      name="password"
+      class="connexion__form__item"
+      id="password"
+    />
+    <button type="submit" class="connexion__form__item">Valider</button>
+    <button type="button" class="connexion__form__item"
+      ><a href="/connexion/createAccount">Créer un compte</a></button
+    >
+  </form>
+</div>
+
+<%- include("partials/footer.ejs") %>

@@ -1,0 +1,66 @@
+<%- include("partials/header.ejs", categories) %>
+
+<!-- On amis les catégories dans le header, reste à
+   mettre les sujets principaux dans l'accueil ? -->
+
+<!--  -->
+
+<div class="connexion__formContainer">
+  <form
+    action="/postConnexion/createAccount"
+    method="POST"
+    class="connexion__form"
+  >
+    <label for="pseudo" class="connexion__form__item">Choisir un pseudo</label>
+    <input
+      type="text"
+      name="pseudo"
+      class="connexion__form__item"
+      id="pseudo"
+    />
+
+    <label for="password" class="connexion__form__item"
+      >Choisir un mot de passe</label
+    >
+    <input
+      type="password"
+      name="password_1"
+      class="connexion__form__item"
+      id="password"
+    />
+
+    <label for="password" class="connexion__form__item"
+      >Saisir à nouveau le mot de passe</label
+    >
+    <input
+      type="password"
+      name="password_2"
+      class="connexion__form__item"
+      id="password"
+    />
+
+    <label for="password" class="connexion__form__item"
+      >Un email pour la récup du mot de passe ?</label
+    >
+    <input
+      type="email"
+      name="email_1"
+      class="connexion__form__item"
+      id="email"
+    />
+
+    <label for="password" class="connexion__form__item"
+      >Et on le saisi deux fois, génial...</label
+    >
+    <input
+      type="email"
+      name="email_2"
+      class="connexion__form__item"
+      id="email"
+    />
+
+    <button type="submit" class="connexion__form__item">Valider</button>
+  </form>
+</div>
+
+<%- include("partials/footer.ejs") %>
