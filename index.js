@@ -21,12 +21,11 @@ app.set('views', './views');
 //set template engine to ejs
 app.set('view engine', 'ejs');
 //set the static file directory
-app.use(express.static('public'));
 
 // On ouvre la session
 app.use(
   session({
-    cookie: { maxAge: 60000 },
+    cookie: { path: '/', httpOnly: true, secure: false, maxAge: 3600000 },
     secret: 'quillers',
     session: {
       loggedIn: false,
@@ -35,6 +34,8 @@ app.use(
     saveUninitialized: false,
   })
 );
+
+app.use(express.static('public'));
 
 // We create a Global variable where we store the categories list (that s ok bc it will only be modified by the admins)
 app.locals.categories = require('./my_modules/database/categories.json');

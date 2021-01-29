@@ -25,11 +25,11 @@ router.get('/', (request, response) => {
   // dans la nav, l'objet categories.json est stocké dans
   // app.locals.categories depuis index.js
   //Vérification de la session
-  (request.session.info = 'vide, on test'),
-    response.render('index', {
-      info: request.session.info,
-      loggedIn: request.session.loggedIn,
-    });
+  request.session.info = 'vide, on test';
+  response.render('index', {
+    info: request.session.info,
+    loggedIn: request.session.loggedIn,
+  });
 });
 
 router.get(
@@ -41,6 +41,8 @@ router.get(
     response.render('category', {
       topics: response.locals.topics,
       categoryName: request.params.categoryName,
+      loggedIn: request.session.loggedIn,
+      info: request.session.info,
     });
   }
 );
@@ -50,7 +52,11 @@ router.get(
   getMW.fetchMessagesDB,
   (request, response) => {
     // idem
-    response.render('topic', { messages: response.locals.messages });
+    response.render('topic', {
+      messages: response.locals.messages,
+      loggedIn: request.session.loggedIn,
+      info: request.session.info,
+    });
   }
 );
 
