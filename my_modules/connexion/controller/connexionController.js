@@ -1,6 +1,7 @@
 const connexionViews = require('./../view/connexionViews');
 const connexionDB = require('./../model/connexionDB');
 const forumController = require('./../../forum/forumController');
+const { request } = require('express');
 
 const connexionController = {
 
@@ -54,6 +55,13 @@ const connexionController = {
 
     callback(request, response);
   },
+
+  sessionDisconnect: (request, response, next) => {
+
+    request.session = null;
+
+    response.redirect('/');
+  }
 }
 
 module.exports = connexionController;

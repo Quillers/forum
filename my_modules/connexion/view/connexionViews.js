@@ -11,7 +11,6 @@ module.exports = {
    * Renders the createAccount form view...
    */
   createAccount: (request, response) => {
-    response.info = "on créé un compte ?"
     response.render('createAccount', {
       info: response.info,
       loggedIn: request.session.loggedIn
@@ -28,7 +27,6 @@ module.exports = {
 
   page404: (request, response) => {
     response.info = "C'est pas la bonne route";
-    request.session.loggedIn = "Tu es déconnecté... enfin c'est l'idée quoi";
 
     response.status(404)
       .render('404', {

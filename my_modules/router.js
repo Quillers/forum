@@ -50,6 +50,7 @@ router.get(
 router.get('/connexion', connexionController.stdConnexion);
 
 router.get('/connexion/createAccount', connexionController.createAccount);
+router.get('/connexion/disconnect', connexionController.sessionDisconnect, forumController.index)
 
 /*------------ POST REQUESTS --------------*/
 
