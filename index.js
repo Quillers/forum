@@ -1,11 +1,8 @@
-/*
- ** include express
- */
 const express = require('express');
 require('dotenv')
   .config();
 const router = require('./my_modules/router');
-const renderMW = require('./my_modules/middlewares/renderMW');
+const connexionViews = require('./my_modules/connexion/view/connexionViews');
 const app = express();
 const cookieSession = require('cookie-session');
 
@@ -42,7 +39,7 @@ app.locals.categories = require('./my_modules/database/categories.json');
 app.use(router);
 
 // A la fin la page 404 si besoin
-app.use(renderMW.page404);
+app.use(connexionViews.page404);
 /*------------------------------------------*/
 
 app.listen(process.env.PORT, console.log('server started at html://localhost:', process.env.PORT));

@@ -3,11 +3,11 @@ const path = require('path');
 
 // import database functionality
 
-const postMW = require('./middlewares/postMW');
-const getMW = require('./middlewares/getMW');
-const forumController = require('./middlewares/forumController');
-const connexionController = require('./middlewares/connexionController');
-const connexionMW = require('./middlewares/connexionMW');
+const postMW = require('./forum/postMW');
+const getMW = require('./forum/getMW');
+const forumController = require('./forum/forumController');
+const connexionController = require('./connexion/controller/connexionController');
+const connexionViews = require('./connexion/view/connexionViews');
 
 const router = express.Router();
 
@@ -48,6 +48,7 @@ router.get(
 
 // CONNEXION
 router.get('/connexion', connexionController.stdConnexion);
+
 router.get('/connexion/createAccount', connexionController.createAccount);
 
 /*------------ POST REQUESTS --------------*/
@@ -69,7 +70,7 @@ router.post(
 
 // CONNEXION
 router.post('/postConnexion/:pass',
-  connexionMW.selectRoute,
+  connexionController.selectRoute,
 );
 
 /*--------------------------------------------*/

@@ -1,0 +1,22 @@
+<%- include("partials/header.ejs", categories) %>
+
+<!-- On amis les catégories dans le header, reste à
+   mettre les sujets principaux dans l'accueil ? -->
+
+<h2>Récup du mot de passe</h2>
+
+<div class="connexion__formContainer">
+  <form action="/postConnexion/stdLogin" method="POST" class="connexion__form">
+    <label for="pseudo" class="connexion__form__item">Email</label>
+    <input
+      type="email"
+      name="email"
+      class="connexion__form__item"
+      id="email"
+    />
+    <button type="submit" class="connexion__form__item">Valider</button>
+
+  </form>
+</div>
+
+<%- include("partials/footer.ejs") %>
