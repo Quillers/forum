@@ -14,9 +14,6 @@ module.exports = {
     });
   },
 
-  /**
-   * Renders the createAccount form view...
-   */
   createAccount: (request, response, info, loggedIn) => {
     response.render('createAccount', {
       info: info,

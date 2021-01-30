@@ -61,6 +61,12 @@ module.exports = {
       loggedIn = "loggedIn => visiteur, pas connecté";
     }
 
-    callback(request, response, info, loggedIn);
+    if (request.session.status) {
+      status = request.session.status;
+    } else {
+      status = "status => visiteur, pas connecté";
+    }
+
+    callback(request, response, info, loggedIn, status);
   }
 };

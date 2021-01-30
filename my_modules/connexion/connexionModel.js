@@ -4,7 +4,8 @@ const { Client } = require('pg');
 
 // Les variables d'env sont rechargées dans chaque module si besoin
 // et définies dans .env
-require('dotenv').config();
+require('dotenv')
+  .config();
 
 // 'process' est une variable globale dispo partout dans le dossier
 const client = new Client({
@@ -124,26 +125,14 @@ module.exports = {
       }
     }
   },
+
+  getProfilFromCookie: () => {
+
+  },
+
+  getInfoProfil: () => {
+
+  }
+
+
 };
-
-//     if () {
-
-//       $pass_hache = password_hash($newPass1,PASSWORD_DEFAULT);
-
-//       $affectedLines = insertNewProfil($newPseudo, $pass_hache, $email_1);
-
-//       if ($affectedLines) {
-//         $_SESSION['identification'] = 'Profil enregistré, tu peux te connecter';
-//         header('Location: ./index.php');
-
-//       } else {
-//         $_SESSION['identification'] = 'Problème d\'enregistrement, désolé !';
-//         header('Location: ./index.php');
-
-//       }
-//     } else {
-//       $_SESSION['identification'] = "Désolé ce pseudo est déjà prit";
-//       header('Location: ./index.php');
-
-//   },
-// };
