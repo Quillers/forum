@@ -1,5 +1,6 @@
 const { render } = require('ejs');
 const connexionModel = require('./../database/connexionModel');
+const forumController = require('./forumController');
 
 module.exports = {
   /**
@@ -11,20 +12,21 @@ module.exports = {
    * @param {Object} request
    * @param {Object} response
    */
-  selectRoute: (request, response, next) => {
+  selectRoute: (request, response) => {
     // Ici récupérer :pass et envoyer la suite en fonction, faire un switch
     const pass = request.params.pass;
 
     switch (pass) {
       case 'stdLogin':
-        connexionModel.stdLoginControl(request, response, next);
+        connexionModel.stdLoginControl;
         break;
       case 'createAccount':
-        connexionModel.createAccountControl(request, response, next);
+        connexionModel.createAccountControl;
         break;
 
       default:
-        next();
+        request.session.info = "La route post qu'elle n'existe !!";
+        forumController.index
         break;
     }
   },
@@ -42,12 +44,23 @@ module.exports = {
   },
 
   /**
-   * Renders the createAccount form view...
+   * Set the session' infos
    */
-  renderCreateAccountForm: (request, response) => {
-    response.render('createAccount', {
-      loggedIn: request.session.loggedIn,
-      info: request.session.info,
-    });
-  },
+  setSessionVar: (request, response, callback) => {
+    let info, loggedIn;
+
+    if (request.session.info) {
+      info = request.session.info;
+    } else {
+      info = "info => vide";
+    }
+
+    if (request.session.loggedIn) {
+      loggedIn = request.session.loggedIn;
+    } else {
+      loggedIn = "loggedIn => visiteur, pas connecté";
+    }
+
+    callback(request, response, info, loggedIn);
+  }
 };
