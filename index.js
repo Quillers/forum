@@ -2,16 +2,17 @@
  ** include express
  */
 const express = require('express');
+require('dotenv')
+  .config();
 const router = require('./my_modules/router');
-
+const renderMW = require('./my_modules/middlewares/renderMW');
 const app = express();
-const session = require('express-session');
+const cookieSession = require('cookie-session');
 
 // user urlencoded to get data from post
 
 app.use(express.urlencoded({ extended: false }));
 
-const port = 3000;
 
 /*
  ** set functionnalities
@@ -22,17 +23,13 @@ app.set('views', './views');
 app.set('view engine', 'ejs');
 //set the static file directory
 
-// On ouvre la session
+// On utilise 'cookie-session' 
+// http://expressjs.com/en/resources/middleware/cookie-session.html
 app.use(
-  session({
-    cookie: { path: '/', httpOnly: true, secure: false, maxAge: 3600000 },
-    secret: 'quillers',
-    session: {
-      loggedIn: false,
-      info: "session.info : Bah rien..."
-    },
-    resave: true,
-    saveUninitialized: false,
+  cookieSession({
+    name: 'session',
+    secret: 'quiller',
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
   })
 );
 
@@ -44,8 +41,8 @@ app.locals.categories = require('./my_modules/database/categories.json');
 //use the router
 app.use(router);
 
-/*
- ** start server and listen to port
- */
+// A la fin la page 404 si besoin
+app.use(renderMW.page404);
+/*------------------------------------------*/
 
-app.listen(port, console.log('server started at port: ', port));
+app.listen(process.env.PORT, console.log('server started at html://localhost:', process.env.PORT));

@@ -1,3 +1,7 @@
+a {
+  color: inherit;
+}
+
 .connexion__formContainer {
   display: flex;
   justify-content: center;

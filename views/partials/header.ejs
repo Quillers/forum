@@ -12,7 +12,7 @@
 
 <body>
   <header class="header">
-    <h1 id="title">Quill'Forum</h1>
+    <a href="/"><h1 id="title">Quill'Forum</h1></a>
     <nav>
       <ul>
         <li><a href="/connexion"> Connexion </a></li>
@@ -32,7 +32,5 @@
 </html>
 
 <!--  -->
-<% if (loggedIn) { %>
-<div class="connexion_loggedIn">Connecté !</div>
-<% } %>
+<div class="connexion_loggedIn"><%= loggedIn %></div>
 <div class="connexion_info"><%= info %></div>

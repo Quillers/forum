@@ -1,6 +1,3 @@
-/*
- ** Include express
- */
 const express = require('express');
 const path = require('path');
 
@@ -8,28 +5,18 @@ const path = require('path');
 
 const postMW = require('./middlewares/postMW');
 const getMW = require('./middlewares/getMW');
+const forumController = require('./middlewares/forumController');
+const connexionController = require('./middlewares/connexionController');
 const connexionMW = require('./connexion/connexionMW');
-
-/*
- ** set the router
- */
 
 const router = express.Router();
 
-/*
- ** GET REQUESTS
- */
+/*------------ POST REQUESTS --------------*/
 
-router.get('/', (request, response) => {
-  // Renvoi la page d'accueil avec les catégories en dynamique
-  // dans la nav, l'objet categories.json est stocké dans
-  // app.locals.categories depuis index.js
-  //Vérification de la session
-  response.render('index', {
-    info: request.session.info,
-    loggedIn: request.session.loggedIn,
-  });
-});
+
+// Renvoi la page d'accueil avec les catégories en dynamique
+// dans la nav.
+router.get('/', forumController.index);
 
 router.get(
   '/categories/:categoryName',
@@ -60,10 +47,11 @@ router.get('/topics/:categoryName/:topicId',
     });
   });
 
-// CONNEXION - GET
-router.get('/connexion', connexionMW.renderConnexionForm);
-router.get('/connexion/createAccount', connexionMW.renderCreateAccountForm);
+// CONNEXION
+router.get('/connexion', connexionController.stdConnexion);
+router.get('/connexion/createAccount', connexionController.createAccount);
 
+/*------------ POST REQUESTS --------------*/
 
 /**
  * POST
@@ -82,8 +70,10 @@ router.post('/topics/:categoryName/:topicId/post', postMW.validateResponseForm, 
   response.redirect(`/topics/${request.params.categoryName}/${request.params.topicId}`);
 });
 
-// CONNEXION - POST
+// CONNEXION
+router.post('/postConnexion/:pass',
+  connexionMW.selectRoute,
+);
 
-router.post('/postConnexion/:pass', connexionMW.selectRoute);
-
+/*--------------------------------------------*/
 module.exports = router;
