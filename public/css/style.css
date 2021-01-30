@@ -11,7 +11,6 @@ html {
 .header {
     color: white;
     background-color: black;
-
     
     display: flex;
     align-items: center;
@@ -23,6 +22,7 @@ a {
     color: inherit;
     text-decoration: none;
 }
+
 #title {
     font-weight: bold;
     font-size: 2rem;
