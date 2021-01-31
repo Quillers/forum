@@ -1,40 +1,41 @@
-const client = require('../../client');
+const { client } = require('./../../client');
 
 /*-------------------------------------------------------------*/
 
 module.exports = {
 
-  /**
-   * Controls wether the user informations matches usersDatabase
-   */
-  stdLoginControl: (request, response) => {
-    const formPseudo = request.body.pseudo;
-    const formPassword = request.body.password;
+  getUser: function(pseudo, password, callback) {
 
-    // Ici un e fonction qui récupère la requête.
     const query = `SELECT * FROM module_connexion.users 
-    WHERE pseudo='${formPseudo}'
-    AND password = '${formPassword}';`;
+    WHERE pseudo = '${pseudo}'
+    AND password = '${password}';`;
 
     try {
       client.query(query, (error, results) => {
-        //
         if (error === null) {
-          // On continue si DBUser existe et que les passwords concordent
-          if (results.rows.length) {
-            // ici mettre les valeurs d'identification dans la session
-            response.render('index', {
-              loggedIn: true,
-              info: request.session.info,
-            });
-            //
-          } else {
-            //
-            response.render('connexion', {
-              loggedIn: false,
-              info: "erreur dans l'enchainement des flash-backs...",
-            });
-          }
+
+          callback(results);
+
+        } else {
+          console.log('error de la query getUser : ', error);
+        }
+      });
+    } catch (error) {
+      console.log('error du bloc try getUser : ', error);
+    }
+  },
+
+  getPseudo: function(pseudo, callback) {
+
+    const query = `SELECT * FROM module_connexion.users 
+    WHERE pseudo='${pseudo}';`;
+
+    try {
+      client.query(query, (error, results) => {
+        if (error === null) {
+          //...
+          callback(results)
+
         } else {
           console.log('error de la query : ', error);
         }
@@ -44,78 +45,23 @@ module.exports = {
     }
   },
 
-  /**
-   * Controls if form's data are good enought to create an account...
-   */
-  createAccountControl: (request, response, next) => {
-    // On récupère les données à contrôler :
-    const formPseudo = request.body.pseudo;
-    const formPassword_1 = request.body.password_1;
-    const formPassword_2 = request.body.password_2;
-    const formEmail_1 = request.body.email_1;
-    const formEmail_2 = request.body.email_1;
+  insertProfil: function(pseudo, password, email, callback) {
 
-    // On vérifie que mots de passe, email et pseudo sont non-vides
-    if (formPseudo === '' || formPassword_1 === '' || formEmail_1 === '') {
-      // Les champs sont mal remplis
-      response.render('createAccount', {
-        info: 'Les champs sont mal remplis',
-        loggedIn: request.session.loggedIn,
-      });
-      //
-    } else {
-      //
-      if (formPassword_1 !== formPassword_2) {
-        // On commence par contrôler si les deux mots de passe sont identiques
-        // 'Les mots de passe ne sont pas identiques';
-        response.render('createAccount', {
-          info: 'Les mots de passe ne sont pas identiques',
-          loggedIn: request.session.loggedIn,
-        });
-        //
-      } else if (formEmail_1 !== formEmail_2) {
-        // les emails ne sont pas identiques:
-        response.render('createAccount', {
-          info: 'Les emails ne sont pas identiques',
-          loggedIn: request.session.loggedIn,
-        });
-        //
-      } else {
-        // C'est bon pour le mot de passe et l'email
-        // Check if pseudo already exist in database
-        const queryPseudo = `SELECT id 
-          FROM module_connexion.users 
-          WHERE pseudo = '${formPseudo}';`;
+    const query = `INSERT INTO module_connexion.users (pseudo, password, email)
+    VALUES ('${pseudo}', '${password}', '${email}');`;
 
-        try {
-          client.query(queryPseudo, (error, results) => {
-            //
-            if (!results.rows) {
-              // On continue les vérifs,
-              response.render('createAccount', {
-                info: 'c bon on peut continuer',
-                loggedIn: request.session.loggedIn,
-              });
-              //
-            } else {
-              // le pseudo est déjà pris:
-              response.render('createAccount', {
-                info: 'Le pseudo est déjà utilisé, il faut en choisir un autre',
-                loggedIn: request.session.loggedIn,
-              });
-            }
-          });
-        } catch (error) {
-          console.log('error de try dans createAccountControl : ', error);
+    try {
+      client.query(query, (error, result) => {
+        if (error === null) {
+
+          callback()
+
+        } else {
+          console.log('error de la query insertProfil: ', error);
         }
-      }
+      });
+    } catch (error) {
+      console.log('error du bloc try insertProfil: ', error);
     }
-  },
-
-  /**
-   * Controls wether the lostPass' form is correct, that's a known email in database.
-   */
-  lostPasswordControl: (request, response) => {
-
   }
-};
+}

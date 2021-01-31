@@ -7,7 +7,6 @@ const postMW = require('./forum/postMW');
 const getMW = require('./forum/getMW');
 const forumController = require('./forum/forumController');
 const connexionController = require('./connexion/controller/connexionController');
-const connexionViews = require('./connexion/view/connexionViews');
 
 const router = express.Router();
 
