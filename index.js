@@ -1,11 +1,8 @@
-/*
- ** include express
- */
 const express = require('express');
 require('dotenv')
   .config();
-const router = require('./my_modules/router');
-const renderMW = require('./my_modules/middlewares/renderMW');
+const router = require('./app/router');
+const connexionViews = require('./app/connexion/view/connexionViews');
 const app = express();
 const cookieSession = require('cookie-session');
 
@@ -36,13 +33,13 @@ app.use(
 app.use(express.static('public'));
 
 // We create a Global variable where we store the categories list (that s ok bc it will only be modified by the admins)
-app.locals.categories = require('./my_modules/database/categories.json');
+app.locals.categories = require('./app/database/categories.json');
 
 //use the router
 app.use(router);
 
 // A la fin la page 404 si besoin
-app.use(renderMW.page404);
+app.use(connexionViews.page404);
 /*------------------------------------------*/
 
 app.listen(process.env.PORT, console.log('server started at html://localhost:', process.env.PORT));

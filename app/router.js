@@ -3,11 +3,10 @@ const path = require('path');
 
 // import database functionality
 
-const postMW = require('./middlewares/postMW');
-const getMW = require('./middlewares/getMW');
-const forumController = require('./middlewares/forumController');
-const connexionController = require('./middlewares/connexionController');
-const connexionMW = require('./connexion/connexionMW');
+const postMW = require('./forum/postMW');
+const getMW = require('./forum/getMW');
+const forumController = require('./forum/forumController');
+const connexionController = require('./connexion/controller/connexionController');
 
 const router = express.Router();
 
@@ -49,7 +48,9 @@ router.get('/topics/:categoryName/:topicId',
 
 // CONNEXION
 router.get('/connexion', connexionController.stdConnexion);
+
 router.get('/connexion/createAccount', connexionController.createAccount);
+router.get('/connexion/disconnect', connexionController.sessionDisconnect, forumController.index)
 
 /*------------ POST REQUESTS --------------*/
 
@@ -72,7 +73,7 @@ router.post('/topics/:categoryName/:topicId/post', postMW.validateResponseForm, 
 
 // CONNEXION
 router.post('/postConnexion/:pass',
-  connexionMW.selectRoute,
+  connexionController.selectRoute,
 );
 
 /*--------------------------------------------*/
