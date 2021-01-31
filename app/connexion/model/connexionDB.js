@@ -1,20 +1,4 @@
-const { Client } = require('pg');
-
-// Les variables d'env sont rechargées dans chaque module si besoin
-// et définies dans .env
-require('dotenv')
-  .config();
-
-// 'process' est une variable globale dispo partout dans le dossier
-const client = new Client({
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_LOGIN,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-});
-
-client.connect();
+const client = require('../../client');
 
 /*-------------------------------------------------------------*/
 
@@ -27,6 +11,7 @@ module.exports = {
     const formPseudo = request.body.pseudo;
     const formPassword = request.body.password;
 
+    // Ici un e fonction qui récupère la requête.
     const query = `SELECT * FROM module_connexion.users 
     WHERE pseudo='${formPseudo}'
     AND password = '${formPassword}';`;
