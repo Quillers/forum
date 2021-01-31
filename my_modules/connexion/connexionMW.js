@@ -1,6 +1,6 @@
 const { render } = require('ejs');
 const connexionModel = require('./../connexion/connexionModel');
-const forumController = require('./../middlewares/forumController');
+const forumController = require('../forum/controller/forumController');
 
 module.exports = {
   /**

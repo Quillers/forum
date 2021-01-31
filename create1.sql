@@ -48,6 +48,8 @@ SET row_security = off;
 
 COMMENT ON DATABASE forum IS 'La base de données locale pour le forum Quillers';
 
+DROP SCHEMA module_forum, module_connexion CASCADE;
+
 
 --
 -- TOC entry 6 (class 2615 OID 16388)
@@ -64,6 +66,8 @@ CREATE SCHEMA module_connexion;
 --
 
 COMMENT ON SCHEMA module_connexion IS 'Développement du module ''connexion'', contient les infos des utilisateurs enregistrés sur le forum.';
+
+DROP TABLE IF EXISTS module_connexion.users;
 
 
 SET default_tablespace = '';
@@ -160,3 +164,33 @@ ALTER TABLE ONLY module_connexion.users
 -- PostgreSQL database dump complete
 --
 
+
+CREATE SCHEMA module_forum;
+
+DROP TABLE IF EXISTS module_forum.category;
+DROP TABLE IF EXISTS module_forum.topic;
+DROP TABLE IF EXISTS module_forum.message;
+
+CREATE TABLE module_forum.category (
+    "id" SERIAL PRIMARY KEY,
+    "name" VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE module_forum.topic (
+    "id" SERIAL PRIMARY KEY,
+    "title" character varying(128) NOT NULL,
+    "topic_description" TEXT NOT NULL,
+    "author" character varying(128) NOT NULL,
+    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_DATE,
+    "modified_at" TIMESTAMP  DEFAULT NULL,
+    "category_id" INT REFERENCES module_forum.category("id")
+);
+
+CREATE TABLE module_forum.message (
+    "id" SERIAL PRIMARY KEY,
+    "author" character varying(128) NOT NULL,
+    "message_content" TEXT NOT NULL,
+    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_DATE,
+    "modified_at" TIMESTAMP DEFAULT NULL,
+    "topic_id" INT REFERENCES module_forum.topic("id")
+);

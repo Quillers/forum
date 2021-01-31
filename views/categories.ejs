@@ -1,0 +1,10 @@
+<%- include("partials/header.ejs") %>
+
+<ul>
+    <% categories.forEach(category => { %>
+        <li><a href="/categories/<%=  category.name %>"><%= category.name %> </a></li>
+ 
+    <% }); %>
+ </ul>
+
+<%- include("partials/footer.ejs") %>

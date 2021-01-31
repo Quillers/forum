@@ -11,10 +11,10 @@
                   <h3 class="message__author"><%= topic.author %></h3>
                </header>
                <section class="message__main">
-                  <%= topic.topicDesc %>
+                  <%= topic.topic_description %>
                </section>
                <footer class="message__footer">
-                  <p>Poste le <time><%= topic.timeStamp %></time></p>
+                  <p>Poste le <time><%= topic.created_at %></time></p>
                </footer>
             </article>
            <!-- We loop through all the messages to display them -->
@@ -26,10 +26,10 @@
                   <h3 class="message__author"><%= message.author %></h3>
                </header>
                <section class="message__main">
-                  <%= message.messageContent %>
+                  <%= message.message_content %>
                </section>
                <footer class="message__footer">
-                  <p>Poste le <time><%= message.timeStamp %></time></p>
+                  <p>Poste le <time><%= message.created_at %></time></p>
                </footer>
             </article>
            

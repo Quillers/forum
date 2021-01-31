@@ -16,8 +16,14 @@
     <nav>
       <ul>
         <li><a href="/connexion"> Connexion </a></li>
-        <li><a href="/categories"> Categories </a></li>
 
+        <% categories.forEach(category => {%>
+
+        <li><a href="/categories/<%= category.name %> ">
+              <%= category.name %>
+            </a></li>
+
+        <% }); %>
       </ul>
     </nav>
   </header>
