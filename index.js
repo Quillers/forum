@@ -4,8 +4,8 @@
 const express = require('express');
 require('dotenv')
   .config();
-const router = require('./my_modules/router');
-const renderMW = require('./my_modules/middlewares/renderMW');
+const router = require('./app/router');
+const renderMW = require('./app/middlewares/renderMW');
 const app = express();
 
 // Les variables d'env sont rechargées dans chaque module si besoin
