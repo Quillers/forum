@@ -87,8 +87,9 @@ forumController = {
     // im expecting an int in topicId, if anything else is passed, then 404
     if (isNaN(topicId)) {
       //TODO we need to implement a middleware for the 404 then we use the code
-      //next();
-      response.status(404).send(`404 NOT FOUND: no such topic exists with id = ${request.params.topicId}`);
+      next();
+      return ;
+      //response.status(404).send(`404 NOT FOUND: no such topic exists with id = ${request.params.topicId}`);
     }
 
     forumDB.getTopicById(topicId, (err, results) => {
@@ -101,8 +102,8 @@ forumController = {
         //we need to check if the topic exists and handle the 404
         if (!currentTopic) {
           //TODO we need to implement a middleware for the 404 then we use the code
-          //next();
-          response.status(404).send(`404 NOT FOUND: no such topic exists with id = ${topicId}`);
+          next();
+          //response.status(404).send(`404 NOT FOUND: no such topic exists with id = ${topicId}`);
         } else {
 
           forumDB.getAllMessagesByTopicId(topicId, (err, results) => {

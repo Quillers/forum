@@ -26,19 +26,15 @@ router.get('/connexion/createAccount', connexionController.createAccount);
 
 /*------------ POST REQUESTS --------------*/
 
-/**
- * POST
- */
-router.post('/topics/:categoryName/post', forumController.createNewTopic);
+/*
+** POST
+*/
 
+ // FORUM
+router.post('/topics/:categoryName/post', forumController.createNewTopic);
 router.post('/topics/:categoryName/:topicId/post', forumController.createNewMessage);
 
-// router.post('/topics/:categoryName/:topicId/post', postMW.validateResponseForm, postMW.insertMessageDB, (request,
-//   response) => {
-//   //TODO
-//   //
-//   response.redirect(`/topics/${request.params.categoryName}/${request.params.topicId}`);
-// });
+
 
 // CONNEXION
 router.post('/postConnexion/:pass',
