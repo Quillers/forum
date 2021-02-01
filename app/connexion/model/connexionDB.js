@@ -1,8 +1,8 @@
-const { client } = require('./../../client');
+const client = require('./../../client');
 
 /*-------------------------------------------------------------*/
 
-module.exports = {
+const connexionDB = {
 
   getUser: function(pseudo, password, callback) {
 
@@ -65,3 +65,5 @@ module.exports = {
     }
   }
 }
+
+module.exports = connexionDB;

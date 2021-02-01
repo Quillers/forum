@@ -4,7 +4,14 @@ require('dotenv')
 const router = require('./app/router');
 const connexionViews = require('./app/connexion/view/connexionViews');
 const app = express();
+
+// Les variables d'env sont rechargées dans chaque module si besoin
+// et définies dans .env
+
+
 const cookieSession = require('cookie-session');
+
+
 
 // user urlencoded to get data from post
 
@@ -33,7 +40,6 @@ app.use(
 app.use(express.static('public'));
 
 // We create a Global variable where we store the categories list (that s ok bc it will only be modified by the admins)
-app.locals.categories = require('./app/database/categories.json');
 
 //use the router
 app.use(router);

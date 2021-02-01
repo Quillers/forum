@@ -15,15 +15,20 @@
     <a href="/"><h1 id="title">Quill'Forum</h1></a>
     <nav>
       <ul>
-        <li><a href="/connexion"> Sign in</a></li>
-        <li><a href="/connexion/disconnect"> Sign out </a></li>
-        <li><a href="/categories"> Categories </a></li>
+        <li><a href="/connexion"> Connexion </a></li>
 
+        <% categories.forEach(category => {%>
+
+        <li><a href="/categories/<%= category.name %> ">
+              <%= category.name %>
+            </a></li>
+
+        <% }); %>
       </ul>
     </nav>
   </header>
 
-<!-- Utiliser en dev pour controler les valeurs des variables lièes à la session -->
+<!--  -->
 <div class="connexion_loggedIn"><%= loggedIn %></div>
 <div class="connexion_info"><%= info %></div>
 <main>

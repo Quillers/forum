@@ -131,7 +131,7 @@ CREATE TABLE module_forum.message (
     author character varying(128) NOT NULL,
     message_content text NOT NULL,
     created_at timestamp without time zone DEFAULT CURRENT_DATE NOT NULL,
-    modified_at timestamp without time zone NOT NULL,
+    modified_at timestamp without time zone,
     topic_id integer
 );
 
@@ -170,7 +170,7 @@ CREATE TABLE module_forum.topic (
     topic_description text NOT NULL,
     author character varying(128) NOT NULL,
     created_at timestamp without time zone DEFAULT CURRENT_DATE NOT NULL,
-    modified_at timestamp without time zone NOT NULL,
+    modified_at timestamp without time zone,
     category_id integer
 );
 
@@ -245,6 +245,9 @@ COPY module_connexion.users (id, pseudo, password, email) FROM stdin;
 --
 
 COPY module_forum.category (id, name) FROM stdin;
+1	Humanitaire
+2	Materiel Informatique
+3	Videos de chats mignons
 \.
 
 
@@ -261,6 +264,9 @@ COPY module_forum.message (id, author, message_content, created_at, modified_at,
 --
 
 COPY module_forum.topic (id, title, topic_description, author, created_at, modified_at, category_id) FROM stdin;
+1	premier topic humanitaire	blablablabla topic humanitaire	valentin	2021-01-31 00:00:00	\N	1
+2	premier topic hardware	blablablabla topic humanitaire	valentin	2021-01-31 00:00:00	\N	2
+3	premier minous	blablablabla topic humanitaire	valentin	2021-01-31 00:00:00	\N	3
 \.
 
 
@@ -275,7 +281,7 @@ SELECT pg_catalog.setval('module_connexion.users_id_seq', 5, true);
 -- Name: category_id_seq; Type: SEQUENCE SET; Schema: module_forum; Owner: vde-guil
 --
 
-SELECT pg_catalog.setval('module_forum.category_id_seq', 1, false);
+SELECT pg_catalog.setval('module_forum.category_id_seq', 3, true);
 
 
 --
@@ -289,7 +295,7 @@ SELECT pg_catalog.setval('module_forum.message_id_seq', 1, false);
 -- Name: topic_id_seq; Type: SEQUENCE SET; Schema: module_forum; Owner: vde-guil
 --
 
-SELECT pg_catalog.setval('module_forum.topic_id_seq', 1, false);
+SELECT pg_catalog.setval('module_forum.topic_id_seq', 3, true);
 
 
 --

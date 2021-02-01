@@ -1,17 +1,17 @@
 const connexionViews = require('./../view/connexionViews');
 const connexionDB = require('./../model/connexionDB');
-const forumController = require('./../../forum/forumController');
-
+const forumController = require('../../forum/controller/forumController')
+const mainController = require('../../main/controller/mainController')
 const connexionController = {
 
   stdConnexion: function(request, response) {
 
-    connexionController.setSessionVar(request, response, connexionViews.stdConnexion)
+    mainController.setSessionVar(request, response, connexionViews.stdConnexion)
   },
 
   createAccount: (request, response) => {
 
-    connexionController.setSessionVar(request, response, connexionViews.createAccount)
+    mainController.setSessionVar(request, response, connexionViews.createAccount)
   },
 
   /**
@@ -44,24 +44,6 @@ const connexionController = {
     }
   },
 
-  /**
-   * Set the session' infos
-   */
-  setSessionVar: function(request, response, callback) {
-
-    if (!request.session.loggedIn) {
-      request.session.loggedIn = "loggedIn => visiteur, pas connecté";
-    }
-
-    callback(request, response);
-  },
-
-  sessionDisconnect: (request, response, next) => {
-
-    request.session = null;
-
-    response.redirect('/');
-  },
 
   /**
    * Controls wether the user informations matches usersDatabase

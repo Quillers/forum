@@ -1,10 +1,5 @@
 const { Client } = require('pg');
 
-// Les variables d'env sont rechargées dans chaque module si besoin
-// et définies dans .env
-require('dotenv')
-  .config();
-
 // 'process' est une variable globale dispo partout dans le dossier
 const client = new Client({
   host: process.env.DB_HOST,
@@ -16,4 +11,4 @@ const client = new Client({
 
 client.connect();
 
-module.exports = { client };
+module.exports = client;
