@@ -1,0 +1,51 @@
+html {
+    font-family: 'Domine', serif;
+}
+
+:root {
+    --color-light: rgb(255,253,249) ;
+    --color-verylightblue: rgb(239,248,250);
+    --color-lightblue: #D9F8FF;
+    --color-mediumblue: #5267B0;
+    --color-darkblue: #4D5497;
+    --color-yellow: rgb(255, 202,65);
+    --color-bubblegumpink : #EA8C8C;
+    --color-grey: rgb(130,130,130);
+    
+}
+
+.frontPage {
+    &__header {
+        background-color: var(--color-verylightblue);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+
+         &__logo {
+           color: var(--color-darkblue);
+           font-weight: bold;
+           font-size: 2rem; 
+        }
+        &__nav {
+            width: 50%;
+            color: var(--color-mediumblue);
+            display: flex;
+            justify-content: space-between;
+            
+            &__links { 
+                padding: 10px;
+                display: flex;
+                
+                &__link {
+                    padding: 10px;
+                }
+            }
+            
+        }
+        &__loginButton {
+            
+        }
+    }
+}
+

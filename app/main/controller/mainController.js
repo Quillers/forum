@@ -10,6 +10,7 @@ const mainController = {
    * Set the session' infos
    */
   checkSession: function(request, response, next) {
+    
     if (!request.session.data) {
 
       const data = {
