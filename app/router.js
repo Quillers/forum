@@ -9,11 +9,11 @@ const connexionController = require('./connexion/controller/connexionController'
 
 const router = express.Router();
 
-/*------------ POST REQUESTS --------------*/
+/*------------ GET REQUESTS --------------*/
 
+router.use(mainController.checkSession);
 
-// Renvoi la page d'accueil avec les catégories en dynamique
-// dans la nav.
+// FORUM
 router.get('/', mainController.index);
 router.get('/categories', forumController.getCategories);
 router.get('/categories/:categoryName', forumController.getAllTopicsByCategoryId);
@@ -21,25 +21,17 @@ router.get('/topics/:categoryName/:topicId', forumController.getAllMessagesByTop
 
 
 // CONNEXION
-router.get('/connexion', connexionController.stdConnexion);
-
-router.get('/connexion/createAccount', connexionController.createAccount);
-router.get('/connexion/disconnect', mainController.sessionDisconnect)
+router.get('/connexion/:pass', connexionController.selectGET);
 
 /*------------ POST REQUESTS --------------*/
 
-/**
- * POST
- */
 
- // FORUM
- router.post('/topics/:categoryName/post', forumController.createNewTopic);
- router.post('/topics/:categoryName/:topicId/post', forumController.createNewMessage);
+// FORUM
+router.post('/topics/:categoryName/post', forumController.createNewTopic);
+router.post('/topics/:categoryName/:topicId/post', forumController.createNewMessage);
 
 // CONNEXION
-router.post('/postConnexion/:pass',
-  connexionController.selectRoute,
-);
+router.post('/postConnexion/:pass', connexionController.selectPOST);
 
 /*--------------------------------------------*/
 module.exports = router;

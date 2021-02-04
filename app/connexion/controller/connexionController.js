@@ -1,27 +1,26 @@
 const connexionViews = require('./../view/connexionViews');
 const connexionDB = require('./../model/connexionDB');
-const forumController = require('../../forum/controller/forumController')
-const mainController = require('../../main/controller/mainController')
+const forumController = require('../../forum/controller/forumController');
+const mainController = require('../../main/controller/mainController');
 const connexionController = {
 
-  stdConnexion: function(request, response) {
+  /*-------------- VIEWS ----------------*/
 
-    mainController.setSessionVar(request, response, connexionViews.stdConnexion)
-  },
+  stdConnexion: (request, response) => { connexionViews.view(request, response); },
+  createAccount: (request, response) => { connexionViews.view(request, response); },
+  lostPass: (request, response) => { connexionViews.view(request, response); },
+  deleteUser: (request, response) => { connexionViews.view(request, response); },
 
-  createAccount: (request, response) => {
-
-    mainController.setSessionVar(request, response, connexionViews.createAccount)
-  },
-
+  /*-------------- ROUTE SELECTOR ------------*/
   /**
    * Using ':pass', select what to do next :
    * ':pass' can take following values :
    *    - stdLogin,
    *    - createAccount,
-   *    - lostPass,
+   *    -lostPass,
+   *    -deleteUser,
    */
-  selectRoute: (request, response) => {
+  selectPOST: (request, response) => {
     // Ici récupérer :pass et envoyer la suite en fonction, faire un switch
     const pass = request.params.pass;
     console.log('etape 0', pass);
@@ -36,15 +35,56 @@ const connexionController = {
       case 'lostPass':
         connexionController.lostPasswordControl(request, response);
         break;
+      case 'deleteUser':
+        connexionController.deleteUserControl(request, response);
+        break;
 
       default:
-        request.session.info = "La route post qu'elle n'existe !!";
-        forumController.index(request, response)
+        response.info = "La route post qu'elle n'existe !!";
+        mainController.index(request, response);
+        break;
+    }
+  },
+
+  /**
+   * Using ':pass', select what to do next :
+   * ':pass' can take following values :
+   *    - stdLogin,
+   *    - createAccount,
+   *    -lostPass,
+   *    -deleteUser,
+   */
+  selectGET: (request, response) => {
+    // Ici récupérer :pass et envoyer la suite en fonction, faire un switch
+    const pass = request.params.pass;
+    console.log('etape 0', pass);
+
+    switch (pass) {
+      case 'stdLogin':
+        connexionController.stdConnexion(request, response);
+        break;
+      case 'createAccount':
+        connexionController.createAccount(request, response);
+        break;
+      case 'disconnect':
+        mainController.sessionDisconnect(request, response);
+        break;
+      case 'lostPass':
+        connexionController.lostPass(request, response);
+        break;
+      case 'deleteUser':
+        connexionController.deleteUser(request, response);
+        break;
+
+      default:
+        response.info = "La route get qu'elle n'existe !!";
+        mainController.index(request, response);
         break;
     }
   },
 
 
+  /*-------------- FORM CONTROL ------------*/
   /**
    * Controls wether the user informations matches usersDatabase
    */
@@ -58,20 +98,19 @@ const connexionController = {
       // On continue si DBUser existe et que les passwords concordent
       if (user.rowCount) {
         // ici mettre les valeurs d'identification dans la session
-        console.log('etape 5');
-        request.session.loggedIn = 'Connecté via stdLoginControl';
-
+        request.session.data.logguedIn = true;
+        request.session.data.userStatus = user.rows[0].userStatus;
+        response.info = 'La connexion c bon'
         response.render('index', {
-          loggedIn: request.session.loggedIn,
-          info: '',
+          session: request.session,
+          info: response.info
         });
-        console.log('etape 6');
 
       } else {
-
+        response.info = 'La base ne renvoie rien';
         response.render('stdLogin', {
-          loggedIn: request.session.loggedIn,
-          info: "Pas de profil correspondant en DB",
+          session: request.session,
+          info: response.info
         });
       }
     });
@@ -145,6 +184,71 @@ const connexionController = {
    */
   lostPasswordControl: (request, response) => {
 
+    // Récup du formulaire
+    const email = request.body.email;
+
+    // Ici vérifier que l'email est en base de données
+    connexionDB.isEmailInDB(email, (error, data) => {
+
+      if (error) {
+        console.log('dans lostPassWordControl - isEmailInDB :', error);
+        response.redirect('/');
+
+      } else {
+
+        if (data.rowCount) {
+          // console.log('isEmailInDB : ', data);
+          // Ici remettre un mot de passe bidon en BDD
+          connexionDB.insertDefaultPassword(data.rows[0].id, (error, results) => {
+
+            if (error) {
+
+              console.log('dans lostPassWordControl - insertDefaultPassword :', error);
+              response.redirect('/');
+
+            } else {
+              console.log('results de insertDefaultPassword:', results);
+              // Ici envoyer un email avec ce mot de passe bidon
+
+              response.render('lostPass', {
+                info: "C'est good, on a mis 'gpasdcerveau' comme mot de passe !",
+                loggedIn: request.session.loggedIn,
+              });
+            }
+          })
+
+        } else {
+          response.render('lostPass', {
+            info: 'Cet email qu\'il n\'existe en DB',
+            loggedIn: request.session.loggedIn,
+          });
+        }
+      }
+    })
+  },
+
+  /**
+   * Supprime un user de la BDD
+   */
+  deleteUserControl: (request, response) => {
+    const userId = request.body.id;
+
+    connexionDB.deleteUser(userId, (error, results) => {
+
+      if (error) {
+
+        console.log('dans deleteUser :', error);
+        response.redirect('/');
+
+      } else {
+        console.log('results de deleteUser:', results);
+
+        response.render('deleteUser', {
+          info: "C'est good, il est plus dans la base",
+          loggedIn: request.session.loggedIn,
+        });
+      }
+    })
   }
 }
 

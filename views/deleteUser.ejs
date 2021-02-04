@@ -3,16 +3,16 @@
 <!-- On amis les catégories dans le header, reste à
    mettre les sujets principaux dans l'accueil ? -->
 
-<h2>Récup du mot de passe</h2>
+<h2>Supprimer un utilisateur</h2>
 
 <div class="connexion__formContainer">
-  <form action="/postConnexion/lostPass" method="POST" class="connexion__form">
-    <label for="pseudo" class="connexion__form__item">Email</label>
+  <form action="/postConnexion/deleteUser" method="POST" class="connexion__form">
+    <label for="pseudo" class="connexion__form__item">Son id</label>
     <input
-      type="email"
-      name="email"
+      type="number"
+      name="id"
       class="connexion__form__item"
-      id="email"
+      id="id"
     />
     <button type="submit" class="connexion__form__item">Valider</button>
 

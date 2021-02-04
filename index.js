@@ -9,8 +9,7 @@ const app = express();
 // et définies dans .env
 
 
-const cookieSession = require('cookie-session');
-
+const expressSession = require('express-session');
 
 
 // user urlencoded to get data from post
@@ -29,13 +28,17 @@ app.set('view engine', 'ejs');
 
 // On utilise 'cookie-session' 
 // http://expressjs.com/en/resources/middleware/cookie-session.html
-app.use(
-  cookieSession({
-    name: 'session',
-    secret: 'quiller',
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
-  })
-);
+app.use(expressSession({
+
+  secret: 'quillers',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+    secure: false
+  }
+
+}))
 
 app.use(express.static('public'));
 

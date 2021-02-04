@@ -63,7 +63,31 @@ const connexionDB = {
     } catch (error) {
       console.log('error du bloc try insertProfil: ', error);
     }
-  }
+  },
+
+  isEmailInDB: (email, callback) => {
+
+    const query = `SELECT * FROM module_connexion.users WHERE email = '${email}';`;
+
+    client.query(query, callback);
+  },
+
+  insertDefaultPassword: (id, callback) => {
+
+    const query = `UPDATE module_connexion.users
+    SET password = 'gpasdcerveau'
+    WHERE id = ${id};`
+
+    client.query(query, callback);
+  },
+
+  deleteUser: (id, callback) => {
+
+    const query = `DELETE FROM module_connexion.users
+    WHERE id = ${id};`
+
+    client.query(query, callback);
+  },
 }
 
 module.exports = connexionDB;

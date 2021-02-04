@@ -15,15 +15,26 @@
     <a href="/"><h1 id="title">Quill'Forum</h1></a>
     <nav>
       <ul>
-        <li><a href="/connexion"> Sign in</a></li>
+        <% if (!session.data.logguedIn) {%>
+        <li><a href="/connexion/stdLogin"> Sign in</a></li>
+        <% } %>
+        <% if (session.data.logguedIn) {%>
         <li><a href="/connexion/disconnect"> Sign out </a></li>
         <li><a href="/categories"> Categories </a></li>
+        <% } %>
 
       </ul>
     </nav>
   </header>
 
-<!-- Utiliser en dev pour controler les valeurs des variables lièes à la session -->
-<div class="connexion_loggedIn"><%= loggedIn %></div>
-<div class="connexion_info"><%= info %></div>
-<main>
+  <!-- Utiliser en dev pour controler les valeurs des variables lièes à la session -->
+  <div class="connexion__loggedIn">session.data.logguedIn : <%= session.data.logguedIn %></div>
+  <div class="connexion__userStatus">session.data.userStatus : <%= session.data.userStatus %></div>
+  <div class="connexion__info">response.info :
+    <% if (typeof info != 'undefined') {%>
+    <%= info %>
+    <% } else { %>
+    pas d'info
+    <% } %>
+  </div>
+  <main>

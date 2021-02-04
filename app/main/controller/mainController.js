@@ -2,32 +2,36 @@ const mainViews = require('../views/mainViews');
 
 
 const mainController = {
-  
-    // code associé à la route '/'
-  index: (request, response) => {
-    mainController.setSessionVar(request, response, mainViews.index)
-  },
+
+  // code associé à la route '/'
+  index: (request, response) => { mainViews.index(request, response) },
 
   /**
    * Set the session' infos
    */
-  setSessionVar: function(request, response, callback) {
+  checkSession: function(request, response, next) {
+    if (!request.session.data) {
 
-    if (!request.session.loggedIn) {
-      request.session.loggedIn = "loggedIn => visiteur, pas connecté";
+      const data = {
+        logguedIn: false,
+        userStatus: 'Visiteur',
+      }
+
+      request.session.data = data;
     }
 
-    callback(request, response);
+    next();
   },
 
   sessionDisconnect: (request, response, next) => {
 
-    request.session = null;
+    request.session.data.logguedIn = false;
+    request.session.data.userStatus = 'Visitor';
 
     response.redirect('/');
   },
 
-  
+
 }
 
 module.exports = mainController;
