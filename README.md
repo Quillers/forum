@@ -20,4 +20,4 @@ pgsql -h localhost -U forum -f forumExport.sql
 
 // Ici on se connecte à la base forum et on lance les commandes contenues dans le fichier, c'est à dire suppression des tables éventuellement existantes dans la base et création de celles prévues par le fichier.
 
-// Les commandes habituels sont maintenant possible, il faut tester !
+// Les commandes habituelles sont maintenant possible, il faut tester !
