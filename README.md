@@ -5,7 +5,9 @@ forum
 Avoir postgres d'installer
 
 ### Depuis un terminal :
+
 sudo -i -u postgres // On bascule sur l'utilisateur postgres
+
 pgsql // On lance pgsql en tant que postgres, donc superutilisateur
 
 CREATE USER forum WITH ENCRYPTED LOGIN "mot_de_passe";
