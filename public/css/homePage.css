@@ -3,14 +3,14 @@ html {
 }
 
 :root {
-  --color-light: rgb(255,253,249) ;
-  --color-verylightblue: rgb(239,248,250);
+  --color-light: rgb(255, 253, 249);
+  --color-verylightblue: rgb(239, 248, 250);
   --color-lightblue: #D9F8FF;
   --color-mediumblue: #5267B0;
   --color-darkblue: #4D5497;
-  --color-yellow: rgb(255, 202,65);
+  --color-yellow: rgb(255, 202, 65);
   --color-bubblegumpink: #EA8C8C;
-  --color-grey: rgb(130,130,130);
+  --color-grey: rgb(130, 130, 130);
 }
 
 .frontPage__header {
@@ -36,5 +36,6 @@ html {
   display: flex;
 }
 .frontPage__header__nav__links__link {
+  font-family: "PT Mono", monospace;
   padding: 10px;
 }
