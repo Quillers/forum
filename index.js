@@ -38,7 +38,7 @@ app.use(expressSession({
     secure: false
   }
 
-}))
+}));
 
 app.use(express.static('public'));
 

@@ -6,6 +6,7 @@ const path = require('path');
 const mainController = require('./main/controller/mainController');
 const forumController = require('./forum/controller/forumController');
 const connexionController = require('./connexion/controller/connexionController');
+const profileController = require('./profile/controller/profileController');
 
 const router = express.Router();
 
@@ -23,6 +24,9 @@ router.get('/topics/:categoryName/:topicId', forumController.getAllMessagesByTop
 // CONNEXION
 router.get('/connexion/:pass', connexionController.selectGET);
 
+// PROFILE
+router.get('/myProfile/:id', profileController.getProfile);
+
 /*------------ POST REQUESTS --------------*/
 
 
@@ -32,6 +36,11 @@ router.post('/topics/:categoryName/:topicId/post', forumController.createNewMess
 
 // CONNEXION
 router.post('/postConnexion/:pass', connexionController.selectPOST);
+
+// PROFILE
+router.post('/postProfile/:pass', profileController.selectPOST);
+
+
 
 /*--------------------------------------------*/
 module.exports = router;

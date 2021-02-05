@@ -1,0 +1,25 @@
+<%- include("partials/header.ejs") %>
+
+<!-- On amis les catégories dans le header, reste à
+   mettre les sujets principaux dans l'accueil ? -->
+
+
+<div class="info">
+  <% if (info) { %>
+    <span class="info"><%= info %></span>
+  <% } %>
+</div>
+<div class="connexion__formContainer">
+  <form action="/postProfile/pseudo" method="POST" class="connexion__form">
+    <label for="pseudo" class="connexion__form__item">Pseudo</label>
+    <input
+      type="text"
+      name="pseudo"
+      class="connexion__form__item"
+      id="pseudo"
+      placeholder="<%= userInfo.pseudo %>"
+    />
+  </form>
+</div>
+
+<%- include("partials/footer.ejs") %>

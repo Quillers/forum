@@ -17,36 +17,36 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: module_connexion; Type: SCHEMA; Schema: -; Owner: vde-guil
+-- Name: module_connexion; Type: SCHEMA; Schema: -; Owner: forumadmin
 --
 
 CREATE SCHEMA module_connexion;
 
 
-ALTER SCHEMA module_connexion OWNER TO "vde-guil";
+ALTER SCHEMA module_connexion OWNER TO "forumadmin";
 
 --
--- Name: SCHEMA module_connexion; Type: COMMENT; Schema: -; Owner: vde-guil
+-- Name: SCHEMA module_connexion; Type: COMMENT; Schema: -; Owner: forumadmin
 --
 
 COMMENT ON SCHEMA module_connexion IS 'Développement du module ''connexion'', contient les infos des utilisateurs enregistrés sur le forum.';
 
 
 --
--- Name: module_forum; Type: SCHEMA; Schema: -; Owner: vde-guil
+-- Name: module_forum; Type: SCHEMA; Schema: -; Owner: forumadmin
 --
 
 CREATE SCHEMA module_forum;
 
 
-ALTER SCHEMA module_forum OWNER TO "vde-guil";
+ALTER SCHEMA module_forum OWNER TO "forumadmin";
 
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
 
 --
--- Name: users; Type: TABLE; Schema: module_connexion; Owner: vde-guil
+-- Name: users; Type: TABLE; Schema: module_connexion; Owner: forumadmin
 --
 
 CREATE TABLE module_connexion.users (
@@ -57,17 +57,17 @@ CREATE TABLE module_connexion.users (
 );
 
 
-ALTER TABLE module_connexion.users OWNER TO "vde-guil";
+ALTER TABLE module_connexion.users OWNER TO "forumadmin";
 
 --
--- Name: TABLE users; Type: COMMENT; Schema: module_connexion; Owner: vde-guil
+-- Name: TABLE users; Type: COMMENT; Schema: module_connexion; Owner: forumadmin
 --
 
 COMMENT ON TABLE module_connexion.users IS 'Contient les infos utilisateurs du forum.';
 
 
 --
--- Name: users_id_seq; Type: SEQUENCE; Schema: module_connexion; Owner: vde-guil
+-- Name: users_id_seq; Type: SEQUENCE; Schema: module_connexion; Owner: forumadmin
 --
 
 CREATE SEQUENCE module_connexion.users_id_seq
@@ -79,17 +79,17 @@ CREATE SEQUENCE module_connexion.users_id_seq
     CACHE 1;
 
 
-ALTER TABLE module_connexion.users_id_seq OWNER TO "vde-guil";
+ALTER TABLE module_connexion.users_id_seq OWNER TO "forumadmin";
 
 --
--- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: module_connexion; Owner: vde-guil
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: module_connexion; Owner: forumadmin
 --
 
 ALTER SEQUENCE module_connexion.users_id_seq OWNED BY module_connexion.users.id;
 
 
 --
--- Name: category; Type: TABLE; Schema: module_forum; Owner: vde-guil
+-- Name: category; Type: TABLE; Schema: module_forum; Owner: forumadmin
 --
 
 CREATE TABLE module_forum.category (
@@ -98,10 +98,10 @@ CREATE TABLE module_forum.category (
 );
 
 
-ALTER TABLE module_forum.category OWNER TO "vde-guil";
+ALTER TABLE module_forum.category OWNER TO "forumadmin";
 
 --
--- Name: category_id_seq; Type: SEQUENCE; Schema: module_forum; Owner: vde-guil
+-- Name: category_id_seq; Type: SEQUENCE; Schema: module_forum; Owner: forumadmin
 --
 
 CREATE SEQUENCE module_forum.category_id_seq
@@ -113,17 +113,17 @@ CREATE SEQUENCE module_forum.category_id_seq
     CACHE 1;
 
 
-ALTER TABLE module_forum.category_id_seq OWNER TO "vde-guil";
+ALTER TABLE module_forum.category_id_seq OWNER TO "forumadmin";
 
 --
--- Name: category_id_seq; Type: SEQUENCE OWNED BY; Schema: module_forum; Owner: vde-guil
+-- Name: category_id_seq; Type: SEQUENCE OWNED BY; Schema: module_forum; Owner: forumadmin
 --
 
 ALTER SEQUENCE module_forum.category_id_seq OWNED BY module_forum.category.id;
 
 
 --
--- Name: message; Type: TABLE; Schema: module_forum; Owner: vde-guil
+-- Name: message; Type: TABLE; Schema: module_forum; Owner: forumadmin
 --
 
 CREATE TABLE module_forum.message (
@@ -136,10 +136,10 @@ CREATE TABLE module_forum.message (
 );
 
 
-ALTER TABLE module_forum.message OWNER TO "vde-guil";
+ALTER TABLE module_forum.message OWNER TO "forumadmin";
 
 --
--- Name: message_id_seq; Type: SEQUENCE; Schema: module_forum; Owner: vde-guil
+-- Name: message_id_seq; Type: SEQUENCE; Schema: module_forum; Owner: forumadmin
 --
 
 CREATE SEQUENCE module_forum.message_id_seq
@@ -151,17 +151,17 @@ CREATE SEQUENCE module_forum.message_id_seq
     CACHE 1;
 
 
-ALTER TABLE module_forum.message_id_seq OWNER TO "vde-guil";
+ALTER TABLE module_forum.message_id_seq OWNER TO "forumadmin";
 
 --
--- Name: message_id_seq; Type: SEQUENCE OWNED BY; Schema: module_forum; Owner: vde-guil
+-- Name: message_id_seq; Type: SEQUENCE OWNED BY; Schema: module_forum; Owner: forumadmin
 --
 
 ALTER SEQUENCE module_forum.message_id_seq OWNED BY module_forum.message.id;
 
 
 --
--- Name: topic; Type: TABLE; Schema: module_forum; Owner: vde-guil
+-- Name: topic; Type: TABLE; Schema: module_forum; Owner: forumadmin
 --
 
 CREATE TABLE module_forum.topic (
@@ -175,10 +175,10 @@ CREATE TABLE module_forum.topic (
 );
 
 
-ALTER TABLE module_forum.topic OWNER TO "vde-guil";
+ALTER TABLE module_forum.topic OWNER TO "forumadmin";
 
 --
--- Name: topic_id_seq; Type: SEQUENCE; Schema: module_forum; Owner: vde-guil
+-- Name: topic_id_seq; Type: SEQUENCE; Schema: module_forum; Owner: forumadmin
 --
 
 CREATE SEQUENCE module_forum.topic_id_seq
@@ -190,45 +190,45 @@ CREATE SEQUENCE module_forum.topic_id_seq
     CACHE 1;
 
 
-ALTER TABLE module_forum.topic_id_seq OWNER TO "vde-guil";
+ALTER TABLE module_forum.topic_id_seq OWNER TO "forumadmin";
 
 --
--- Name: topic_id_seq; Type: SEQUENCE OWNED BY; Schema: module_forum; Owner: vde-guil
+-- Name: topic_id_seq; Type: SEQUENCE OWNED BY; Schema: module_forum; Owner: forumadmin
 --
 
 ALTER SEQUENCE module_forum.topic_id_seq OWNED BY module_forum.topic.id;
 
 
 --
--- Name: users id; Type: DEFAULT; Schema: module_connexion; Owner: vde-guil
+-- Name: users id; Type: DEFAULT; Schema: module_connexion; Owner: forumadmin
 --
 
 ALTER TABLE ONLY module_connexion.users ALTER COLUMN id SET DEFAULT nextval('module_connexion.users_id_seq'::regclass);
 
 
 --
--- Name: category id; Type: DEFAULT; Schema: module_forum; Owner: vde-guil
+-- Name: category id; Type: DEFAULT; Schema: module_forum; Owner: forumadmin
 --
 
 ALTER TABLE ONLY module_forum.category ALTER COLUMN id SET DEFAULT nextval('module_forum.category_id_seq'::regclass);
 
 
 --
--- Name: message id; Type: DEFAULT; Schema: module_forum; Owner: vde-guil
+-- Name: message id; Type: DEFAULT; Schema: module_forum; Owner: forumadmin
 --
 
 ALTER TABLE ONLY module_forum.message ALTER COLUMN id SET DEFAULT nextval('module_forum.message_id_seq'::regclass);
 
 
 --
--- Name: topic id; Type: DEFAULT; Schema: module_forum; Owner: vde-guil
+-- Name: topic id; Type: DEFAULT; Schema: module_forum; Owner: forumadmin
 --
 
 ALTER TABLE ONLY module_forum.topic ALTER COLUMN id SET DEFAULT nextval('module_forum.topic_id_seq'::regclass);
 
 
 --
--- Data for Name: users; Type: TABLE DATA; Schema: module_connexion; Owner: vde-guil
+-- Data for Name: users; Type: TABLE DATA; Schema: module_connexion; Owner: forumadmin
 --
 
 COPY module_connexion.users (id, pseudo, password, email) FROM stdin;
@@ -241,7 +241,7 @@ COPY module_connexion.users (id, pseudo, password, email) FROM stdin;
 
 
 --
--- Data for Name: category; Type: TABLE DATA; Schema: module_forum; Owner: vde-guil
+-- Data for Name: category; Type: TABLE DATA; Schema: module_forum; Owner: forumadmin
 --
 
 COPY module_forum.category (id, name) FROM stdin;
@@ -252,7 +252,7 @@ COPY module_forum.category (id, name) FROM stdin;
 
 
 --
--- Data for Name: message; Type: TABLE DATA; Schema: module_forum; Owner: vde-guil
+-- Data for Name: message; Type: TABLE DATA; Schema: module_forum; Owner: forumadmin
 --
 
 COPY module_forum.message (id, author, message_content, created_at, modified_at, topic_id) FROM stdin;
@@ -260,7 +260,7 @@ COPY module_forum.message (id, author, message_content, created_at, modified_at,
 
 
 --
--- Data for Name: topic; Type: TABLE DATA; Schema: module_forum; Owner: vde-guil
+-- Data for Name: topic; Type: TABLE DATA; Schema: module_forum; Owner: forumadmin
 --
 
 COPY module_forum.topic (id, title, topic_description, author, created_at, modified_at, category_id) FROM stdin;
@@ -271,35 +271,35 @@ COPY module_forum.topic (id, title, topic_description, author, created_at, modif
 
 
 --
--- Name: users_id_seq; Type: SEQUENCE SET; Schema: module_connexion; Owner: vde-guil
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: module_connexion; Owner: forumadmin
 --
 
 SELECT pg_catalog.setval('module_connexion.users_id_seq', 5, true);
 
 
 --
--- Name: category_id_seq; Type: SEQUENCE SET; Schema: module_forum; Owner: vde-guil
+-- Name: category_id_seq; Type: SEQUENCE SET; Schema: module_forum; Owner: forumadmin
 --
 
 SELECT pg_catalog.setval('module_forum.category_id_seq', 3, true);
 
 
 --
--- Name: message_id_seq; Type: SEQUENCE SET; Schema: module_forum; Owner: vde-guil
+-- Name: message_id_seq; Type: SEQUENCE SET; Schema: module_forum; Owner: forumadmin
 --
 
 SELECT pg_catalog.setval('module_forum.message_id_seq', 1, false);
 
 
 --
--- Name: topic_id_seq; Type: SEQUENCE SET; Schema: module_forum; Owner: vde-guil
+-- Name: topic_id_seq; Type: SEQUENCE SET; Schema: module_forum; Owner: forumadmin
 --
 
 SELECT pg_catalog.setval('module_forum.topic_id_seq', 3, true);
 
 
 --
--- Name: users users_pkey; Type: CONSTRAINT; Schema: module_connexion; Owner: vde-guil
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: module_connexion; Owner: forumadmin
 --
 
 ALTER TABLE ONLY module_connexion.users
@@ -307,7 +307,7 @@ ALTER TABLE ONLY module_connexion.users
 
 
 --
--- Name: category category_pkey; Type: CONSTRAINT; Schema: module_forum; Owner: vde-guil
+-- Name: category category_pkey; Type: CONSTRAINT; Schema: module_forum; Owner: forumadmin
 --
 
 ALTER TABLE ONLY module_forum.category
@@ -315,7 +315,7 @@ ALTER TABLE ONLY module_forum.category
 
 
 --
--- Name: message message_pkey; Type: CONSTRAINT; Schema: module_forum; Owner: vde-guil
+-- Name: message message_pkey; Type: CONSTRAINT; Schema: module_forum; Owner: forumadmin
 --
 
 ALTER TABLE ONLY module_forum.message
@@ -323,7 +323,7 @@ ALTER TABLE ONLY module_forum.message
 
 
 --
--- Name: topic topic_pkey; Type: CONSTRAINT; Schema: module_forum; Owner: vde-guil
+-- Name: topic topic_pkey; Type: CONSTRAINT; Schema: module_forum; Owner: forumadmin
 --
 
 ALTER TABLE ONLY module_forum.topic
@@ -331,7 +331,7 @@ ALTER TABLE ONLY module_forum.topic
 
 
 --
--- Name: message message_topic_id_fkey; Type: FK CONSTRAINT; Schema: module_forum; Owner: vde-guil
+-- Name: message message_topic_id_fkey; Type: FK CONSTRAINT; Schema: module_forum; Owner: forumadmin
 --
 
 ALTER TABLE ONLY module_forum.message
@@ -339,7 +339,7 @@ ALTER TABLE ONLY module_forum.message
 
 
 --
--- Name: topic topic_category_id_fkey; Type: FK CONSTRAINT; Schema: module_forum; Owner: vde-guil
+-- Name: topic topic_category_id_fkey; Type: FK CONSTRAINT; Schema: module_forum; Owner: forumadmin
 --
 
 ALTER TABLE ONLY module_forum.topic
