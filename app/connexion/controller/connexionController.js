@@ -2,6 +2,11 @@ const connexionViews = require('./../view/connexionViews');
 const connexionDB = require('./../model/connexionDB');
 const forumController = require('../../forum/controller/forumController');
 const mainController = require('../../main/controller/mainController');
+
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
+
 const connexionController = {
 
   /*-------------- VIEWS ----------------*/
@@ -92,28 +97,39 @@ const connexionController = {
     const formPseudo = request.body.pseudo;
     const formPassword = request.body.password;
 
-    // Ici un e fonction qui récupère la requête.
+    // Ici on récupère les données user en BDD.
     connexionDB.getUser(formPseudo, formPassword, (user) => {
 
-      // On continue si DBUser existe et que les passwords concordent
+      // On continue si DBUser existe
       if (user.rowCount) {
-        // ici mettre les valeurs d'identification dans la session
-        request.session.data.logguedIn = true;
-        request.session.data.userStatus = user.rows[0].userStatus;
-        response.info = 'La connexion c bon'
-        response.render('index', {
-          session: request.session,
-          info: response.info
+
+        // Ici on compare le mdp hashé en BDD avec celui saisi dans le formulaire
+        bcrypt.compare(formPassword, user.hashPassword, (err, result) => { // Après c'est callback
+
+          if (err) {
+
+            console.log('erreur dans bcrypt compare :', err)
+            response.info = 'Il y a eu une erreur, merci de réessayer';
+            connexionViews.view(request, response);
+
+          } else {
+
+            // ici mettre les valeurs d'identification dans la session
+            request.session.data.logguedIn = true;
+            request.session.data.userStatus = user.rows[0].userStatus;
+            request.session.data.userId = user.rows[0].id;
+            response.info = 'La connexion c bon'
+            connexionViews.view(request, response);
+          }
         });
 
       } else {
+
         response.info = 'La base ne renvoie rien';
-        response.render('stdLogin', {
-          session: request.session,
-          info: response.info
-        });
+        connexionViews.view(request, response);
+
       }
-    });
+    })
   },
 
   /**
@@ -130,26 +146,21 @@ const connexionController = {
     // Check empty form
     if (formPseudo === '' || formPassword_1 === '' || formEmail_1 === '') {
 
-      response.render('createAccount', {
-        info: 'Les champs sont mal remplis',
-        loggedIn: request.session.loggedIn,
-      });
+      response.info = 'Les champs sont mal remplis';
+      connexionViews.view(request, response);
+
 
     } else {
 
       if (formPassword_1 !== formPassword_2) { // Passwords check
 
-        response.render('createAccount', {
-          info: 'Les mots de passe ne sont pas identiques',
-          loggedIn: request.session.loggedIn,
-        });
+        response.info = 'Les mots de passe ne sont pas identiques';
+        connexionViews.view(request, response);
 
       } else if (formEmail_1 !== formEmail_2) { // Emails check
 
-        response.render('createAccount', {
-          info: 'Les emails ne sont pas identiques',
-          loggedIn: request.session.loggedIn,
-        });
+        response.info = 'Les emails ne sont pas identiques';
+        connexionViews.view(request, response);
 
       } else { // Check if Pseudo exists in DB
 
@@ -157,22 +168,32 @@ const connexionController = {
 
           if (!user.rowCount) { // If pseudo doesn't exist
 
-            // Ici function avec callback pour l'insertion du profil
-            connexionDB.insertProfil(formPseudo, formPassword_1, formEmail_1, () => {
+            // Ici on hash le password avant le stockage en BDD
+            bcrypt.hash(formPseudo, saltRounds, function(err, hash) {
 
-              // Le render car tout est bon
-              response.render('stdLogin', {
-                info: 'Et maintenant on peut se connecter',
-                loggedIn: request.session.loggedIn,
+              // Ici function avec callback pour l'insertion du profil
+              connexionDB.insertProfil(formPseudo, hash, formEmail_1, (err, res) => {
 
+                if (error === null) {
+
+                  // Ici on renvoi vers le formulaire de connexion standard
+                  request.params.pass = 'stdLogin';
+                  response.info = 'Et maintenant on peut se connecter';
+                  connexionViews.view(request, response);
+
+                } else {
+                  console.log('error de la query insertProfil: ', error);
+                  response.info = 'Erreur, le mot de passe n\'a pas été enregistré dans la base';
+                  connexionViews.view(request, response);
+                }
               });
             })
+
           } else {
             // le pseudo est déjà pris:
-            response.render('createAccount', {
-              info: 'Le pseudo est déjà utilisé, il faut en choisir un autre',
-              loggedIn: request.session.loggedIn,
-            });
+            response.info = 'Le pseudo est déjà utilisé, il faut en choisir un autre';
+            connexionViews.view(request, response);
+
           }
         })
       }
@@ -210,18 +231,17 @@ const connexionController = {
               console.log('results de insertDefaultPassword:', results);
               // Ici envoyer un email avec ce mot de passe bidon
 
-              response.render('lostPass', {
-                info: "C'est good, on a mis 'gpasdcerveau' comme mot de passe !",
-                loggedIn: request.session.loggedIn,
-              });
+              response.info = "C'est good, on a mis 'gpasdcerveau' comme mot de passe !";
+              connexionViews.view(request, response);
+
             }
           })
 
         } else {
-          response.render('lostPass', {
-            info: 'Cet email qu\'il n\'existe en DB',
-            loggedIn: request.session.loggedIn,
-          });
+
+          response.info = 'Cet email qu\'il n\'existe en DB';
+          connexionViews.view(request, response);
+
         }
       }
     })
@@ -231,9 +251,8 @@ const connexionController = {
    * Supprime un user de la BDD
    */
   deleteUserControl: (request, response) => {
-    const userId = request.body.id;
 
-    connexionDB.deleteUser(userId, (error, results) => {
+    connexionDB.deleteUser(request.body.id, (error, results) => {
 
       if (error) {
 
@@ -243,10 +262,9 @@ const connexionController = {
       } else {
         console.log('results de deleteUser:', results);
 
-        response.render('deleteUser', {
-          info: "C'est good, il est plus dans la base",
-          loggedIn: request.session.loggedIn,
-        });
+        response.info = "C'est good, il est plus dans la base";
+        connexionViews.view(request, response);
+
       }
     })
   }

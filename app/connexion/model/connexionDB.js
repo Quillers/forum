@@ -50,19 +50,7 @@ const connexionDB = {
     const query = `INSERT INTO module_connexion.users (pseudo, password, email)
     VALUES ('${pseudo}', '${password}', '${email}');`;
 
-    try {
-      client.query(query, (error, result) => {
-        if (error === null) {
-
-          callback()
-
-        } else {
-          console.log('error de la query insertProfil: ', error);
-        }
-      });
-    } catch (error) {
-      console.log('error du bloc try insertProfil: ', error);
-    }
+    client.query(query, callback)
   },
 
   isEmailInDB: (email, callback) => {
