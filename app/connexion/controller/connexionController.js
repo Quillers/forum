@@ -28,7 +28,6 @@ const connexionController = {
   selectPOST: (request, response) => {
     // Ici récupérer :pass et envoyer la suite en fonction, faire un switch
     const pass = request.params.pass;
-    console.log('etape 0', pass);
 
     switch (pass) {
       case 'stdLogin':
@@ -97,6 +96,7 @@ const connexionController = {
     const formPseudo = request.body.pseudo;
     const formPassword = request.body.password;
 
+<<<<<<< HEAD
     // Ici on récupère les données user en BDD.
     connexionDB.getUser(formPseudo, formPassword, (user) => {
 
@@ -128,6 +128,34 @@ const connexionController = {
         response.info = 'La base ne renvoie rien';
         connexionViews.view(request, response);
 
+=======
+    // Ici un e fonction qui récupère la requête.
+    connexionDB.getUser(formPseudo, formPassword, (error, user) => {
+
+      if (error) {
+        response.info = 'erreur dans la console'
+
+        connexionViews.view(request, response)
+        console.log('error de la query getUser : ', error);
+
+      } else {
+
+        // On continue si DBUser existe et que les passwords concordent
+        if (user.rowCount) {
+          // ici mettre les valeurs d'identification dans la session
+          request.session.data.logguedIn = true;
+          request.session.data.userStatus = user.rows[0].userStatus;
+          response.info = 'La connexion c bon'
+
+          connexionViews.view(request, response);
+
+        } else {
+          response.info = 'La base ne renvoie rien';
+
+          connexionViews.view(request, response);
+
+        }
+>>>>>>> main
       }
     })
   },
@@ -260,7 +288,6 @@ const connexionController = {
         response.redirect('/');
 
       } else {
-        console.log('results de deleteUser:', results);
 
         response.info = "C'est good, il est plus dans la base";
         connexionViews.view(request, response);

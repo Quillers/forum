@@ -1,12 +1,11 @@
-
 const forumDB = require('../model/forumDB');
 const forumView = require('../view/forumView');
 
 const forumController = {
 
   /*
-  ** GET
-  */
+   ** GET
+   */
 
   //code associe a la route /categories
 
@@ -81,7 +80,7 @@ const forumController = {
     if (isNaN(topicId)) {
       //TODO we need to implement a middleware for the 404 then we use the code
       next();
-      return ;
+      return;
       //response.status(404).send(`404 NOT FOUND: no such topic exists with id = ${request.params.topicId}`);
     }
 
@@ -123,8 +122,8 @@ const forumController = {
   },
 
   /*
-  ** POST
-  */
+   ** POST
+   */
 
   // code associe a la route /topics/:categoryName/post
 
