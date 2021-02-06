@@ -11,15 +11,7 @@ const connexionDB = {
     AND password = '${password}';`;
 
     try {
-      client.query(query, (error, results) => {
-        if (error === null) {
-
-          callback(results);
-
-        } else {
-          console.log('error de la query getUser : ', error);
-        }
-      });
+      client.query(query, callback)
     } catch (error) {
       console.log('error du bloc try getUser : ', error);
     }

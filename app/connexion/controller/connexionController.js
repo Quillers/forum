@@ -23,7 +23,6 @@ const connexionController = {
   selectPOST: (request, response) => {
     // Ici récupérer :pass et envoyer la suite en fonction, faire un switch
     const pass = request.params.pass;
-    console.log('etape 0', pass);
 
     switch (pass) {
       case 'stdLogin':
@@ -93,25 +92,31 @@ const connexionController = {
     const formPassword = request.body.password;
 
     // Ici un e fonction qui récupère la requête.
-    connexionDB.getUser(formPseudo, formPassword, (user) => {
+    connexionDB.getUser(formPseudo, formPassword, (error, user) => {
 
-      // On continue si DBUser existe et que les passwords concordent
-      if (user.rowCount) {
-        // ici mettre les valeurs d'identification dans la session
-        request.session.data.logguedIn = true;
-        request.session.data.userStatus = user.rows[0].userStatus;
-        response.info = 'La connexion c bon'
-        response.render('index', {
-          session: request.session,
-          info: response.info
-        });
+      if (error) {
+        response.info = 'erreur dans la console'
+
+        connexionViews.view(request, response)
+        console.log('error de la query getUser : ', error);
 
       } else {
-        response.info = 'La base ne renvoie rien';
-        response.render('stdLogin', {
-          session: request.session,
-          info: response.info
-        });
+
+        // On continue si DBUser existe et que les passwords concordent
+        if (user.rowCount) {
+          // ici mettre les valeurs d'identification dans la session
+          request.session.data.logguedIn = true;
+          request.session.data.userStatus = user.rows[0].userStatus;
+          response.info = 'La connexion c bon'
+
+          connexionViews.view(request, response);
+
+        } else {
+          response.info = 'La base ne renvoie rien';
+
+          connexionViews.view(request, response);
+
+        }
       }
     });
   },
@@ -241,7 +246,6 @@ const connexionController = {
         response.redirect('/');
 
       } else {
-        console.log('results de deleteUser:', results);
 
         response.render('deleteUser', {
           info: "C'est good, il est plus dans la base",
