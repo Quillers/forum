@@ -1,36 +1,55 @@
 html {
-    font-family: 'Domine', serif;
+  font-family: 'Domine', serif;
+  
 }
 
 :root {
-    --color-light: rgb(255,253,249) ;
-    --color-verylightblue: rgb(239,248,250);
-    --color-lightblue: #D9F8FF;
-    --color-mediumblue: #5267B0;
-    --color-darkblue: #4D5497;
-    --color-yellow: rgb(255, 202,65);
-    --color-bubblegumpink : #EA8C8C;
-    --color-grey: rgb(130,130,130);
-    
+  
+  --color-light: rgb(255, 253, 249);
+  --color-verylightblue: rgb(239, 248, 250);
+  --color-lightblue: #D9F8FF;
+  --color-mediumblue: #5267B0;
+  --color-darkblue: #4D5497;
+  --color-yellow: rgb(255, 202, 65);
+  --color-bubblegumpink: #EA8C8C;
+  --color-grey: rgb(130, 130, 130);
+
 }
 
+/*---------------------------------------------------------*/
+/*------------------ HEADER -------------------------------*/
+/*---------------------------------------------------------*/
+img {
+  max-width: 400px;
+}
 .frontPage {
-    &__header {
-        background-color: var(--color-verylightblue);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 10px;
 
-         &__logo {
-           color: var(--color-darkblue);
-           font-weight: bold;
-           font-size: 2rem;
-           font-family: 'Suez One', serif;
+  &__header {
+    position: relative;
+    background-color: var(--color-verylightblue);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
 
-        }
+    &__logo {
+      color: var(--color-darkblue);
+      font-size: 2rem;
+      
+      & a>h1 {
+      font-family: 'Suez One', serif;
+      font-size: 47px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 61px;
+      letter-spacing: -0.095em;
+      text-align: left;
+        
+      }
+    }
+
         &__nav {
-            width: 50%;
+            width: 60%;
             color: var(--color-mediumblue);
             display: flex;
             justify-content: space-between;
@@ -40,14 +59,69 @@ html {
                 display: flex;
                 
                 &__link {
+                    font-family: 'PT Mono', serif;
                     padding: 10px;
+                    margin-right: 3vw;
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 25px;
+                    line-height: 28px;
                 }
             }
             
-        }
         &__loginButton {
-            
+          font-family: 'PT Mono', serif;
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 22px;
+          letter-spacing: 0em;
+          text-align: left;
+          border: 3px solid #4D5497;
+          box-sizing: border-box;
+          border-radius: 2px;
+          padding: 10px;
+        }
+      }
+    }
+
+    &__container {
+
+        margin: 10vh;
+
+        &__presentation {
+            display:flex;
+            justify-content: space-evenly;
+            align-items: center;
+            width: 90vw;
+            margin-bottom: 25vh;
+
+            &__text {
+                max-width: 25vw;
+                color: var(--color-mediumblue);
+                font-style: normal;
+                font-weight: bold;
+                font-size: 74px;
+                line-height: 84px;
+                letter-spacing: -0.06em;
+            }
         }
     }
-}
+  }
 
+  .footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background-color: var(--color-darkblue);
+    display: flex;
+    align-items: center;
+    
+    &__devButton {
+      padding: 8px;
+      margin: 10px;
+      background-color: var(--color-bubblegumpink);
+      color: -var(--color-darkblue);
+    }
+  }
