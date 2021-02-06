@@ -24,6 +24,7 @@ html {
   color: var(--color-darkblue);
   font-weight: bold;
   font-size: 2rem;
+  font-family: "Suez One", serif;
 }
 .frontPage__header__nav {
   width: 50%;
