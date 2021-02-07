@@ -1,5 +1,5 @@
 :root {
-  
+
   --color-light: rgb(255, 253, 249);
   --color-verylightblue: rgb(239, 248, 250);
   --color-lightblue: #D9F8FF;
@@ -20,7 +20,7 @@ a {
     display: flex;
     justify-content: center;
     width: 70vw;
-    margin-top: 10vw;
+    margin-top: 4vw;
   }
 
   &__form {
@@ -29,11 +29,11 @@ a {
     align-items: flex-start;
 
     &__item {
-      padding: 1vw;
-      margin: 1vw;
+      padding: 0.5vw;
+      margin: 0.5vw;
     }
   }
-  
+
   &__infoDev {
     padding: 10px;
     position: fixed;
@@ -42,6 +42,7 @@ a {
     color: var(--color-lightblue);
     font-weight: bold;
   }
+
   &__item {
     margin: 5px;
   }

@@ -10,7 +10,7 @@ const mainController = {
    * Set the session' infos
    */
   checkSession: function(request, response, next) {
-    
+
     if (!request.session.data) {
 
       const data = {
@@ -26,8 +26,11 @@ const mainController = {
 
   sessionDisconnect: (request, response, next) => {
 
-    request.session.data.logguedIn = false;
-    request.session.data.userStatus = 'Visitor';
+    request.session.data = {
+      logguedIn: false,
+      userStatus: 'Visiteur',
+      userId: null
+    };
 
     response.redirect('/');
   },

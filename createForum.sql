@@ -105,11 +105,7 @@ ALTER TABLE ONLY forum.message ALTER COLUMN id SET DEFAULT nextval('forum.messag
 ALTER TABLE ONLY forum.topic ALTER COLUMN id SET DEFAULT nextval('forum.topic_id_seq'::regclass);
 
 INSERT INTO forum.users (pseudo, password, email, status) VALUES
-('Julien',  'Bob', 'jupellin39@gmail.com',   'dev'),
-('Alice',	'quiller',	'',  'dev'),
-('Valentin',    'quiller',	'',  'dev'),
-('Camille', 'quiller', '' ,'dev'),
-('Flo', 'quiller',	'' , 'dev');
+('Julien',  '$2b$10$EUaudgeyxHm8Tl0PwEQxi.fGH.8BXR8J3aLyMCZfsDqoIqsdWAeby', 'jupellin39@gmail.com',   'dev');
 
 INSERT INTO forum.category ("name") VALUES
 ('animals'),
