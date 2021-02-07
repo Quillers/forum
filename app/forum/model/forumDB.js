@@ -13,6 +13,7 @@ const forumDB = {
 
         client.query(query, [categoryName], callback);
     },
+
     getTopicsByCategoryId: (categoryId, callback) => {
         const query = `SELECT * from module_forum.topic WHERE "category_id"=$1`;
 
