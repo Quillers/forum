@@ -1,10 +1,19 @@
 <%- include("partials/header.ejs") %>
 
-<ul>
+<h1 class="categories__main__title">Explore all topics</h1>
+
+<main class="categories__main__container">
     <% categories.forEach(category => { %>
-        <li><a href="/categories/<%=  category.name %>"><%= category.name %> </a></li>
+        
+            <article class="categories__box">
+                    <a href="/categories/<%=category.name%>"><img class="categories__box__image" src="/assets/browse/<%= category.name %>.png" alt="cartoon of a <%=category.name%>"></a>
+                    <div class="categories__box__title__container">
+                    <a href="/categories/<%=category.name%>"><h2 class="categories__box__title"> <%=category.name%> </h2></a>
+                    </div>
+                
+                </article>
  
     <% }); %>
- </ul>
+</main>
 
 <%- include("partials/footer.ejs") %>
