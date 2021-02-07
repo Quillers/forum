@@ -17,11 +17,10 @@ const forumController = {
         // error first implementation checking for server errors
         response.status(500).res("getcategories error: " + error.stack);
       } else {
-
         forumView.categories(response, {
           categories: results.rows,
-          loggedIn: request.session.loggedIn,
-          info: request.session.info,
+          session: request.session,
+          info: response.info,
         });
       }
     });
@@ -61,8 +60,8 @@ const forumController = {
               forumView.category(response, {
                 topics: topics,
                 categoryName,
-                loggedIn: request.session.loggedIn,
-                info: request.session.info,
+                session: request.session,
+                info: response.info,
               });
             }
           });
@@ -81,7 +80,7 @@ const forumController = {
     if (isNaN(topicId)) {
       //TODO we need to implement a middleware for the 404 then we use the code
       next();
-      return ;
+      return;
       //response.status(404).send(`404 NOT FOUND: no such topic exists with id = ${request.params.topicId}`);
     }
 
@@ -111,8 +110,8 @@ const forumController = {
                 topic: currentTopic,
                 messages,
                 postUrl: request.url + '/post',
-                loggedIn: request.session.loggedIn,
-                info: request.session.info,
+                session: request.session,
+                info: response.info,
               });
             }
           });
