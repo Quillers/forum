@@ -13,9 +13,43 @@ const profileDB = {
         client.query(query, callback);
     },
 
+    checkUserPseudo: (pseudo, callback) => {
+        const query = `SELECT * FROM module_connexion.users WHERE pseudo='${pseudo}';`;
+
+        try {
+        client.query(query, (error, results) => {
+            if (error === null) {
+            //...
+            callback(results)
+
+            } else {
+            console.log('error de la query : ', error);
+            }
+        });
+        } catch (error) {
+        console.log('error du bloc try : ', error);
+        }
+    },
+
     updateUserPseudo: (id, newPseudo, callback) => {
         
         const userID = parseInt(id);
+        const query = `UPDATE module_connexion.users SET pseudo = '${newPseudo}' WHERE id = ${userID};`;
+
+    try {
+      client.query(query, (error, result) => {
+        if (error === null) {
+
+          callback();
+
+        } else {
+          console.log('error de la query update: ', error);
+        }
+      });
+    } catch (error) {
+      console.log('error du bloc try updatepseudo: ', error);
+    }
+  },
         
         
     }
