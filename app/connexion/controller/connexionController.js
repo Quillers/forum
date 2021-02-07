@@ -97,13 +97,18 @@ const connexionController = {
     const formPassword = request.body.password;
 
     // Ici on récupère les données user en BDD.
-    connexionDB.getUser(formPseudo, formPassword, (user) => {
+    connexionDB.getUser(formPseudo, formPassword, (err, user) => {
 
+      if (err) {
+        console.log('erreur dans connexionDB.getUser :', err)
+        response.info = 'Il y a eu une erreur, merci de réessayer';
+        connexionViews.view(request, response);
+      }
       // On continue si DBUser existe
       if (user.rowCount) {
 
         // Ici on compare le mdp hashé en BDD avec celui saisi dans le formulaire
-        bcrypt.compare(formPassword, user.hashPassword, (err, result) => { // Après c'est callback
+        bcrypt.compare(formPassword, user.hashPassword, (err, boolean) => { // Après c'est callback
 
           if (err) {
 
@@ -111,13 +116,18 @@ const connexionController = {
             response.info = 'Il y a eu une erreur, merci de réessayer';
             connexionViews.view(request, response);
 
-          } else {
+          } else if (boolean) {
 
             // ici mettre les valeurs d'identification dans la session
             request.session.data.logguedIn = true;
             request.session.data.userStatus = user.rows[0].userStatus;
             request.session.data.userId = user.rows[0].id;
             response.info = 'La connexion c bon'
+            connexionViews.view(request, response);
+
+          } else {
+            request.session.data.userId = user.rows[0].id;
+            response.info = 'Les mots de passe ne correspondent pas';
             connexionViews.view(request, response);
           }
         });

@@ -14,7 +14,12 @@ const forumController = {
     forumDB.getCategories((err, results) => {
       if (err) {
         // error first implementation checking for server errors
-        response.status(500).res("getcategories error: " + error.stack);
+        // response.status(500).res("getcategories error: " + error.stack);
+        forumView.categories(response, {
+          categories: [],
+          session: request.session,
+          info: "getcategories error: " + err.stack,
+        });
       } else {
 
         forumView.categories(response, {

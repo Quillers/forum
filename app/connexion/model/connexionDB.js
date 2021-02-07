@@ -6,7 +6,7 @@ const connexionDB = {
 
   getUser: function(pseudo, password, callback) {
 
-    const query = `SELECT * FROM module_connexion.users 
+    const query = `SELECT * FROM users 
     WHERE pseudo = '${pseudo}'
     AND password = '${password}';`;
 
@@ -19,7 +19,7 @@ const connexionDB = {
 
   getPseudo: function(pseudo, callback) {
 
-    const query = `SELECT * FROM module_connexion.users 
+    const query = `SELECT * FROM users 
     WHERE pseudo='${pseudo}';`;
 
     try {
@@ -37,24 +37,24 @@ const connexionDB = {
     }
   },
 
-  insertProfil: function(pseudo, password, email, callback) {
+  insertProfil: function(pseudo, hashedPass, email, callback) {
 
-    const query = `INSERT INTO module_connexion.users (pseudo, password, email)
-    VALUES ('${pseudo}', '${password}', '${email}');`;
+    const query = `INSERT INTO users (pseudo, hashedPass, email)
+    VALUES ('${pseudo}', '${hashedPass}', '${email}');`;
 
     client.query(query, callback)
   },
 
   isEmailInDB: (email, callback) => {
 
-    const query = `SELECT * FROM module_connexion.users WHERE email = '${email}';`;
+    const query = `SELECT * FROM users WHERE email = '${email}';`;
 
     client.query(query, callback);
   },
 
   insertDefaultPassword: (id, callback) => {
 
-    const query = `UPDATE module_connexion.users
+    const query = `UPDATE users
     SET password = 'gpasdcerveau'
     WHERE id = ${id};`
 
@@ -63,7 +63,7 @@ const connexionDB = {
 
   deleteUser: (id, callback) => {
 
-    const query = `DELETE FROM module_connexion.users
+    const query = `DELETE FROM users
     WHERE id = ${id};`
 
     client.query(query, callback);
