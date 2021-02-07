@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Domine:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Suez+One&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/reset.css" />
   <link rel="stylesheet" href="/css/style.css" />
@@ -44,16 +45,16 @@
       <ul class="frontPage__header__nav__links">
         <% if (!session.data.logguedIn) {%>
 
-        <li class="frontPage__header__nav__links__link"><a href="/connexion/stdLogin" >
-            Sign in
+        <li class="frontPage__header__nav__loginButton"><a href="/connexion/stdLogin" >
+            Sign/in
           </a></li>
 
         <% } %>
 
         <% if (session.data.logguedIn) { %>
 
-        <li class="frontPage__header__nav__links__link"><a href="/connexion/disconnect">
-            Sign out</a></li>
+        <li class="frontPage__header__nav__loginButton"><a href="/connexion/disconnect">
+            Sign/out</a></li>
 
         <% } %>
         <li><a href="/categories"> Categories </a></li>
@@ -66,9 +67,11 @@
   </header>
 
   <!-- Utiliser en dev pour controler les valeurs des variables lièes à la session -->
-  <div class="connexion__loggedIn">session.data.logguedIn : <%= session.data.logguedIn %></div>
-  <div class="connexion__userStatus">session.data.userStatus : <%= session.data.userStatus %></div>
-  <div class="connexion__info">response.info :
+  
+<div class="connexion__infoDev" id="infoDev">
+  <div class="connexion__loggedIn connexion__item">session.data.logguedIn : <%= session.data.logguedIn %></div>
+  <div class="connexion__userStatus connexion__item">session.data.userStatus : <%= session.data.userStatus %></div>
+  <div class="connexion__info  connexion__item">response.info :
     <% if (typeof info != 'undefined') {%>
     <%= info %>
     <% } else { %>
@@ -76,3 +79,5 @@
     <% } %>
   </div>
   <main>
+    
+  </div>
