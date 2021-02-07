@@ -14,7 +14,7 @@ const connexionDB = {
 
   getPseudo: function(pseudo, callback) {
 
-    const query = `SELECT * FROM forum.users 
+    const query = `SELECT * FROM users 
     WHERE pseudo='${pseudo}';`;
 
     client.query(query, callback)
@@ -22,7 +22,7 @@ const connexionDB = {
 
   insertProfil: function(pseudo, hashedPass, email, callback) {
 
-    const query = `INSERT INTO forum.users (pseudo, password, email, status)
+    const query = `INSERT INTO users (pseudo, password, email, status)
     VALUES ('${pseudo}', '${hashedPass}', '${email}', 'stdUser');`;
 
     client.query(query, callback)
@@ -30,14 +30,14 @@ const connexionDB = {
 
   isEmailInDB: (email, callback) => {
 
-    const query = `SELECT * FROM forum.users WHERE email = '${email}';`;
+    const query = `SELECT * FROM users WHERE email = '${email}';`;
 
     client.query(query, callback);
   },
 
   insertDefaultPassword: (id, callback) => {
 
-    const query = `UPDATE forum.users
+    const query = `UPDATE users
     SET password = 'gpasdcerveau'
     WHERE id = ${id};`
 
@@ -46,7 +46,7 @@ const connexionDB = {
 
   deleteUser: (id, callback) => {
 
-    const query = `DELETE FROM forum.users
+    const query = `DELETE FROM users
     WHERE id = ${id};`
 
     client.query(query, callback);

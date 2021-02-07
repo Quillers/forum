@@ -112,13 +112,13 @@ INSERT INTO forum.users (pseudo, password, email, status) VALUES
 ('Flo', 'quiller',	'' , 'dev');
 
 INSERT INTO forum.category ("name") VALUES
-("animal"),
-("arts"),
-("bdsm"),
-("cinema"),
-("sports"),
-("technology"),
-("videogames"),
+('animals'),
+('arts'),
+('bdsm'),
+('cinema'),
+('sports'),
+('technology'),
+('videogames');
 
 
 
