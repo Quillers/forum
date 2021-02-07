@@ -19,8 +19,8 @@ const forumController = {
 
         forumView.categories(response, {
           categories: results.rows,
-          loggedIn: request.session.loggedIn,
-          info: request.session.info,
+          session: request.session,
+          info: response.info,
         });
       }
     });
@@ -60,8 +60,8 @@ const forumController = {
               forumView.category(response, {
                 topics: topics,
                 categoryName,
-                loggedIn: request.session.loggedIn,
-                info: request.session.info,
+                session: request.session,
+                info: response.info,
               });
             }
           });
