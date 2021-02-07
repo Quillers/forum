@@ -13,7 +13,15 @@ html {
   --color-grey: rgb(130, 130, 130);
 }
 
+/*---------------------------------------------------------*/
+/*------------------ HEADER -------------------------------*/
+/*---------------------------------------------------------*/
+img {
+  max-width: 400px;
+}
+
 .frontPage__header {
+  position: relative;
   background-color: var(--color-verylightblue);
   display: flex;
   align-items: center;
@@ -22,11 +30,19 @@ html {
 }
 .frontPage__header__logo {
   color: var(--color-darkblue);
-  font-weight: bold;
   font-size: 2rem;
 }
+.frontPage__header__logo a > h1 {
+  font-family: "Suez One", serif;
+  font-size: 47px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 61px;
+  letter-spacing: -0.095em;
+  text-align: left;
+}
 .frontPage__header__nav {
-  width: 50%;
+  width: 60%;
   color: var(--color-mediumblue);
   display: flex;
   justify-content: space-between;
@@ -36,6 +52,59 @@ html {
   display: flex;
 }
 .frontPage__header__nav__links__link {
-  font-family: "PT Mono", monospace;
+  font-family: "PT Mono", serif;
   padding: 10px;
+  margin-right: 3vw;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 25px;
+  line-height: 28px;
+}
+.frontPage__header__nav__loginButton {
+  font-family: "PT Mono", serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+  border: 3px solid #4D5497;
+  box-sizing: border-box;
+  border-radius: 2px;
+  padding: 10px;
+}
+.frontPage__container {
+  margin: 10vh;
+}
+.frontPage__container__presentation {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 90vw;
+  margin-bottom: 25vh;
+}
+.frontPage__container__presentation__text {
+  max-width: 25vw;
+  color: var(--color-mediumblue);
+  font-style: normal;
+  font-weight: bold;
+  font-size: 74px;
+  line-height: 84px;
+  letter-spacing: -0.06em;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  background-color: var(--color-darkblue);
+  display: flex;
+  align-items: center;
+}
+.footer__devButton {
+  padding: 8px;
+  margin: 10px;
+  background-color: var(--color-bubblegumpink);
+  color: -var(--color-darkblue);
 }
