@@ -1,5 +1,6 @@
 DROP SCHEMA IF EXISTS forum CASCADE;
 
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -104,12 +105,13 @@ ALTER TABLE ONLY forum.message ALTER COLUMN id SET DEFAULT nextval('forum.messag
 
 ALTER TABLE ONLY forum.topic ALTER COLUMN id SET DEFAULT nextval('forum.topic_id_seq'::regclass);
 
-INSERT INTO forum.users (pseudo, password, email, status) VALUES
-('Julien',  'Bob', 'jupellin39@gmail.com',   'dev'),
-('Alice',	'quiller',	'',  'dev'),
-('Valentin',    'quiller',	'',  'dev'),
-('Camille', 'quiller', '' ,'dev'),
-('Flo', 'quiller',	'' , 'dev');
+INSERT INTO users (pseudo, password, email, status) VALUES
+1	Julien  Bob jupellin39@gmail.com    dev
+2	Alice	quiller	\N  dev
+3	Valentin    quiller	\N  dev
+4	Camille quiller \N  dev
+5	Flo quiller	\N  dev
+\.
 
 COPY forum.category (id, name) FROM stdin;
 1	Humanitaire
@@ -117,13 +119,11 @@ COPY forum.category (id, name) FROM stdin;
 3	Videos de chats mignons
 \.
 
-INSERT INTO forum.message (author, message_content, created_at, modified_at, topic_id) VALUES
-('Un auteur' ,  'un contenu de message',   DEFAULT, DEFAULT,	1),
-('Un 2eme auteur' ,  'un 2ème contenu de message',   DEFAULT, DEFAULT,	2),
-('Un 3ème auteur' ,  'un 3ème contenu de message',   DEFAULT, DEFAULT,	3),
-('Un 4ème auteur' ,  'un 4ème contenu de message',   DEFAULT, DEFAULT,	1),
-('Un 5ème auteur' ,  'un 5ème contenu de message',   DEFAULT, DEFAULT,	1);
-
+COPY forum.message (id, author, message_content, created_at, modified_at, topic_id) FROM stdin;
+1   Un auteur   un contenu de message   2021-01-31 00:00:00 \N	1
+2   Un 2eme auteur   un 2eme contenu de message   2021-01-31 00:00:00	\N	2
+3   Un 3eme auteur   un 3eme contenu de message   2021-01-31 00:00:00	\N	3
+\.
 
 COPY forum.topic (id, title, topic_description, author, created_at, modified_at, category_id) FROM stdin;
 1	premier topic humanitaire	blablablabla topic humanitaire	valentin	2021-01-31 00:00:00	\N	1

@@ -115,8 +115,8 @@ const forumController = {
                 topic: currentTopic,
                 messages,
                 postUrl: request.url + '/post',
-                loggedIn: request.session.loggedIn,
-                info: request.session.info,
+                session: request.session,
+                info: response.info,
               });
             }
           });

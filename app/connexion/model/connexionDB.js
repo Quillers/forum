@@ -4,17 +4,12 @@ const client = require('./../../client');
 
 const connexionDB = {
 
-  getUser: function(pseudo, password, callback) {
+  getUser: function(pseudo, callback) {
 
     const query = `SELECT * FROM users 
-    WHERE pseudo = '${pseudo}'
-    AND password = '${password}';`;
+    WHERE pseudo = '${pseudo}';`;
 
-    try {
-      client.query(query, callback)
-    } catch (error) {
-      console.log('error du bloc try getUser : ', error);
-    }
+    client.query(query, callback)
   },
 
   getPseudo: function(pseudo, callback) {
@@ -22,25 +17,13 @@ const connexionDB = {
     const query = `SELECT * FROM users 
     WHERE pseudo='${pseudo}';`;
 
-    try {
-      client.query(query, (error, results) => {
-        if (error === null) {
-          //...
-          callback(results)
-
-        } else {
-          console.log('error de la query : ', error);
-        }
-      });
-    } catch (error) {
-      console.log('error du bloc try : ', error);
-    }
+    client.query(query, callback)
   },
 
   insertProfil: function(pseudo, hashedPass, email, callback) {
 
-    const query = `INSERT INTO users (pseudo, hashedPass, email)
-    VALUES ('${pseudo}', '${hashedPass}', '${email}');`;
+    const query = `INSERT INTO users (pseudo, password, email, status)
+    VALUES ('${pseudo}', '${hashedPass}', '${email}', 'stdUser');`;
 
     client.query(query, callback)
   },

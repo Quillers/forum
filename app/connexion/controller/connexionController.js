@@ -97,46 +97,59 @@ const connexionController = {
     const formPassword = request.body.password;
 
     // Ici on récupère les données user en BDD.
-    connexionDB.getUser(formPseudo, formPassword, (err, user) => {
+    connexionDB.getUser(formPseudo, (err, user) => {
 
       if (err) {
+
         console.log('erreur dans connexionDB.getUser :', err)
         response.info = 'Il y a eu une erreur, merci de réessayer';
         connexionViews.view(request, response);
-      }
-      // On continue si DBUser existe
-      if (user.rowCount) {
-
-        // Ici on compare le mdp hashé en BDD avec celui saisi dans le formulaire
-        bcrypt.compare(formPassword, user.hashPassword, (err, boolean) => { // Après c'est callback
-
-          if (err) {
-
-            console.log('erreur dans bcrypt compare :', err)
-            response.info = 'Il y a eu une erreur, merci de réessayer';
-            connexionViews.view(request, response);
-
-          } else if (boolean) {
-
-            // ici mettre les valeurs d'identification dans la session
-            request.session.data.logguedIn = true;
-            request.session.data.userStatus = user.rows[0].userStatus;
-            request.session.data.userId = user.rows[0].id;
-            response.info = 'La connexion c bon'
-            connexionViews.view(request, response);
-
-          } else {
-            request.session.data.userId = user.rows[0].id;
-            response.info = 'Les mots de passe ne correspondent pas';
-            connexionViews.view(request, response);
-          }
-        });
 
       } else {
 
-        response.info = 'La base ne renvoie rien';
-        connexionViews.view(request, response);
+        // On continue si DBUser existe
+        if (!user.rowCount) {
 
+          console.log(user);
+          response.info = 'Il doit y avoir une erreur de saisie...';
+          connexionViews.view(request, response);
+
+        } else {
+          console.log(user.rows);
+          bcrypt.hash(request.body.password, 10, (err, hash) => {
+
+
+            // Ici on compare le mdp hashé en BDD avec celui saisi dans le formulaire
+            bcrypt.compare(request.body.password, hash, (err, same) => {
+
+              console.log('formPassword : ', formPassword);
+              console.log('same : ', same);
+              console.log('err : ', err);
+              console.log('user.rows[0].password : ', user.rows[0].password);
+
+              if (err) {
+
+                console.log('erreur dans bcrypt compare :', err)
+                response.info = 'Il y a eu une erreur, merci de réessayer';
+                connexionViews.view(request, response);
+
+              } else if (same) {
+
+                // ici mettre les valeurs d'identification dans la session
+                request.session.data.logguedIn = true;
+                request.session.data.userStatus = user.rows[0].userStatus;
+                request.session.data.userId = user.rows[0].id;
+                response.info = 'La connexion c bon'
+                connexionViews.view(request, response);
+
+              } else {
+                response.info = 'Les mots de passe ne correspondent pas';
+                connexionViews.view(request, response);
+              }
+            });
+          })
+
+        }
       }
     })
   },
@@ -173,36 +186,50 @@ const connexionController = {
 
       } else { // Check if Pseudo exists in DB
 
-        connexionDB.getPseudo(formPseudo, (user) => {
+        connexionDB.getPseudo(formPseudo, (error, user) => {
 
-          if (!user.rowCount) { // If pseudo doesn't exist
-
-            // Ici on hash le password avant le stockage en BDD
-            bcrypt.hash(formPseudo, saltRounds, function(err, hash) {
-
-              // Ici function avec callback pour l'insertion du profil
-              connexionDB.insertProfil(formPseudo, hash, formEmail_1, (err, res) => {
-
-                if (error === null) {
-
-                  // Ici on renvoi vers le formulaire de connexion standard
-                  request.params.pass = 'stdLogin';
-                  response.info = 'Et maintenant on peut se connecter';
-                  connexionViews.view(request, response);
-
-                } else {
-                  console.log('error de la query insertProfil: ', error);
-                  response.info = 'Erreur, le mot de passe n\'a pas été enregistré dans la base';
-                  connexionViews.view(request, response);
-                }
-              });
-            })
+          if (error) {
+            console.log('error de la query getPseudo : ', error);
 
           } else {
-            // le pseudo est déjà pris:
-            response.info = 'Le pseudo est déjà utilisé, il faut en choisir un autre';
-            connexionViews.view(request, response);
 
+            if (!user.rowCount) { // If pseudo doesn't exist
+
+              // Ici on hash le password avant le stockage en BDD
+              bcrypt.hash(formPseudo, saltRounds, (err, hash) => {
+
+                if (err) {
+                  console.log(err)
+
+                } else {
+                  console.log(hash)
+                  // Ici function avec callback pour l'insertion du profil
+                  connexionDB.insertProfil(formPseudo, hash, formEmail_1, (err, res) => {
+
+                    if (err) {
+                      console.log('error de la query insertProfil: ', err);
+                      console.log('result', res);
+
+                      response.info = 'Erreur, le mot de passe n\'a pas été enregistré dans la base';
+                      connexionViews.view(request, response);
+
+                    } else {
+                      // Ici on renvoi vers le formulaire de connexion standard
+                      request.params.pass = 'stdLogin';
+                      response.info = 'Et maintenant on peut se connecter';
+                      connexionViews.view(request, response);
+
+                    }
+                  });
+                }
+              })
+
+            } else {
+              // le pseudo est déjà pris:
+              response.info = 'Le pseudo est déjà utilisé, il faut en choisir un autre';
+              connexionViews.view(request, response);
+
+            }
           }
         })
       }
