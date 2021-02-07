@@ -1,12 +1,11 @@
-
 const forumDB = require('../model/forumDB');
 const forumView = require('../view/forumView');
 
 const forumController = {
 
   /*
-  ** GET
-  */
+   ** GET
+   */
 
   //code associe a la route /categories
 
@@ -15,7 +14,12 @@ const forumController = {
     forumDB.getCategories((err, results) => {
       if (err) {
         // error first implementation checking for server errors
-        response.status(500).res("getcategories error: " + error.stack);
+        // response.status(500).res("getcategories error: " + error.stack);
+        forumView.categories(response, {
+          categories: [],
+          session: request.session,
+          info: "getcategories error: " + err.stack,
+        });
       } else {
         forumView.categories(response, {
           categories: results.rows,
@@ -122,8 +126,8 @@ const forumController = {
   },
 
   /*
-  ** POST
-  */
+   ** POST
+   */
 
   // code associe a la route /topics/:categoryName/post
 

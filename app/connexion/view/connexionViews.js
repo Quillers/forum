@@ -1,6 +1,20 @@
 module.exports = {
 
-  view: (request, response) => {
+  /**
+   * Sets the views with :
+   * 
+   * request.session.data = { 
+   *   - logguedIn:  boolean,
+   *   - userStatus: string,
+   *   - userId : number,
+   * }
+   * 
+   * response.info = string
+   * 
+   * @param {Object} request 
+   * @param {Object} response 
+   */
+  view: (request, response, ) => {
     response.render(request.params.pass, {
       session: request.session,
       info: response.info
