@@ -1,10 +1,7 @@
 const connexionViews = require('./../view/connexionViews');
 const connexionDB = require('./../model/connexionDB');
-const forumController = require('../../forum/controller/forumController');
 const mainController = require('../../main/controller/mainController');
-
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
 
 
 const connexionController = {
@@ -110,45 +107,35 @@ const connexionController = {
         // On continue si DBUser existe
         if (!user.rowCount) {
 
-          console.log(user);
           response.info = 'Il doit y avoir une erreur de saisie...';
           connexionViews.view(request, response);
 
         } else {
-          console.log(user.rows);
-          bcrypt.hash(request.body.password, 10, (err, hash) => {
 
+          // https://www.npmjs.com/package/bcrypt
+          bcrypt.compare(request.body.password, user.rows[0].password, (err, same) => {
 
-            // Ici on compare le mdp hashé en BDD avec celui saisi dans le formulaire
-            bcrypt.compare(request.body.password, hash, (err, same) => {
+            if (err) {
 
-              console.log('formPassword : ', formPassword);
-              console.log('same : ', same);
-              console.log('err : ', err);
-              console.log('user.rows[0].password : ', user.rows[0].password);
+              console.log('erreur dans bcrypt hash :', err)
+              response.info = 'Il y a eu une erreur, merci de réessayer';
+              connexionViews.view(request, response);
 
-              if (err) {
+            } else if (same) {
 
-                console.log('erreur dans bcrypt compare :', err)
-                response.info = 'Il y a eu une erreur, merci de réessayer';
-                connexionViews.view(request, response);
+              // ici mettre les valeurs d'identification dans la session
+              request.session.data.logguedIn = true;
+              request.session.data.userStatus = user.rows[0].userStatus;
+              request.session.data.userId = user.rows[0].id;
+              response.info = 'La connexion c bon'
+              connexionViews.view(request, response);
 
-              } else if (same) {
+            } else {
 
-                // ici mettre les valeurs d'identification dans la session
-                request.session.data.logguedIn = true;
-                request.session.data.userStatus = user.rows[0].userStatus;
-                request.session.data.userId = user.rows[0].id;
-                response.info = 'La connexion c bon'
-                connexionViews.view(request, response);
-
-              } else {
-                response.info = 'Les mots de passe ne correspondent pas';
-                connexionViews.view(request, response);
-              }
-            });
-          })
-
+              response.info = 'Les mots de passe ne correspondent pas';
+              connexionViews.view(request, response);
+            }
+          });
         }
       }
     })
@@ -196,13 +183,12 @@ const connexionController = {
             if (!user.rowCount) { // If pseudo doesn't exist
 
               // Ici on hash le password avant le stockage en BDD
-              bcrypt.hash(formPseudo, saltRounds, (err, hash) => {
+              bcrypt.hash(formPassword_1, 10, (err, hash) => {
 
                 if (err) {
                   console.log(err)
 
                 } else {
-                  console.log(hash)
                   // Ici function avec callback pour l'insertion du profil
                   connexionDB.insertProfil(formPseudo, hash, formEmail_1, (err, res) => {
 
