@@ -8,13 +8,13 @@
            <!-- description of the thread is set as the first message -->
             <article class="message">
                <header class="message__header">
-                  <h3 class="message__author"><%= topic.topic_author %></h3>
+                  <h3 class="message__author"><%= topic.author %></h3>
                </header>
                <section class="message__main">
                   <%= topic.topic_description %>
                </section>
                <footer class="message__footer">
-                  <p>Poste le <time><%= topic.topic_created_at %></time></p>
+                  <p>Poste le <time><%= topic.created_at %></time></p>
                </footer>
             </article>
            <!-- We loop through all the messages to display them -->

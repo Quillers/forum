@@ -136,10 +136,10 @@ COPY forum.topic (id, title, topic_description, author, created_at, modified_at,
 3	premier minous	blablablabla topic humanitaire	valentin	2021-01-31 00:00:00	\N	3
 \.
 
-SELECT pg_catalog.setval('forum.users_id_seq', 5, true);
-SELECT pg_catalog.setval('forum.category_id_seq', 3, true);
-SELECT pg_catalog.setval('forum.message_id_seq', 1, false);
-SELECT pg_catalog.setval('forum.topic_id_seq', 3, true);
+SELECT pg_catalog.setval('forum.users_id_seq', 6, true);
+SELECT pg_catalog.setval('forum.category_id_seq', 8, true);
+SELECT pg_catalog.setval('forum.message_id_seq', 6, false);
+SELECT pg_catalog.setval('forum.topic_id_seq', 4, true);
 
 ALTER TABLE ONLY forum.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);

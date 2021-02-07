@@ -1,4 +1,3 @@
-const { get } = require('../../router');
 const forumDB = require('../model/forumDB');
 const forumView = require('../view/forumView');
 
@@ -61,7 +60,7 @@ const forumController = {
 
             } else {
               const topics = results.rows;
-
+              
               forumView.category(response, {
                 topics: topics,
                 categoryName,
@@ -80,7 +79,7 @@ const forumController = {
 
   getAllMessagesByTopicId: (request, response, next) => {
     const topicId = +request.params.topicId;
-
+    const catName = request.params.categoryName;
     // im expecting an int in topicId, if anything else is passed, then 404
     if (isNaN(topicId)) {
       //TODO we need to implement a middleware for the 404 then we use the code
@@ -88,29 +87,25 @@ const forumController = {
       return;
       //response.status(404).send(`404 NOT FOUND: no such topic exists with id = ${request.params.topicId}`);
     }
-
-    forumDB.getTopicById(topicId, (err, results) => {
+    //First i need to make sure the topic exists in this category
+    forumDB.checkTopicExistsInCategory(topicId, catName, (err, results) => {
       if (err) {
         // checking for server Error
         response.status(500).send(" getAllMessagesByTopicId error: " + err.stack);
-
       } else {
         const currentTopic = results.rows[0];
-        //we need to check if the topic exists and handle the 404
-        if (!currentTopic) {
-          //TODO we need to implement a middleware for the 404 then we use the code
+        if (results.rows[0] === undefined) {
           next();
-          //response.status(404).send(`404 NOT FOUND: no such topic exists with id = ${topicId}`);
         } else {
-
+          //then i need to get all the messages from this topic
           forumDB.getAllMessagesByTopicId(topicId, (err, results) => {
             if (err) {
               // checking for server Error
               response.status(500).send(" getAllMessagesByTopicId error: " + err.stack);
-
             } else {
+
               const messages = results.rows;
-              // We populate the object ejs to pass to the view then we call the method that manage the render
+
               forumView.topic(response, {
                 topic: currentTopic,
                 messages,
@@ -123,46 +118,8 @@ const forumController = {
         }
       }
     });
-
-  },
-
-  // getAllMessagesByTopicId: (request, response, next) => {
-  //   const topicId = +request.params.topicId;
-  //   const catName = request.params.categoryName;
-  //   // im expecting an int in topicId, if anything else is passed, then 404
-  //   if (isNaN(topicId)) {
-  //     //TODO we need to implement a middleware for the 404 then we use the code
-  //     next();
-  //     return;
-  //     //response.status(404).send(`404 NOT FOUND: no such topic exists with id = ${request.params.topicId}`);
-  //   }
-
-  //   forumDB.getAllMessagesByTopicIdAndCatName(topicId, catName, (err, results) => {
-  //     if (err) {
-  //       // checking for server Error
-  //       response.status(500).send(" getAllMessagesByTopicId error: " + err.stack);
-  //     } else {
-  //       const currentTopic = results.rows[0];
-  //       const messages = results.rows;
-
-  //       if (results.rows[0] === undefined) {
-  //         console.log("prout1");
-  //         next();
-  //       } else {
-  //         console.log("prout2");
-
-  //         forumView.topic(response, {
-  //           topic: currentTopic,
-  //           messages,
-  //           postUrl: request.url + '/post',
-  //           session: request.session,
-  //           info: response.info,
-  //         });
-  //       }
-  //     }
-  //   });
     
-  // },
+  },
 
   /*
    ** POST
