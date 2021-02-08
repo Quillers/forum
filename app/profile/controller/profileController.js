@@ -75,7 +75,7 @@ const profileController = {
   updatePseudo: (request, response) => {
 
     const formPseudo = request.body.pseudo;
-    const userID = request.session.data.id;
+    const userID = request.session.data.userid;
     // Initialize a variable which will contain user informations
     let userInfos;
 

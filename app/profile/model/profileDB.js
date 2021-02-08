@@ -40,7 +40,7 @@ const profileDB = {
       client.query(query, (error, result) => {
         if (error === null) {
 
-          callback();
+          callback(result);
 
         } else {
           console.log('error de la query update: ', error);
