@@ -1,0 +1,67 @@
+/*---------------------------------------------------------*/
+/*------------------ HEADER -------------------------------*/
+/*---------------------------------------------------------*/
+.header {
+  position: relative;
+  background-color: var(--color-verylightblue);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: var(--color-lightblue);
+}
+.header__logo {
+  color: var(--color-darkblue);
+  font-size: 2rem;
+}
+.header__logo a > h1 {
+  font-family: "Suez One", serif;
+  font-size: 47px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 61px;
+  letter-spacing: -0.095em;
+  text-align: left;
+}
+.header__nav {
+  width: 60%;
+  color: var(--color-mediumblue);
+  display: flex;
+  justify-content: space-between;
+}
+.header__nav__links {
+  padding: 10px;
+  display: flex;
+}
+.header__nav__links__link {
+  font-family: "PT Mono", serif;
+  padding: 10px;
+  margin-right: 3vw;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 25px;
+  line-height: 28px;
+}
+.header__nav__loginButton {
+  font-family: "PT Mono", serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+  border: 3px solid #4D5497;
+  box-sizing: border-box;
+  border-radius: 2px;
+  padding: 10px;
+}
+.header__devButton {
+  position: fixed;
+  top: 100px;
+  left: 0;
+  padding: 10px;
+  border-radius: 0 50% 50% 0;
+  background-color: var(--color-lightblue);
+  color: -var(--color-darkblue);
+  cursor: pointer;
+}

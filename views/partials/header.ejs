@@ -10,43 +10,46 @@
   <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/reset.css" />
   <!-- <link rel="stylesheet" href="/css/style.css" /> -->
-  <link rel="stylesheet" href="/css/connexion.css" />
-  <link rel="stylesheet" href="/css/homePage.css" />
   <link rel="stylesheet" href="/css/categories.css" />
+  <link rel="stylesheet" href="/css/connexion.css" />
+  <link rel="stylesheet" href="/css/footer.css" />
+  <link rel="stylesheet" href="/css/header.css" />
+  <link rel="stylesheet" href="/css/homePage.css" />
+  <link rel="stylesheet" href="/css/login.css" />
   <title>Forum</title>
 </head>
 
-<body class="frontPage">
-  <header class="frontPage__header">
+<body class="body">
+  <header class="header">
 
-    <div class="frontPage__header__logo">
-      <a href="/"><h1 id="frontPage__title">TOPIC(S)</h1></a>
+    <div class="header__logo">
+      <a href="/"><h1 id="frontPageTitle">TOPIC(S)</h1></a>
     </div>
 
 
-    <nav class="frontPage__header__nav">
+    <nav class="header__nav">
 
 
-      <ul class="frontPage__header__nav__links">
-        <li class="frontPage__header__nav__links__link"><a href="/">
+      <ul class="header__nav__links">
+        <li class="header__nav__links__link"><a href="/">
           Home
         </a></li>
 
-        <li class="frontPage__header__nav__links__link"><a href="/categories">
+        <li class="header__nav__links__link"><a href="/categories">
           Categories
         </a></li>
 
-        <li class="frontPage__header__nav__links__link"><a href="#">
+        <li class="header__nav__links__link"><a href="#">
           About
         </a></li>
 
       </ul>
 
 
-      <ul class="frontPage__header__nav__links">
+      <ul class="header__nav__links">
         <% if (!session.data.logguedIn) {%>
 
-        <li class="frontPage__header__nav__loginButton"><a href="/connexion/stdLogin" >
+        <li class="header__nav__loginButton"><a href="/connexion/stdLogin" >
             Sign/in
           </a></li>
 
@@ -54,7 +57,7 @@
 
         <% if (session.data.logguedIn) { %>
 
-        <li class="frontPage__header__nav__loginButton"><a href="/connexion/disconnect">
+        <li class="header__nav__loginButton"><a href="/connexion/disconnect">
             Sign/out</a></li>
 
         <% } %>
@@ -62,13 +65,14 @@
       </ul>
 
     </nav>
+    <div class="header__devButton" id="infoDevButton">?</div>
 
 
   </header>
 
   <!-- Utiliser en dev pour controler les valeurs des variables lièes à la session -->
 
-  <div class="connexion__infoDev --showInfo" id="infoDev">
+  <div class="connexion__infoDev" id="infoDev">
     <div class="connexion__loggedIn connexion__item">session.data.logguedIn : <%= session.data.logguedIn %></div>
     <div class="connexion__userStatus connexion__item">session.data.userStatus : <%= session.data.userStatus %></div>
     <div class="connexion__userStatus connexion__item">session.data.userId : <%= session.data.userId %></div>
