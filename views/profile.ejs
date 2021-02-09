@@ -5,7 +5,7 @@
 
 
 <div class="info">
-  <% if (info) { %>
+  <% if (typeof info !== 'undefined') { %>
     <span class="info"><%= info %></span>
   <% } %>
 </div>
@@ -17,7 +17,8 @@
       name="pseudo"
       class="connexion__form__item"
       id="pseudo"
-      placeholder="<%= userInfo.pseudo %>"
+      value="<%= userInfo.pseudo %>"
+      disabled
     />
   </form>
 </div>

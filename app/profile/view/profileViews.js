@@ -3,7 +3,7 @@ const profileViews = {
         response.render('profile', {
           session: request.session,
           info: response.info,
-          userInfo: response.userInfo,
+          userInfos: request.session.data.userInfos,
         });
       },
     

@@ -98,9 +98,10 @@ const connexionController = {
       // On continue si DBUser existe et que les passwords concordent
       if (user.rowCount) {
         // ici mettre les valeurs d'identification dans la session
-        request.session.data.logguedIn = true;
-        request.session.data.userStatus = user.rows[0].userStatus;
-        response.info = 'La connexion c bon'
+        request.session.data.userInfos = user.rows[0];
+        // request.session.data.logguedIn = true;
+        // request.session.data.userStatus = user.rows[0].userStatus;
+        response.info = 'La connexion c bon';
         response.render('index', {
           session: request.session,
           info: response.info
