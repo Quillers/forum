@@ -30,8 +30,8 @@ const connexionDB = {
 
     const query = {
       text: `INSERT INTO users (pseudo, password, email, status)
-    VALUES ('${pseudo}', '${hashedPass}', '${email}', 'stdUser');`,
-      values: [pseudo, hashedPass, email, 'stdUser']
+    VALUES ($1, $2, $3, 'stdUser');`,
+      values: [pseudo, hashedPass, email]
     };
 
     client.query(query, callback)

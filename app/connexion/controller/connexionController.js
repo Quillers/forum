@@ -125,8 +125,8 @@ const connexionController = {
 
               // ici mettre les valeurs d'identification dans la session
               request.session.data.logguedIn = true;
-              request.session.data.userStatus = user.rows[0].userStatus;
-              request.session.data.userId = user.rows[0].id;
+              request.session.data.userInfos = user.rows[0];
+              
               response.info = 'La connexion c bon'
               connexionViews.view(request, response);
 

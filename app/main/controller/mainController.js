@@ -12,10 +12,9 @@ const mainController = {
   checkSession: function(request, response, next) {
 
     if (!request.session.data) {
-
       const data = {
         logguedIn: false,
-        userStatus: 'Visiteur',
+        userInfos: null
       }
 
       request.session.data = data;
@@ -28,8 +27,7 @@ const mainController = {
 
     request.session.data = {
       logguedIn: false,
-      userStatus: 'Visiteur',
-      userId: null
+      userInfos: null
     };
 
     response.redirect('/');

@@ -74,8 +74,13 @@
 
   <div class="connexion__infoDev" id="infoDev">
     <div class="connexion__loggedIn connexion__item">session.data.logguedIn : <%= session.data.logguedIn %></div>
-    <div class="connexion__userStatus connexion__item">session.data.userStatus : <%= session.data.userStatus %></div>
-    <div class="connexion__userStatus connexion__item">session.data.userId : <%= session.data.userId %></div>
+    
+    <% if (session.data.userInfos !== null) { %>
+    <div class="connexion__userStatus connexion__item">session.data.userInfos.status : <%= session.data.userInfos.status %></div>
+    <div class="connexion__userStatus connexion__item">session.data.userInfos.id : <%= session.data.userInfos.id %></div>
+    <div class="connexion__userStatus connexion__item">session.data.userInfos.pseudo : <%= session.data.userInfos.pseudo %></div>
+    <% } %>
+    
     <div class="connexion__info  connexion__item">response.info :
       <% if (typeof info != 'undefined') {%>
       <%= info %>
