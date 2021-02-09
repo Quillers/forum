@@ -51,4 +51,4 @@ app.use(router);
 app.use(connexionViews.page404);
 /*------------------------------------------*/
 
-app.listen(process.env.PORT, console.log('server started at html://localhost:', process.env.PORT));
+app.listen(process.env.PORT, console.log('server started at http://localhost:', process.env.PORT));
