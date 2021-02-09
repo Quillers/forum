@@ -3,19 +3,40 @@
 <!-- On amis les catégories dans le header, reste à
    mettre les sujets principaux dans l'accueil ? -->
 
-
-</div>
-<div class="connexion__formContainer">
-  <form action="/postProfile/pseudo" method="POST" class="connexion__form">
-    <label for="pseudo" class="connexion__form__item">Pseudo</label>
+<div class="profile__formContainer">
+  <form action="/postProfile/pseudo" method="POST" class="profile__form">
+    <label for="pseudo" class="profile__form__item">Pseudo</label>
     <input
       type="text"
       name="pseudo"
-      class="connexion__form__item"
+      class="profile__form__item"
       id="pseudo"
-      value="<%= userInfos.pseudo %>"
-      disabled
+      placeholder="<%= userInfos.pseudo %>"
     />
+    <button type="submit" class="profile__form__button">Modifier mon pseudo</button>
+  </form>
+</div>
+
+<div class="profile__formContainer">
+  <form action="/postProfile/password" method="POST" class="profile__form">
+    <label for="password1" class="profile__form__item">Mot de passe</label>
+    <input
+      type="password"
+      name="password1"
+      class="profile__form__item"
+      id="password1"
+      placeholder="Nouveau mot de passe"
+    />
+
+    <label for="password2" class="profile__form__item">Confirmer le mot de passe</label>
+    <input
+      type="password"
+      name="password2"
+      class="profile__form__item"
+      id="password2"
+      placeholder="Répétez le mot de passe"
+    />
+    <button type="submit" class="profile__form__button">Modifier mon mot de passe</button>
   </form>
 </div>
 

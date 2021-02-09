@@ -38,7 +38,7 @@ const profileDB = {
         const userID = parseInt(id);
         const query = {
           text: `UPDATE users SET pseudo = $2 WHERE id = $1;`,
-          values: [id, newPseudo]
+          values: [userID, newPseudo]
         };
 
       client.query(query, (error, result) => {
@@ -50,6 +50,24 @@ const profileDB = {
           console.log('error de la query update: ', error);
         }
       });
+  },
+
+  updateUserPassword: (id, newPassword, callback) => {
+    const userID = parseInt(id);
+    const query = {
+      text: `UPDATE users SET password = $2 WHERE id = $1;`,
+      values: [userID, newPassword]
+    }
+
+    client.query(query, (error, result) => {
+      if (error === null) {
+
+        callback(result);
+      } else {
+        console.error('error de la query update: ', error);
+      }
+    });
+
   },
 }
 
