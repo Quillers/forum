@@ -8,7 +8,7 @@ const connexionController = {
 
   /*-------------- VIEWS ----------------*/
 
-  stdConnexion: (request, response) => { connexionViews.view(request, response); },
+  stdConnexion: (request, response) => { connexionViews.view(request, response)},
   createAccount: (request, response) => { connexionViews.view(request, response); },
   lostPass: (request, response) => { connexionViews.view(request, response); },
   deleteUser: (request, response) => { connexionViews.view(request, response); },
