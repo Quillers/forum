@@ -47,7 +47,7 @@ const profileDB = {
           callback(result);
 
         } else {
-          console.log('error de la query update: ', error);
+          console.log('error de la query update pseudo: ', error);
         }
       });
   },
@@ -64,11 +64,30 @@ const profileDB = {
 
         callback(result);
       } else {
-        console.error('error de la query update: ', error);
+        console.error('error de la query update password: ', error);
       }
     });
 
   },
+
+  updateUserEmail: (id, newMail, callback) => {
+    const userID = parseInt(id);
+    const query = {
+      text: `UPDATE users SET email = $2 WHERE id = $1;`,
+      values: [userID, newMail]
+    }
+
+    client.query(query, (error, result) => {
+      if (error === null) {
+        
+        callback(result);
+
+      } else {
+        console.error('error de la query update mail:', error);
+      }
+    });
+  },
+  
 }
 
 

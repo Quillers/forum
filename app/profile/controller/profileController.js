@@ -42,9 +42,9 @@ const profileController = {
       case 'password':
         formController.controlFormPassword(request, response);
         break;
-      // case 'email':
-      //   profileController.updateEmail(request, response);
-      //   break;
+      case 'email':
+        formController.controlFormEmail(request, response);
+        break;
       // case 'delete':
       //   profileController.deleteUserControl(request, response);
       //   break;

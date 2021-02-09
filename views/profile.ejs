@@ -40,4 +40,27 @@
   </form>
 </div>
 
+<div class="profile__formContainer">
+  <form action="/postProfile/email" method="POST" class="profile__form">
+    <label for="email1" class="profile__form__item">E-mail</label>
+    <input
+      type="email"
+      name="email1"
+      class="profile__form__item"
+      id="email1"
+      placeholder="<%= userInfos.email %>"
+    />
+
+    <label for="email2" class="profile__form__item">Confirmer le nouvel e-mail</label>
+    <input
+      type="email"
+      name="email2"
+      class="profile__form__item"
+      id="email2"
+      placeholder="Répétez l'e-mail"
+    />
+    <button type="submit" class="profile__form__button">Modifier mon e-mail</button>
+  </form>
+</div>
+
 <%- include("partials/footer.ejs") %>
