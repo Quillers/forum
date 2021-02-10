@@ -1,0 +1,32 @@
+.frontPage__container {
+  margin: 10vh;
+}
+.frontPage__container__presentation {
+  display: flex;
+  justify-content: space-around;
+  width: 90vw;
+}
+.frontPage__container__presentation__bubble {
+  max-width: 50vw;
+  width: 50vw;
+  max-height: 80vh;
+  height: 80vh;
+  background-image: url(../assets/home/formes_geomtriques/Ellipse-2.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: flex;
+  justify-content: center;
+}
+.frontPage__container__presentation__text {
+  max-width: 25vw;
+  width: 25vw;
+  color: var(--color-mediumblue);
+  font-style: normal;
+  font-weight: bold;
+  font-size: 74px;
+  line-height: 84px;
+  letter-spacing: -0.06em;
+  text-align: center;
+  padding-top: 6%;
+}
