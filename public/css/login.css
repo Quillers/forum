@@ -1,16 +1,4 @@
-:root {
-  --color-light: rgb(255, 253, 249);
-  --color-verylightblue: rgb(239, 248, 250);
-  --color-lightblue: #D9F8FF;
-  --color-mediumblue: #5267B0;
-  --color-darkblue: #4D5497;
-  --color-yellow: rgb(255, 202, 65);
-  --color-bubblegumpink: #EA8C8C;
-  --color-grey: rgb(130, 130, 130);
-}
-
 .stdLogin__container {
-  margin-top: 80px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -18,7 +6,7 @@
 .stdLogin__formContainer {
   width: 50%;
   max-width: 700px;
-  padding: 100px 80px 20px 90px;
+  padding: 80px 80px 20px 90px;
   border: 2px solid var(--color-yellow);
   border-radius: 10px;
   background-color: var(--color-verylightblue);

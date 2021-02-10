@@ -9,10 +9,6 @@
   --color-grey: rgb(130, 130, 130);
 }
 
-a {
-  color: inherit;
-}
-
 .connexion__formContainer {
   display: flex;
   justify-content: center;

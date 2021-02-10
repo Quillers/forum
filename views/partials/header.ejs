@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="/css/header.css" />
   <link rel="stylesheet" href="/css/homePage.css" />
   <link rel="stylesheet" href="/css/login.css" />
+  <link rel="stylesheet" href="/css/main.css" />
   <title>Forum</title>
 </head>
 
@@ -74,13 +75,16 @@
 
   <div class="connexion__infoDev" id="infoDev">
     <div class="connexion__loggedIn connexion__item">session.data.logguedIn : <%= session.data.logguedIn %></div>
-    
+
     <% if (session.data.userInfos !== null) { %>
-    <div class="connexion__userStatus connexion__item">session.data.userInfos.status : <%= session.data.userInfos.status %></div>
-    <div class="connexion__userStatus connexion__item">session.data.userInfos.id : <%= session.data.userInfos.id %></div>
-    <div class="connexion__userStatus connexion__item">session.data.userInfos.pseudo : <%= session.data.userInfos.pseudo %></div>
+    <div class="connexion__userStatus connexion__item">session.data.userInfos.status :
+      <%= session.data.userInfos.status %></div>
+    <div class="connexion__userStatus connexion__item">session.data.userInfos.id : <%= session.data.userInfos.id %>
+    </div>
+    <div class="connexion__userStatus connexion__item">session.data.userInfos.pseudo :
+      <%= session.data.userInfos.pseudo %></div>
     <% } %>
-    
+
     <div class="connexion__info  connexion__item">response.info :
       <% if (typeof info != 'undefined') {%>
       <%= info %>
@@ -88,6 +92,5 @@
       pas d'info
       <% } %>
     </div>
-    <main>
-
   </div>
+  <main>
