@@ -9,8 +9,8 @@ const profileController = {
    
     getProfile: (request, response) => {
 
-      // Test si la variable userInfos existe ou pas.
-      if (typeof request.session.data.userInfos !== 'undefined') {
+      // Test si la variable userInfos est null ou non
+      if (request.session.data.userInfos !== null) {
         response.info = `Bienvenue ${request.session.data.userInfos.pseudo}!`;
         profileViews.view(request, response);
 
@@ -21,7 +21,7 @@ const profileController = {
         
       },
 
-    /*-------------- ROUTE SELECTOR ------------*/
+  /*-------------- ROUTE SELECTOR ------------*/
   /**
    * Using ':pass', select what to do next :
    * ':pass' can take following values :
@@ -39,12 +39,12 @@ const profileController = {
       case 'pseudo':
         formController.controlFormPseudo(request, response);
         break;
-      // case 'password':
-      //   profileController.updatePassword(request, response);
-      //   break;
-      // case 'email':
-      //   profileController.updateEmail(request, response);
-      //   break;
+      case 'password':
+        formController.controlFormPassword(request, response);
+        break;
+      case 'email':
+        formController.controlFormEmail(request, response);
+        break;
       // case 'delete':
       //   profileController.deleteUserControl(request, response);
       //   break;

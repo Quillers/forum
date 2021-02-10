@@ -25,7 +25,7 @@ router.get('/topics/:categoryName/:topicId', forumController.getAllMessagesByTop
 router.get('/connexion/:pass', connexionController.selectGET);
 
 // PROFILE
-router.get('/myProfile/:id', profileController.getProfile);
+router.get('/myProfile', profileController.getProfile);
 
 /*------------ POST REQUESTS --------------*/
 
