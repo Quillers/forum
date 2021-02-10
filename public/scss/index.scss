@@ -1,14 +1,17 @@
 .frontPage {
   &__container {
 
-    margin: 10vh;
+    position: relative;
+    padding: 10vh;
+    z-index: 1;
 
     &__presentation {
       display: flex;
-      justify-content: space-evenly;
+      justify-content: space-between;
       align-items: center;
       width: 90vw;
       margin-bottom: 25vh;
+      z-index: 2;
 
       &__text {
         max-width: 25vw;
@@ -18,7 +21,34 @@
         font-size: 74px;
         line-height: 84px;
         letter-spacing: -0.06em;
+        z-index: 2;
       }
+
+      &__image__book {
+        z-index: 2;
+      }
+    }
+
+    &__upperPolygon {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 55%;
+      height: 50%;
+      background: center / contain no-repeat url("./../assets/home/formes_geometriques/Polygon_4.png");
+      background-size: 100% 100%;
+      z-index: 1;
+    }
+
+    &__lowerPolygon {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 55%;
+      height: 50%;
+      background: center / contain no-repeat url("./../assets/home/formes_geometriques/Polygon_3.png");
+      background-size: 100% 100%;
+      z-index: 1;
     }
   }
 }
