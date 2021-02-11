@@ -5,42 +5,30 @@
 }
 .frontPage__container__presentation {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: space-around;
   width: 90vw;
-  margin-bottom: 25vh;
-  z-index: 2;
+}
+.frontPage__container__presentation__bubble {
+  max-width: 50vw;
+  width: 50vw;
+  max-height: 80vh;
+  height: 80vh;
+  background-image: url(../assets/home/formes_geomtriques/Ellipse-2.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: flex;
+  justify-content: center;
 }
 .frontPage__container__presentation__text {
   max-width: 25vw;
+  width: 25vw;
   color: var(--color-mediumblue);
   font-style: normal;
   font-weight: bold;
   font-size: 74px;
   line-height: 84px;
   letter-spacing: -0.06em;
-  z-index: 2;
-}
-.frontPage__container__presentation__image__book {
-  z-index: 2;
-}
-.frontPage__container__upperPolygon {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 55%;
-  height: 50%;
-  background: center/contain no-repeat url("./../assets/home/formes_geometriques/Polygon_4.png");
-  background-size: 100% 100%;
-  z-index: 1;
-}
-.frontPage__container__lowerPolygon {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 55%;
-  height: 50%;
-  background: center/contain no-repeat url("./../assets/home/formes_geometriques/Polygon_3.png");
-  background-size: 100% 100%;
-  z-index: 1;
+  text-align: center;
+  padding-top: 6%;
 }
