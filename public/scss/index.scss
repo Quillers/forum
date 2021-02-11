@@ -4,7 +4,8 @@
 
     position: relative;
     padding: 10vh;
-    z-index: 1;
+    width: 100%;
+    height: 100%;
 
     &__presentation {
       display: flex;
@@ -17,13 +18,14 @@
         width: 50vw;
         max-height: 80vh;
         height: 80vh;
-        background-image: url(../assets/home/formes_geomtriques/Ellipse-2.svg);
+        background-image: url(../assets/home/formes_geometriques/Ellipse_2.svg);
         background-position: center;
         background-repeat: no-repeat;
         background-size: contain;
 
         display: flex;
         justify-content: center;
+        z-index: 2;
 
       }
 
@@ -39,8 +41,31 @@
         text-align: center;
 
         padding-top: 6%;
+        z-index: 2;
 
       }
+    }
+
+    &__upperPolygon {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 60%;
+      height: 50%;
+      background: no-repeat url('./../assets/home/formes_geometriques/Polygon_4.png');
+      background-size: 100% 100%;
+      z-index: 1;
+    }
+
+    &__lowerPolygon {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60%;
+      height: 50%;
+      background: no-repeat url('./../assets/home/formes_geometriques/Polygon_3.png');
+      background-size: 100% 100%;
+      z-index: 1;
     }
   }
 }
