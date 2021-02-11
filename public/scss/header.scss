@@ -59,14 +59,4 @@
     }
   }
 
-  &__devButton {
-    position: fixed;
-    top: 100px;
-    left: 0;
-    padding: 10px;
-    border-radius: 0 50% 50% 0;
-    background-color: var(--color-lightblue);
-    color: -var(--color-darkblue);
-    cursor: pointer;
-  }
 }

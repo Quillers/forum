@@ -12,11 +12,9 @@
   <!-- <link rel="stylesheet" href="/css/style.css" /> -->
   <link rel="stylesheet" href="/css/categories.css" />
   <link rel="stylesheet" href="/css/connexion.css" />
-  <link rel="stylesheet" href="/css/footer.css" />
   <link rel="stylesheet" href="/css/header.css" />
-  <link rel="stylesheet" href="/css/login.css" />
-  <link rel="stylesheet" href="/css/main.css" />
   <link rel="stylesheet" href="/css/index.css" />
+  <link rel="stylesheet" href="/css/main.css" />
 
   <title>Forum</title>
 </head>
@@ -69,7 +67,7 @@
       </ul>
 
     </nav>
-    <div class="header__devButton" id="infoDevButton">?</div>
+    <div class="connexion__devButton" id="infoDevButton">?</div>
 
 
   </header>
@@ -77,15 +75,23 @@
   <!-- Utiliser en dev pour controler les valeurs des variables lièes à la session -->
 
   <div class="connexion__infoDev" id="infoDev">
-    <div class="connexion__loggedIn connexion__item">session.data.logguedIn : <%= session.data.logguedIn %></div>
+    <div class="connexion__loggedIn connexion__item">
+      session.data.logguedIn : <%= session.data.logguedIn %>
+    </div>
 
     <% if (session.data.userInfos !== null) { %>
-    <div class="connexion__userStatus connexion__item">session.data.userInfos.status :
-      <%= session.data.userInfos.status %></div>
-    <div class="connexion__userStatus connexion__item">session.data.userInfos.id : <%= session.data.userInfos.id %>
+    <div class="connexion__userStatus connexion__item">
+      session.data.userInfos.status : <%= session.data.userInfos.status %>
     </div>
-    <div class="connexion__userStatus connexion__item">session.data.userInfos.pseudo :
-      <%= session.data.userInfos.pseudo %></div>
+
+    <div class="connexion__userStatus connexion__item">
+      session.data.userInfos.id : <%= session.data.userInfos.id %>
+    </div>
+
+    <div class="connexion__userStatus connexion__item">
+      session.data.userInfos.pseudo : <%= session.data.userInfos.pseudo %>
+    </div>
+
     <% } %>
 
     <div class="connexion__info  connexion__item">response.info :
