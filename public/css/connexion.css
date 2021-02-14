@@ -1,18 +1,6 @@
-:root {
-  --color-light: rgb(255, 253, 249);
-  --color-verylightblue: rgb(239, 248, 250);
-  --color-lightblue: #D9F8FF;
-  --color-mediumblue: #5267B0;
-  --color-darkblue: #4D5497;
-  --color-yellow: rgb(255, 202, 65);
-  --color-bubblegumpink: #EA8C8C;
-  --color-grey: rgb(130, 130, 130);
-}
-
-a {
-  color: inherit;
-}
-
+/*-------------------------------------------------*/
+/*-------------------------------------------------*/
+/*-------------------------------------------------*/
 .connexion__formContainer {
   display: flex;
   justify-content: center;
@@ -35,11 +23,67 @@ a {
   background-color: var(--color-mediumblue);
   color: var(--color-lightblue);
   font-weight: bold;
+  z-index: 1000;
+}
+.connexion__devButton {
+  position: fixed;
+  top: 100px;
+  left: 0;
+  padding: 10px;
+  border-radius: 0 50% 50% 0;
+  background-color: var(--color-lightblue);
+  color: -var(--color-darkblue);
+  cursor: pointer;
+  z-index: 1000;
 }
 .connexion__item {
   margin: 5px;
 }
 
+/*-------------------------------------------------*/
+/*-------------------------------------------------*/
+/*-------------------------------------------------*/
+.stdLogin__container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.stdLogin__formContainer {
+  width: 50%;
+  max-width: 700px;
+  padding: 80px 80px 20px 90px;
+  border: 2px solid var(--color-yellow);
+  border-radius: 10px;
+  background-color: var(--color-verylightblue);
+}
+.stdLogin__form {
+  display: flex;
+  flex-direction: column;
+}
+.stdLogin__form__item {
+  font-family: "PT Mono", serif;
+  font-weight: bolder;
+  color: var(--color-grey);
+  padding: 10px;
+  margin: 10px;
+}
+.stdLogin__form__item type[input] {
+  border: 1px solid var(--color-grey);
+}
+.stdLogin__form__buttonRow {
+  display: flex;
+  margin: 8px;
+}
+.stdLogin__form__buttonRow button {
+  border-radius: 10px;
+  background-color: var(--color-mediumblue);
+  color: var(--color-verylightblue);
+  border: none;
+}
+
+/*----------------------------------------*/
+/*----------------------------------------*/
+/*----------------------------------------*/
 .--showInfo {
   top: 150px;
 }
