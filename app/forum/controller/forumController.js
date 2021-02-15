@@ -36,34 +36,36 @@ const forumController = {
 
     const categoryName = request.params.categoryName;
     //First we get the id corresponding to the category name
-    forumDB.getCategoryIdByName(categoryName, (err, results) => {
+    forumDB.getCategories((err, results) => {
       if (err) {
         // checking for server Error
         response.status(500).send(" getcategoryIdByName error: " + err.stack);
 
       } else {
 
-        //if we don't get a result for the category, then it's a not found error
-        if (!results.rows[0]) {
+       // if we don't get a result for the category, then it's a not found error
+        if (!results.rows) {
           //TODO we need to implement a middleware for the 404 then we use the code
           next();
          
 
         } else {
-          const categoryId = results.rows[0].id;
-
+          const categories = results.rows;
+          
+          const currentCategory = categories.find(cat =>  cat.name === categoryName );
+        
           //if no 404, we then get all the topics from the categoryId
-          forumDB.getTopicsByCategoryId(categoryId, (err, results) => {
+          forumDB.getTopicsByCategoryId(currentCategory.id, (err, results) => {
             if (err) {
               // checking for server Error
               response.status(500).send(" getTopicsByCategoryId error: " + err.stack);
 
             } else {
               const topics = results.rows;
-              
               forumView.category(response, {
                 topics: topics,
-                categoryName,
+                categories: categories,
+                currentCategory,
                 session: request.session,
                 info: response.info,
               });

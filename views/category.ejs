@@ -1,39 +1,74 @@
 <%- include("partials/header.ejs") %>
 
+<div class="categorypage__main__container">
+   <aside class="categories__container">
+      <ul class="categories__list">
+         <% categories.forEach(category => { %>
+         <li class="categories__list__element">
+            <a href="/categories/<%=  category.name %>"
+               ><%= category.name %>
+            </a>
+         </li>
+         <% }); %>
+      </ul>
+      <img
+         class="categories__category__image"
+         src="/assets/browse/<%= currentCategory.name %>.png"
+         alt="<%= currentCategory.name %>"
+      />
+   </aside>
 
-<ul>
-   <% topics.forEach(topic => { %>
-       <li><a href="/topics/<%=  categoryName %>/<%= topic.id %> "><%= topic.title %> </a></li>
+   <div class="topics__container">
+      <h1 class="categories__category__title"><%= currentCategory.name %></h1>
 
-   <% }); %>
-</ul>
+      <% for(let topic of topics) { %>
+      <article class="topic__container">
+         <header class="topic__header">
+            <img
+               src="/assets/browse/<%= currentCategory.name %>.png"
+               alt="<%= currentCategory.name %>"
+            />
+            <h2 class="topic__description"><%= topic.topic_description %></h2>
+         </header>
+         <footer class="topic__title__container">
+            <h2 class="topic__title"><%=topic.title%></h2>
+            <h3 class="topic__title__author">by <%= topic.author %></h3>
+         </footer>
+      </article>
+      <% } %>
+   </div>
+</div>
 
-<form method="post" action="/topics/<%=  categoryName %>/post" id="topic-form" class="topic__form">
-    <label for="topic__username">ton pseudo</label>
-    <input
-       type="text"
-       id="topic__username"
-       name="topic__username"
-       class="topic__username"
-    />
-    <label for="topic__title">Titre de votre topic</label>
-    <input
-    type="text"
-       name="topic__title"
-       id="topic__title"
-       class="topic__title"
-       placeholder="title of your topic..."
-    >
-   
-    <label for="topic__title">Titre de votre topic</label>
-    <textarea
-       name="topic__desc"
-       id="topic__desc"
-       class="topic__area"
-       placeholder="Describe your topic..."
-    ></textarea>
-    <button class="btn__submit" type="submit">Poster</button>
- </form>
-</main>
+<form
+   method="post"
+   action="/topics/<%=  currentCategory.name %>/post"
+   id="topic-form"
+   class="topic__form"
+>
+   <label for="topic__form__username">ton pseudo</label>
+   <input
+      type="text"
+      id="topic__username"
+      name="topic__username"
+      class="topic__form__username"
+   />
+   <label for="topic__form__title">Titre de votre topic</label>
+   <input
+      type="text"
+      name="topic__title"
+      id="topic__title"
+      class="topic__form__title"
+      placeholder="title of your topic..."
+   />
+
+   <label for="topic__form__description">description de votre topic</label>
+   <textarea
+      name="topic__desc"
+      id="topic__desc"
+      class="topic__form__area"
+      placeholder="Describe your topic..."
+   ></textarea>
+   <button class="btn__submit" type="submit">Poster</button>
+</form>
 
 <%- include("partials/footer.ejs") %>

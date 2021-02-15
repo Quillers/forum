@@ -1,6 +1,6 @@
 :root {
 
-  --color-light: rgb(255, 253, 249);
+  --color-light: #fcf9f2;
   --color-verylightblue: rgb(239, 248, 250);
   --color-lightblue: #D9F8FF;
   --color-mediumblue: #5267B0;
@@ -13,6 +13,7 @@
 
 html {
   font-family: 'Domine', serif;
+  background-color: var(--color-light);
   min-height: 100vh;
 }
 
