@@ -35,7 +35,7 @@ const forumController = {
   getAllTopicsByCategoryId: (request, response, next) => {
 
     const categoryName = request.params.categoryName;
-    //First we get the id corresponding to the category name
+    //First we get all the categories to generate the link in the navigation aside of the page
     forumDB.getCategories((err, results) => {
       if (err) {
         // checking for server Error
@@ -96,6 +96,7 @@ const forumController = {
         response.status(500).send(" getAllMessagesByTopicId error: " + err.stack);
       } else {
         const currentTopic = results.rows[0];
+        //if the topic doesnt exist, we go 404
         if (results.rows[0] === undefined) {
           next();
         } else {

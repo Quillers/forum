@@ -31,7 +31,7 @@
             <h2 class="topic__description"><%= topic.topic_description %></h2>
          </header>
          <footer class="topic__title__container">
-            <h2 class="topic__title"><%=topic.title%></h2>
+            <h2 class="topic__title"><a href="/topics/<%= currentCategory.name %>/<%= topic.id %>"><%=topic.title%></a></h2>
             <h3 class="topic__title__author">by <%= topic.author %></h3>
          </footer>
       </article>

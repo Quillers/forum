@@ -8,7 +8,7 @@ const profileDB = {
     const userID = parseInt(id);
     // Find the user informations in the database with its ID
     const query = {
-      text: `SELECT * FROM users WHERE id = $1;`,
+      text: `SELECT * FROM forum.users WHERE id = $1;`,
       values: [userID]
     };
 
@@ -18,7 +18,7 @@ const profileDB = {
 
   getUserByPseudo: (pseudo, callback) => {
     const query = {
-      text: `SELECT * FROM users WHERE pseudo = $1;`,
+      text: `SELECT * FROM forum.users WHERE pseudo = $1;`,
       values: [pseudo]
     };
 
@@ -37,7 +37,7 @@ const profileDB = {
 
     const userID = parseInt(id);
     const query = {
-      text: `UPDATE users SET pseudo = $2 WHERE id = $1;`,
+      text: `UPDATE forum.users SET pseudo = $2 WHERE id = $1;`,
       values: [userID, newPseudo]
     };
 
@@ -55,7 +55,7 @@ const profileDB = {
   updateUserPassword: (id, newPassword, callback) => {
     const userID = parseInt(id);
     const query = {
-      text: `UPDATE users SET password = $2 WHERE id = $1;`,
+      text: `UPDATE forum.users SET password = $2 WHERE id = $1;`,
       values: [userID, newPassword]
     }
 
@@ -73,7 +73,7 @@ const profileDB = {
   updateUserEmail: (id, newMail, callback) => {
     const userID = parseInt(id);
     const query = {
-      text: `UPDATE users SET email = $2 WHERE id = $1;`,
+      text: `UPDATE forum.users SET email = $2 WHERE id = $1;`,
       values: [userID, newMail]
     }
 
