@@ -1,5 +1,5 @@
-const connexionViews = require('./../view/connexionViews');
-const connexionDB = require('./../model/connexionDB');
+const connexionViews = require('../view/connexionViews');
+const connexionDB = require('../model/connexionDB');
 const mainController = require('../../main/controller/mainController');
 const bcrypt = require('bcrypt');
 
@@ -8,7 +8,7 @@ const connexionController = {
 
   /*-------------- VIEWS ----------------*/
 
-  stdConnexion: (request, response) => { connexionViews.view(request, response)},
+  stdConnexion: (request, response) => { connexionViews.view(request, response) },
   createAccount: (request, response) => { connexionViews.view(request, response); },
   lostPass: (request, response) => { connexionViews.view(request, response); },
   deleteUser: (request, response) => { connexionViews.view(request, response); },
@@ -126,7 +126,7 @@ const connexionController = {
               // ici mettre les valeurs d'identification dans la session
               request.session.data.logguedIn = true;
               request.session.data.userInfos = user.rows[0];
-              
+
               response.info = 'La connexion c bon'
               connexionViews.view(request, response);
 

@@ -1,0 +1,9 @@
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+PassengerAppRoot "/home/quiltuuc/forum"
+PassengerBaseURI "/forum"
+PassengerNodejs "/home/quiltuuc/nodevenv/forum/10/bin/node"
+PassengerAppType node
+PassengerStartupFile index.js
+PassengerAppEnv development
+PassengerFriendlyErrorPages on
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END

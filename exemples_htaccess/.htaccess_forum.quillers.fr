@@ -1,0 +1,15 @@
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+PassengerAppRoot "/home/quiltuuc/forum_subDir"
+PassengerBaseURI "/"
+PassengerNodejs "/home/quiltuuc/nodevenv/forum_subDir/10/bin/node"
+PassengerAppType node
+PassengerStartupFile index.js
+PassengerAppLogFile "/home/quiltuuc/logs/forum_subdir.log"
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
+
+PassengerAppEnv development
+PassengerFriendlyErrorPages on
+
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R,L]

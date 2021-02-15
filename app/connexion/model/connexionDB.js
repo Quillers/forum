@@ -1,4 +1,4 @@
-const client = require('./../../client');
+const client = require('../../client');
 
 /*-------------------------------------------------------------*/
 
@@ -7,7 +7,7 @@ const connexionDB = {
   getUser: function(pseudo, callback) {
 
     const query = {
-      text: `SELECT * FROM users 
+      text: `SELECT * FROM forum.users 
     WHERE pseudo=$1;`,
       values: [pseudo]
     }
@@ -18,7 +18,7 @@ const connexionDB = {
   getPseudo: function(pseudo, callback) {
 
     const query = {
-      text: `SELECT * FROM users 
+      text: `SELECT * FROM forum.users 
     WHERE pseudo=$1;`,
       values: [pseudo]
     }
@@ -29,7 +29,7 @@ const connexionDB = {
   insertProfil: function(pseudo, hashedPass, email, callback) {
 
     const query = {
-      text: `INSERT INTO users (pseudo, password, email, status)
+      text: `INSERT INTO forum.users (pseudo, password, email, status)
     VALUES ($1, $2, $3, 'stdUser');`,
       values: [pseudo, hashedPass, email]
     };
@@ -39,7 +39,7 @@ const connexionDB = {
 
   isEmailInDB: (email, callback) => {
 
-    const query = `SELECT * FROM users WHERE email = '${email}';`;
+    const query = `SELECT * FROM forum.users WHERE email = '${email}';`;
 
     client.query(query, callback);
   },

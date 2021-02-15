@@ -41,7 +41,7 @@ app.use(expressSession({
 }));
 
 app.use(express.static('public'));
-
+// app.use('/', express.static(__dirname + '/public'));
 // We create a Global variable where we store the categories list (that s ok bc it will only be modified by the admins)
 
 //use the router
