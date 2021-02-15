@@ -33,7 +33,7 @@ const forumController = {
   // code associe a la route /categories/:category
 
   getAllTopicsByCategoryId: (request, response, next) => {
-
+  
     const categoryName = request.params.categoryName;
     //First we get all the categories to generate the link in the navigation aside of the page
     forumDB.getCategories((err, results) => {
@@ -43,17 +43,17 @@ const forumController = {
 
       } else {
 
-       // if we don't get a result for the category, then it's a not found error
+        // if we don't get a result for the category, then it's a not found error
         if (!results.rows) {
           //TODO we need to implement a middleware for the 404 then we use the code
           next();
-         
+
 
         } else {
           const categories = results.rows;
-          
-          const currentCategory = categories.find(cat =>  cat.name === categoryName );
-        
+
+          const currentCategory = categories.find(cat => cat.name === categoryName);
+
           //if no 404, we then get all the topics from the categoryId
           forumDB.getTopicsByCategoryId(currentCategory.id, (err, results) => {
             if (err) {
@@ -108,7 +108,6 @@ const forumController = {
             } else {
 
               const messages = results.rows;
-
               forumView.topic(response, {
                 topic: currentTopic,
                 messages,
@@ -121,7 +120,7 @@ const forumController = {
         }
       }
     });
-    
+
   },
 
   /*
@@ -134,14 +133,14 @@ const forumController = {
   createNewTopic: (request, response, next) => {
     const newTopic = {
       topicDesc: request.body.topic__desc,
-      author: request.body.topic__username,
+      users_id: +request.session.data.userInfos.id,
       title: request.body.topic__title
     }
     const categoryName = request.params.categoryName;
     //TODO need to validate the data!!!! => saw a video about request header and validate from front JS
 
     //...here i just make sure author, description and content are not empty
-    if (!newTopic.author || !newTopic.topicDesc || !newTopic.title) {
+    if (!newTopic.topicDesc || !newTopic.title) {
       response.send(`
             <h1>Recommencez votre topic, vous avez oublie quelque chose</h1>
             <a href="/categories/${request.params.categoryName}">Retourner a la liste des sujets</a>
@@ -178,14 +177,14 @@ const forumController = {
   createNewMessage: (request, response, next) => {
     const newMessage = {
       messageContent: request.body.message,
-      author: request.body.username,
+      users_id: +request.session.data.userInfos.id,
       topicId: +request.params.topicId
     }
 
     //TODO need to validate the data!!!! => saw a video about request header and validate from front JS
 
     //...here i just make sure author and content are not empty
-    if (!newMessage.author || !newMessage.messageContent) {
+    if (!newMessage.messageContent) {
       response.send(`
             <h1>Recommencez votre message, vous avez oublie quelque chose</h1>
             <a href="/">Retourner a la liste des sujets</a>

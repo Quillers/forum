@@ -1,35 +1,37 @@
 
     <%- include("partials/header.ejs") %>
 
-      
-        <h2 class="main__topic__title" ><%= topic.title %> </h2>
+    <% if (session.data.userInfos !== null) {%> 
+    <h2>Bonjour je suis <%= session.data.userInfos.pseudo %> avec mon id= <%= session.data.userInfos.id %></h2>
+    <% } %> 
+    <h2 style="text-decoration:underlined;font-size:1.5rem; margin-bottom:1rem"class="main__topic__title" ><%= topic.title %> </h2>
 
          <div id="message-list" class="message__list">
            <!-- description of the thread is set as the first message -->
-            <article class="message">
+            <article style="border:2px solid black; margin-bottom:1rem"class="message">
                <header class="message__header">
-                  <h3 class="message__author"><%= topic.author %></h3>
+                  <h3 class="message__author"><%= topic.pseudo %></h3>
                </header>
                <section class="message__main">
                   <%= topic.topic_description %>
                </section>
                <footer class="message__footer">
-                  <p>Poste le <time><%= topic.created_at %></time></p>
+                  <p>Poste le <time><time><%= new Date(topic.created_at).toLocaleDateString() %> - <%=new Date(topic.created_at).toLocaleTimeString()%></time></time></p>
                </footer>
             </article>
            <!-- We loop through all the messages to display them -->
            
             <% for (message of messages) { %>
            
-               <article class="message">
+               <article style="border:2px solid black;margin-bottom:1rem" class="message">
                <header class="message__header">
-                  <h3 class="message__author"><%= message.author %></h3>
+                  <h3 class="message__author"><%= message.pseudo %></h3>
                </header>
                <section class="message__main">
                   <%= message.message_content %>
                </section>
                <footer class="message__footer">
-                  <p>Poste le <time><%= message.created_at %></time></p>
+                  <p>Poste le <time><%= new Date(message.created_at).toLocaleDateString() %> - <%=new Date(message.created_at).toLocaleTimeString()%></time></p>
                </footer>
             </article>
            
@@ -38,6 +40,7 @@
 
          </div>
            <!-- form to post messages-->
+           <% if (session.data.logguedIn) { %> 
 
          <form method="post" action="<%= postUrl %> " id="message-form" class="message__form">
             <label for="message">Repondre:</label>
@@ -47,15 +50,9 @@
                class="message__area"
                placeholder="type your message here"
             ></textarea>
-            <label for="username">ton pseudo</label>
-            <input
-               type="text"
-               id="username"
-               name="username"
-               class="message__username"
-            />
             <button class="btn__submit" type="submit">Poster</button>
          </form>
+<% } %>
      
 
       <%- include("partials/footer.ejs") %> 

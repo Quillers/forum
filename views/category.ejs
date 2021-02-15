@@ -32,26 +32,21 @@
          </header>
          <footer class="topic__title__container">
             <h2 class="topic__title"><a href="/topics/<%= currentCategory.name %>/<%= topic.id %>"><%=topic.title%></a></h2>
-            <h3 class="topic__title__author">by <%= topic.author %></h3>
+            <h3 class="topic__title__author">by <%= topic.pseudo %></h3>
          </footer>
       </article>
       <% } %>
    </div>
 </div>
 
+
+<% if (session.data.logguedIn) { %> 
 <form
    method="post"
    action="/topics/<%=  currentCategory.name %>/post"
    id="topic-form"
    class="topic__form"
 >
-   <label for="topic__form__username">ton pseudo</label>
-   <input
-      type="text"
-      id="topic__username"
-      name="topic__username"
-      class="topic__form__username"
-   />
    <label for="topic__form__title">Titre de votre topic</label>
    <input
       type="text"
@@ -70,5 +65,5 @@
    ></textarea>
    <button class="btn__submit" type="submit">Poster</button>
 </form>
-
+<% } %>
 <%- include("partials/footer.ejs") %>
