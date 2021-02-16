@@ -54,6 +54,17 @@ const forumDB = {
         ($1, $2, $3)`;
     client.query(query, [newMessage.users_id, newMessage.messageContent, newMessage.topicId], callback);
   },
+
+  delMessageById: (objParams, callback) => {
+    const preparedQuery= {
+      text: `DELETE FROM "forum"."message" WHERE id=$1 AND users_id=$2;
+      `,
+      values: [objParams.messageId, objParams.users_id]
+     }
+    client.query(preparedQuery, callback);
+
+  },
+
 };
 
 module.exports = forumDB;

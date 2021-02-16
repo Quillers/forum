@@ -33,7 +33,7 @@ const forumController = {
   // code associe a la route /categories/:category
 
   getAllTopicsByCategoryId: (request, response, next) => {
-  
+
     const categoryName = request.params.categoryName;
     //First we get all the categories to generate the link in the navigation aside of the page
     forumDB.getCategories((err, results) => {
@@ -111,7 +111,7 @@ const forumController = {
               forumView.topic(response, {
                 topic: currentTopic,
                 messages,
-                postUrl: request.url + '/post',
+                postUrl: request.url,
                 session: request.session,
                 info: response.info,
               });
@@ -131,6 +131,12 @@ const forumController = {
 
 
   createNewTopic: (request, response, next) => {
+
+    if (!request.session.data.LogguedIn) {
+      response.redirect(`/categories/${request.params.categoryName}`);
+      return;
+    }
+
     const newTopic = {
       topicDesc: request.body.topic__desc,
       users_id: +request.session.data.userInfos.id,
@@ -175,6 +181,12 @@ const forumController = {
   // code associe a la route /topics/:categoryName/:topicId/post
 
   createNewMessage: (request, response, next) => {
+   
+    if (request.session.data.LogguedIn === false) {
+      response.redirect(`/topics/${request.params.categoryName}/${request.params.topicId}`);
+      return;
+    }
+
     const newMessage = {
       messageContent: request.body.message,
       users_id: +request.session.data.userInfos.id,
@@ -201,6 +213,46 @@ const forumController = {
     }
   },
 
+  // middleware pour traiter la demande de suppression d un message par son id
+  deleteMessage: (request, response, next) => {
+
+    if (!request.session.data.LogguedIn) {
+      response.redirect(`/topics/${request.params.categoryName}/${request.params.topicId}`);
+      return;
+    }
+
+    //objet de parametre qui sera envoye au datamapper
+    const deleteParams = {
+    // On recupere l id du message envoye via POST dans user form
+      messageId: +request.body.deleteMessageId,
+      // on recupere l'id de l utilisateur connecte qui a fait la demande de suppression du message 
+      //(pour s assurer que ce soit bien son msg qu on va supprimer)
+      users_id: request.session.data.userInfos.id,
+    };
+
+    //si la valeur de id envoye en post n est pas correct, erreur
+    if (!deleteParams.messageId || isNaN(deleteParams.messageId)) {
+      //
+      console.log("le message Id n est pas bon, l'utilisateur a modifie notre form cache")
+      next();
+    }
+
+    //on appelle le datamapper qui va envoyuer la requete de suppression
+    forumDB.delMessageById(deleteParams, (err, results) => {
+
+      if (err) {
+        //gestion des erreurs
+        response.status(500).send("deleteMessage error: " + err.stack);
+      } else {
+        if (!results.rowCount) {
+          console.log("Message n a pas ete supprime, l utilisateur n avait pas les droits pour supprimer le message");
+        }
+        //message supprime avec succes, on redirect sur la page des 
+        response.redirect(`/topics/${request.params.categoryName}/${request.params.topicId}`);
+      }
+
+    });
+  },
 };
 
 module.exports = forumController;

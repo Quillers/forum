@@ -9,14 +9,14 @@
          <div id="message-list" class="message__list">
            <!-- description of the thread is set as the first message -->
             <article style="border:2px solid black; margin-bottom:1rem"class="message">
-               <header class="message__header">
+               <header style="border:1px solid gray" class="message__header">
                   <h3 class="message__author"><%= topic.pseudo %></h3>
                </header>
                <section class="message__main">
                   <%= topic.topic_description %>
                </section>
                <footer class="message__footer">
-                  <p>Poste le <time><time><%= new Date(topic.created_at).toLocaleDateString() %> - <%=new Date(topic.created_at).toLocaleTimeString()%></time></time></p>
+                  <p>Poste le <time>><%= new Date(topic.created_at).toLocaleDateString() %> - <%=new Date(topic.created_at).toLocaleTimeString()%></time></p>
                </footer>
             </article>
            <!-- We loop through all the messages to display them -->
@@ -24,8 +24,18 @@
             <% for (message of messages) { %>
            
                <article style="border:2px solid black;margin-bottom:1rem" class="message">
-               <header class="message__header">
+               <header style="display: flex; justify-content:space-between; border:1px solid gray" class="message__header">
                   <h3 class="message__author"><%= message.pseudo %></h3>
+
+                  <% if (session.data.logguedIn && message.users_id === session.data.userInfos.id) { %>
+                     <!-- hidden form -->
+                     <form action="<%= postUrl + '/delete' %>" method="POST">
+                        <input type="hidden" id="deleteMessageId" name="deleteMessageId" value="<%= message.id %> ">
+                        <button type="submit" style="color:red; font-weight:bold; border:2px solid red; border-radius: 5px; padding: 0 5px"href="#"> x</button>
+                     </form>
+                 
+                  <% } %>
+
                </header>
                <section class="message__main">
                   <%= message.message_content %>
@@ -42,7 +52,7 @@
            <!-- form to post messages-->
            <% if (session.data.logguedIn) { %> 
 
-         <form method="post" action="<%= postUrl %> " id="message-form" class="message__form">
+         <form method="post" action="<%= postUrl + '/post' %>" id="message-form" class="message__form">
             <label for="message">Repondre:</label>
             <textarea
                name="message"

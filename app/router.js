@@ -33,6 +33,7 @@ router.get('/myProfile', profileController.getProfile);
 // FORUM
 router.post('/topics/:categoryName/post', forumController.createNewTopic);
 router.post('/topics/:categoryName/:topicId/post', forumController.createNewMessage);
+router.post('/topics/:categoryName/:topicId/delete', forumController.deleteMessage);
 
 // CONNEXION
 router.post('/postConnexion/:pass', connexionController.selectPOST);
