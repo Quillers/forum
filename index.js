@@ -25,9 +25,9 @@ app.set('views', './views');
 //set template engine to ejs
 app.set('view engine', 'ejs');
 //set the static file directory
+app.use(express.static('public'));
 
-// On utilise 'cookie-session' 
-// http://expressjs.com/en/resources/middleware/cookie-session.html
+// http://expressjs.com/en/resources/middleware/express-session.html
 app.use(expressSession({
 
   secret: 'quillers',
@@ -39,10 +39,6 @@ app.use(expressSession({
   }
 
 }));
-
-app.use(express.static('public'));
-// app.use('/', express.static(__dirname + '/public'));
-// We create a Global variable where we store the categories list (that s ok bc it will only be modified by the admins)
 
 //use the router
 app.use(router);
