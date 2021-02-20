@@ -1,0 +1,27 @@
+<div class="connexion__modale" id="lostPassModale">
+
+  <div class="connexion__modale__container">
+
+    <button class="connexion__modale__quit" id="quitLostPass"><img src="/assets/quit_cross.png"></button>
+
+    <h1 class="connexion__modale__title">Reinitialize password</h1>
+
+    <hr class="connexion__form__hr" />
+
+    <div class="connexion__modale__form__container">
+
+      <form action="/postConnexion/lostPass" method="POST" class="connexion__form">
+        <input
+      type="email"
+      name="email"
+      class="connexion__form__input"
+      placeholder="Email"
+      id="emailLostPass"
+    />
+        <button type="submit" class="connexion__button__connexion">Send</button>
+
+      </form>
+
+    </div>
+  </div>
+</div>

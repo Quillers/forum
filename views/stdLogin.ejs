@@ -1,38 +1,89 @@
-<%- include("partials/header.ejs") %>
+<!DOCTYPE html>
+<html lang="en">
 
-<!-- On amis les catégories dans le header, reste à
-   mettre les sujets principaux dans l'accueil ? -->
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Domine:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Suez+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/reset.css" />
+  <link rel="stylesheet" href="/css/connexion.css" />
+  <script src="/js/connexion_showForm.js"></script>
 
-<div class="stdLogin__container">
-  <div class="stdLogin__formContainer">
-    <form action="/postConnexion/stdLogin" method="POST" class="stdLogin__form">
-      <label for="pseudo" class="stdLogin__form__item">Pseudo</label>
-      <input
-        type="text"
-        name="pseudo"
-        class="stdLogin__form__item"
-        id="pseudo"
+  <title>Topic(s)- Connexion</title>
+</head>
+
+<body class="body">
+  <main class="connexion">
+    <!-- ICI LA VUE CREATE ACCOUNT -->
+
+    <%- include("partials/createAccount") %>
+
+    <!-- ICI LA VUE LOST PASSWORD -->
+
+    <%- include("partials/lostPass") %>
+
+    <!-- ICI VUE LOGIN -->
+
+    <div class="connexion__container">
+      <div class="connexion__commBox">
+        <h2 class="connexion__commBox__title">TOPIC(S)</h2>
+        <p class="connexion__commBox__text">Create and react to all kinds of topics.
+          Our limit is your imagination.</p>
+      </div>
+
+      <div class="connexion__form__container">
+        <div class="connexion__form__buttonRow">
+          <a href="#" class="connexion__button__service">
+            <img
+            src="/assets/logo_google.png"
+            alt="logo Google"
+            height="80%"
+            />
+          </a>
+          <a href="#" class="connexion__button__service">
+            <img
+            src="/assets/Daco_335636.png"
+            alt="logo Google"
+            height="80%"
+            />
+          </a>
+
+        </div>
+
+        <hr class="connexion__form__hr connexion__form__hr__OR ">
+
+        <form action="/postConnexion/stdLogin" method="POST" class="connexion__form">
+          <input
+        type="email"
+        name="email"
+        class="connexion__form__input"
+        placeholder="Email address"
+        id="email"
       />
-      <label for="password" class="stdLogin__form__item">Mot de passe</label>
-      <input
+          <input
         type="password"
         name="password"
-        class="stdLogin__form__item"
+        class="connexion__form__input"
+        placeholder="Password"
         id="password"
       />
 
+          <button type="submit"  class="connexion__button__connexion">Connexion</button>
+        </form>
 
-      <div class="stdLogin__form__buttonRow">
-        <button type="submit" class="stdLogin__form__item">Valider</button>
-        <button type="button" class="stdLogin__form__item"
-          ><a href="/connexion/createAccount">Créer un compte</a></button>
-        <button type="button" class="stdLogin__form__item"
-          ><a href="/connexion/lostPass">Réinitialiser mon mot de passe</a></button>
+        <p class="connexion__form__forgotPass" id="showLostPass">Forgot password ?</p>
+
+        <hr class="connexion__form__hr">
+
+        <button class="connexion__button__createProfile" id="showCreateProfile">
+          Create profile
+        </button>
+
       </div>
+    </div>
 
-
-    </form>
-  </div>
-</div>
-
-<%- include("partials/footer.ejs") %>
+    <%- include("partials/footer.ejs") %>

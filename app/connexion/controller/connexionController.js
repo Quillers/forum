@@ -58,7 +58,6 @@ const connexionController = {
   selectGET: (request, response) => {
     // Ici récupérer :pass et envoyer la suite en fonction, faire un switch
     const pass = request.params.pass;
-    console.log('etape 0', pass);
 
     switch (pass) {
       case 'stdLogin':
