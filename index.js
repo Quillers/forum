@@ -1,16 +1,12 @@
 const express = require('express');
 require('dotenv')
   .config();
+
 const router = require('./app/router');
 const connexionViews = require('./app/connexion/view/connexionViews');
 const app = express();
 
-// Les variables d'env sont rechargées dans chaque module si besoin
-// et définies dans .env
-
-
 const expressSession = require('express-session');
-
 
 // user urlencoded to get data from post
 

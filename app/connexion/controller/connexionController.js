@@ -3,12 +3,21 @@ const connexionDB = require('../model/connexionDB');
 const mainController = require('../../main/controller/mainController');
 const bcrypt = require('bcrypt');
 
+const {
+  url,
+  getGoogleAccountFromCode
+} = require('./googleLogin');
+
 
 const connexionController = {
 
   /*-------------- VIEWS ----------------*/
 
-  stdConnexion: (request, response) => { connexionViews.view(request, response) },
+  stdConnexion: (request, response) => {
+    response.locals.urlGoogle = url;
+    connexionViews.view(request, response)
+  },
+
   createAccount: (request, response) => { connexionViews.view(request, response); },
   lostPass: (request, response) => { connexionViews.view(request, response); },
   deleteUser: (request, response) => { connexionViews.view(request, response); },
@@ -90,7 +99,6 @@ const connexionController = {
    */
   stdLoginControl: (request, response) => {
     const formEmail = request.body.email;
-    const formPassword = request.body.password;
 
     // Ici on récupère les données user en BDD.
     connexionDB.getUserByEmail(formEmail, (err, user) => {
@@ -298,6 +306,53 @@ const connexionController = {
 
       }
     })
+  },
+
+  /**
+   * After a user is identified, retrieve infos from google redirect url <code>
+   * @param {Objet} request 
+   * @param {Objet} response 
+   */
+  getUserInfoFromGoogle: async (request, response) => {
+
+    try {
+      const dataUser = await getGoogleAccountFromCode(request.query.code);
+
+      // Ici on vérifie si l'utilisateur existe en DBUser
+      connexionDB.getUserByEmail(dataUser.email, (err, res) => {
+
+        if (res.rows.length) {
+
+          request.session.data.logguedIn = true;
+          request.session.data.userInfos = res.rows[0];
+
+          response.redirect('/categories');
+
+        } else {
+
+          connexionDB.insertProfilFromGoogle(dataUser, (err, res) => {
+
+            console.log('result', res);
+
+            // Ici faire la connexion directement :
+            // ici mettre les valeurs d'identification dans la session
+            request.session.data.logguedIn = true;
+            request.session.data.userInfos = {
+              id: res.rows[0].id,
+              status: res.rows[0].status,
+              pseudo: `${dataUser.firstName} ${dataUser.lastName}`
+            }
+
+            response.redirect('/categories');
+
+          })
+        }
+      })
+    } catch (error) {
+      console.log(error)
+      response.info = 'Aïe, le profile n\'a pas été enregistré dans la base';
+      connexionViews.view(request, response);
+    }
   }
 }
 
