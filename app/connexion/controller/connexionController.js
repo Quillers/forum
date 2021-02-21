@@ -89,15 +89,15 @@ const connexionController = {
    * Controls wether the user informations matches usersDatabase
    */
   stdLoginControl: (request, response) => {
-    const formPseudo = request.body.pseudo;
+    const formEmail = request.body.email;
     const formPassword = request.body.password;
 
     // Ici on récupère les données user en BDD.
-    connexionDB.getUser(formPseudo, (err, user) => {
+    connexionDB.getUserByEmail(formEmail, (err, user) => {
 
       if (err) {
 
-        console.log('erreur dans connexionDB.getUser :', err)
+        console.log('erreur dans connexionDB.getUserByEmail :', err)
         response.info = 'Il y a eu une erreur, merci de réessayer';
         connexionViews.view(request, response);
 
@@ -126,8 +126,8 @@ const connexionController = {
               request.session.data.logguedIn = true;
               request.session.data.userInfos = user.rows[0];
 
-              response.info = 'La connexion c bon'
-              connexionViews.view(request, response);
+              response.info = 'La connexion c bon';
+              response.redirect('/categories');
 
             } else {
 
@@ -145,18 +145,25 @@ const connexionController = {
    */
   createAccountControl: (request, response, next) => {
     // On récupère les données à contrôler :
-    const formPseudo = request.body.pseudo;
+    const formFirstName = request.body.first_name;
+    const formLastName = request.body.last_name;
+    const formEmail = request.body.email;
     const formPassword_1 = request.body.password_1;
     const formPassword_2 = request.body.password_2;
-    const formEmail_1 = request.body.email_1;
-    const formEmail_2 = request.body.email_2;
+
+    // Ici on fixe la vue à afficher lors du render
+    request.params.pass = 'stdLogin';
 
     // Check empty form
-    if (formPseudo === '' || formPassword_1 === '' || formEmail_1 === '') {
+    if (
+      formFirstName === '' ||
+      formLastName === '' ||
+      formEmail === '' ||
+      formPassword_1 === ''
+    ) {
 
       response.info = 'Les champs sont mal remplis';
       connexionViews.view(request, response);
-
 
     } else {
 
@@ -165,14 +172,10 @@ const connexionController = {
         response.info = 'Les mots de passe ne sont pas identiques';
         connexionViews.view(request, response);
 
-      } else if (formEmail_1 !== formEmail_2) { // Emails check
 
-        response.info = 'Les emails ne sont pas identiques';
-        connexionViews.view(request, response);
+      } else { // Check if Email exists in DB
 
-      } else { // Check if Pseudo exists in DB
-
-        connexionDB.getPseudo(formPseudo, (error, user) => {
+        connexionDB.getEmail(formEmail, (error, user) => {
 
           if (error) {
             console.log('error de la query getPseudo : ', error);
@@ -188,8 +191,15 @@ const connexionController = {
                   console.log(err)
 
                 } else {
+
+                  const dataUser = {
+                    firstName: formFirstName,
+                    lastName: formLastName,
+                    email: formEmail,
+                    hashedPass: hash
+                  }
                   // Ici function avec callback pour l'insertion du profil
-                  connexionDB.insertProfil(formPseudo, hash, formEmail_1, (err, res) => {
+                  connexionDB.insertProfil(dataUser, (err, res) => {
 
                     if (err) {
                       console.log('error de la query insertProfil: ', err);
@@ -199,8 +209,9 @@ const connexionController = {
                       connexionViews.view(request, response);
 
                     } else {
-                      // Ici on renvoi vers le formulaire de connexion standard
-                      request.params.pass = 'stdLogin';
+                      // TODO: Prévoir un envoi de mail pour confirmation de l'adresse mail
+
+
                       response.info = 'Et maintenant on peut se connecter';
                       connexionViews.view(request, response);
 

@@ -3,13 +3,23 @@ const client = require('../../client');
 /*-------------------------------------------------------------*/
 
 const connexionDB = {
-
-  getUser: function(pseudo, callback) {
+  getUserByPseudo: function(pseudo, callback) {
 
     const query = {
       text: `SELECT * FROM forum.users 
     WHERE pseudo=$1;`,
       values: [pseudo]
+    }
+
+    client.query(query, callback)
+  },
+
+  getUserByEmail: function(email, callback) {
+
+    const query = {
+      text: `SELECT * FROM forum.users 
+    WHERE email=$1;`,
+      values: [email]
     }
 
     client.query(query, callback)
@@ -26,12 +36,23 @@ const connexionDB = {
     client.query(query, callback)
   },
 
-  insertProfil: function(pseudo, hashedPass, email, callback) {
+  getEmail: function(email, callback) {
 
     const query = {
-      text: `INSERT INTO forum.users (pseudo, password, email, status)
-    VALUES ($1, $2, $3, 'stdUser');`,
-      values: [pseudo, hashedPass, email]
+      text: `SELECT * FROM forum.users 
+    WHERE email=$1;`,
+      values: [email]
+    }
+
+    client.query(query, callback)
+  },
+
+  insertProfil: function(dataUser, callback) {
+
+    const query = {
+      text: `INSERT INTO forum.users (firstname, lastname, password, email, status)
+    VALUES ($1, $2, $3, $4,'stdUser');`,
+      values: [dataUser.firstName, dataUser.lastName, dataUser.hashedPass, dataUser.email]
     };
 
     client.query(query, callback)
