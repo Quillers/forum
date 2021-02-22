@@ -2,45 +2,66 @@ const client = require('../../client');
 
 const forumDB = {
 
-  getCategories: (callback) => {
-    const query = `SELECT * from forum.category`;
-
-    client.query(query, callback);
+  // thanks to closure, i manage to pass arguments to the client.query callback
+  promiseCB: function(resolve, reject) {
+    return (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(data);
+      }
+    }
   },
 
-  getCategoryIdByName: (categoryName, callback) => {
-    const query = `SELECT id from forum.category WHERE name=$1`;
+  getCategories: () => {
+    return new Promise((resolve, reject) => {
+      const query = `SELECT * from forum.category`;
 
-    client.query(query, [categoryName], callback);
+      client.query(query, forumDB.promiseCB(resolve, reject));
+    })
   },
 
-  getTopicsByCategoryId: (categoryId, callback) => {
-    const query = `SELECT topic.*, users.pseudo FROM forum.topic JOIN forum.users ON forum.topic.users_id=forum.users.id WHERE category_id=$1 ORDER BY topic.created_at ASC`;
+  getCategoryIdByName: (categoryName) => {
+    return new Promise((resolve, reject) => {
+    
+      const query = `SELECT id from forum.category WHERE name=$1`;
 
-    client.query(query, [+categoryId], callback);
+      client.query(query, [categoryName], promiseCB(resolve, reject));
+    });
   },
 
-  getTopicById: (topicId, callback) => {
-    const query = `SELECT topic.*, users.pseudo FROM forum.topic JOIN forum.users ON forum.topic.users_id=forum.users.id WHERE id=$1`;
+  getTopicsByCategoryId: (categoryId) => {
+    return new Promise((resolve, reject) => {
 
-    client.query(query, [+topicId], callback);
+      const query = `SELECT topic.*, users.pseudo FROM forum.topic JOIN forum.users ON forum.topic.users_id=forum.users.id WHERE category_id=$1 ORDER BY topic.created_at ASC`;
+  
+      client.query(query, [+categoryId], forumDB.promiseCB(resolve, reject));
+    });
+    
   },
+
   // TEST ALL MESSAGES
   // this function query makes sure that a particular topic exists in this particular category 
-  checkTopicExistsInCategory: (topicId, catName, callback) => {
-    const query = `
-    SELECT  *
-    FROM forum.topic  JOIN forum.category ON forum.topic.category_id=category.id
-                      JOIN forum.users ON forum.topic.users_id=forum.users.id
-    WHERE forum.category.name=$1 AND forum.topic.id=$2 ORDER BY topic.created_at ASC`;
-
-    client.query(query, [catName, +topicId], callback);
+  checkTopicExistsInCategory: (topicId, catName) => {
+    return new Promise((resolve, reject) => {
+    
+      const query = `
+      SELECT  *
+      FROM forum.topic  JOIN forum.category ON forum.topic.category_id=category.id
+                        JOIN forum.users ON forum.topic.users_id=forum.users.id
+      WHERE forum.category.name=$1 AND forum.topic.id=$2 ORDER BY topic.created_at ASC`;
+  
+      client.query(query, [catName, +topicId], forumDB.promiseCB(resolve, reject));
+    });
   },
 
-  getAllMessagesByTopicId: (topicId, callback) => {
-    const query = `SELECT message.*, users.pseudo FROM forum.message JOIN forum.users ON message.users_id=users.id WHERE topic_id=$1 ORDER BY message.created_at ASC`;
-
-    client.query(query, [+topicId], callback);
+  getAllMessagesByTopicId: (topicId) => {
+    return new Promise((resolve, reject) => {
+    
+      const query = `SELECT message.*, users.pseudo FROM forum.message JOIN forum.users ON message.users_id=users.id WHERE topic_id=$1 ORDER BY message.created_at ASC`;
+  
+      client.query(query, [+topicId],forumDB.promiseCB(resolve, reject));
+    });
   },
 
   createNewTopic: (newTopic, callback) => {
@@ -56,24 +77,24 @@ const forumDB = {
   },
 
   delMessageById: (objParams, callback) => {
-    const preparedQuery= {
+    const preparedQuery = {
       text: `DELETE FROM "forum"."message" WHERE id=$1 AND users_id=$2;
       `,
       values: [objParams.messageId, objParams.users_id]
-     }
+    }
     client.query(preparedQuery, callback);
 
   },
 
   updateMessage: (objParams, callback) => {
-    const preparedQuery= {
+    const preparedQuery = {
       text: ` UPDATE "forum"."message"
                 SET "message_content" = $1, 
                     "modified_at" = CURRENT_TIMESTAMP
                 WHERE id=$2 AND users_id=$3;
       `,
       values: [objParams.message, objParams.messageId, objParams.users_id]
-     }
+    }
     client.query(preparedQuery, callback);
   }
 

@@ -9,119 +9,112 @@ const forumController = {
 
   //code associe a la route /categories
 
-  getCategories: (request, response, next) => {
-    // getting all categories from DB, i specify the callback to treat the result of the query
-    forumDB.getCategories((err, results) => {
-      if (err) {
-        // error first implementation checking for server errors
-        // response.status(500).res("getcategories error: " + error.stack);
-        forumView.categories(response, {
-          categories: [],
-          session: request.session,
-          info: "getcategories error: " + err.stack,
-        });
-      } else {
-        forumView.categories(response, {
-          categories: results.rows,
-          session: request.session,
-          info: response.info,
-        });
-      }
-    });
+  getCategories: async (request, response, next) => {
+
+    try {
+      // getting all categories from DB, i specify the callback to treat the result of the query
+      const results = await forumDB.getCategories();
+
+      forumView.categories(response, {
+        categories: results.rows,
+        session: request.session,
+        info: response.info,
+      });
+
+    } catch (error) {
+
+      // error first implementation checking for server errors
+      // response.status(500).res("getcategories error: " + error.stack);
+      forumView.categories(response, {
+        categories: [],
+        session: request.session,
+        info: "getcategories error: " + error.stack,
+      });
+    }
+
   },
 
   // code associe a la route /categories/:category
 
-  getAllTopicsByCategoryId: (request, response, next) => {
+  getAllTopicsByCategoryId: async (request, response, next) => {
 
-    const categoryName = request.params.categoryName;
-    //First we get all the categories to generate the link in the navigation aside of the page
-    forumDB.getCategories((err, results) => {
-      if (err) {
-        // checking for server Error
-        response.status(500).send(" getcategoryIdByName error: " + err.stack);
+    try {
+      const categoryName = request.params.categoryName;
 
-      } else {
+      //First we get all the categories to generate the link in the navigation aside of the page
+      let results = await forumDB.getCategories();
+      const categories = results.rows;
 
-        // if we don't get a result for the category, then it's a not found error
-        if (!results.rows) {
-          //TODO we need to implement a middleware for the 404 then we use the code
-          next();
-
-
-        } else {
-          const categories = results.rows;
-
-          const currentCategory = categories.find(cat => cat.name === categoryName);
-
-          //if no 404, we then get all the topics from the categoryId
-          forumDB.getTopicsByCategoryId(currentCategory.id, (err, results) => {
-            if (err) {
-              // checking for server Error
-              response.status(500).send(" getTopicsByCategoryId error: " + err.stack);
-
-            } else {
-              const topics = results.rows;
-              forumView.category(response, {
-                topics: topics,
-                categories: categories,
-                currentCategory,
-                session: request.session,
-                info: response.info,
-              });
-            }
-          });
-        }
+      // we get the current category in the list form the request.param
+      const currentCategory = categories.find(category => category.name === categoryName);
+      if (!currentCategory) {
+        throw new Error(`404 - Category "${categoryName}" not found`);
       }
-    });
 
+      // now that i have the current category and the list of categories for the side menu, i need to get all topic by categoryId
+      results = await forumDB.getTopicsByCategoryId(currentCategory.id);
+      const topics = results.rows;
+
+      forumView.category(response, {
+        topics: topics,
+        categories: categories,
+        currentCategory,
+        session: request.session,
+        info: response.info,
+      });
+
+    } catch (error) {
+      if (error.message.includes('404 -')) {
+        response.info = error.message;
+        next();
+      } else {
+        response.status(500).send(" getcategoryIdByName error: " + error.stack);
+      }
+
+    }
   },
 
   // code associe a la route /topics/:categoryName/:topicId
 
-  getAllMessagesByTopicId: (request, response, next) => {
-    const topicId = +request.params.topicId;
-    const catName = request.params.categoryName;
-    // im expecting an int in topicId, if anything else is passed, then 404
-    if (isNaN(topicId)) {
-      //TODO we need to implement a middleware for the 404 then we use the code
-      next();
-      return;
-      //response.status(404).send(`404 NOT FOUND: no such topic exists with id = ${request.params.topicId}`);
-    }
-    //First i need to make sure the topic exists in this category
-    forumDB.checkTopicExistsInCategory(topicId, catName, (err, results) => {
-      if (err) {
-        // checking for server Error
-        response.status(500).send(" getAllMessagesByTopicId error: " + err.stack);
-      } else {
-        const currentTopic = results.rows[0];
-        //if the topic doesnt exist, we go 404
-        if (results.rows[0] === undefined) {
-          next();
-        } else {
-          //then i need to get all the messages from this topic
-          forumDB.getAllMessagesByTopicId(topicId, (err, results) => {
-            if (err) {
-              // checking for server Error
-              response.status(500).send(" getAllMessagesByTopicId error: " + err.stack);
-            } else {
+  getAllMessagesByTopicId: async (request, response, next) => {
 
-              const messages = results.rows;
-              forumView.topic(response, {
-                topic: currentTopic,
-                messages,
-                postUrl: request.url,
-                session: request.session,
-                info: response.info,
-                jsFileUrl: "/js/topic.js"
-              });
-            }
-          });
-        }
+    try {
+      const topicId = +request.params.topicId;
+      const catName = request.params.categoryName;
+      // im expecting an integer in topicId, if anything else is passed, then 404
+      if (isNaN(topicId)) {
+        throw new Error(`404 -  no such topic exists with id = ${request.params.topicId}`);
       }
-    });
 
+      //First i need to make sure the topic exists in this category
+      let results = await forumDB.checkTopicExistsInCategory(topicId, catName);
+      const currentTopic = results.rows[0];
+      //if the topic doesnt exist, we go 404
+      if (currentTopic === undefined) {
+        throw new Error(`404 -  no such topic exists with id = ${request.params.topicId}`);
+      }
+
+      //then i need to get all the messages from this topic
+      results = await forumDB.getAllMessagesByTopicId(topicId);
+
+      const messages = results.rows;
+      forumView.topic(response, {
+        topic: currentTopic,
+        messages,
+        postUrl: request.url,
+        session: request.session,
+        info: response.info,
+        jsFileUrl: "/js/topic.js"
+      });
+
+    } catch (error) {
+      if (error.message.includes('404 -')) {
+        response.info = error.message;
+        next();
+      } else {
+        response.status(500).send(" getcategoryIdByName error: " + error.stack);
+      }
+    } 
   },
 
   /*
@@ -214,6 +207,7 @@ const forumController = {
     }
   },
 
+  // code associe a la route /topics/:categoryName/:topicId/delete
   // middleware pour traiter la demande de suppression d un message par son id
   deleteMessage: (request, response, next) => {
 
@@ -255,6 +249,8 @@ const forumController = {
 
     });
   },
+
+  // code associe a la route /topics/:categoryName/:topicId/edit
 
   editMessage: (request, response, next) => {
 

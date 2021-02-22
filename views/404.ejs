@@ -1,6 +1,10 @@
 <%- include("partials/header.ejs") %>
 
-<div class="page404">La page 404...</div>
+<h1 class="page404">La page 404...</h1>
+
+<% if (locals.info) { %> 
+<div><%= info %></div>
+<% } %> 
 
 
 <%- include("partials/footer.ejs") %>
