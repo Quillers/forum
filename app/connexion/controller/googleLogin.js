@@ -1,19 +1,10 @@
 const { google } = require('googleapis');
 const OAuth2Data = require('./google_key.json')
 
-/*
-This is where we try to log in with google account...
-*/
-
 /**
- * Part 1: Create a Google URL and send it to the client in order for the user to log in.
+ * Create a OAuthClient 2.0 that handles flow with API
  */
-
-/**
- * Part 2: Take the "code" parameter which Google gives us when the user logs in, then get the user's email and id.
- */
-
-const auth = new google.auth.OAuth2(
+const oAuth2Client = new google.auth.OAuth2(
 
   OAuth2Data.web.client_id,
   OAuth2Data.web.client_secret,
@@ -21,7 +12,10 @@ const auth = new google.auth.OAuth2(
 
 );
 
-const url = auth.generateAuthUrl({
+/**
+ * Generates the google account identification's url.
+ */
+const url = oAuth2Client.generateAuthUrl({
   access_type: 'offline',
   prompt: 'consent',
   scope: [
@@ -30,15 +24,23 @@ const url = auth.generateAuthUrl({
 ]
 });
 
+/**
+ * Gets the informations sent by google People API
+ * @param {string} code 
+ */
 const getGoogleAccountFromCode = async (code) => {
 
   try {
-    const data = await auth.getToken(code);
+    // Gets the access token for the given code.
+    const data = await oAuth2Client.getToken(code);
     const tokens = data.tokens;
 
-    auth.setCredentials(tokens);
+    // Sets the auth credentials.
+    oAuth2Client.setCredentials(tokens);
 
-    const people = google.people({ version: 'v1', auth });
+    // The user agreed to allow our app by giving appropriates tokens.
+    // We can now use those tokens with our client to get the corresponding infos from the API
+    const people = google.people({ version: 'v1', auth: oAuth2Client });
 
     const me = await people.people.get({
       personFields: [`emailAddresses`, `names`],
