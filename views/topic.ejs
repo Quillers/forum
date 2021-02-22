@@ -1,6 +1,12 @@
 
     <%- include("partials/header.ejs") %>
 
+    <style>
+       .message__main--hidden {
+          display: none;
+       }
+   </style>
+
     <% if (session.data.userInfos !== null) {%> 
     <h2>Bonjour je suis <%= session.data.userInfos.pseudo %> avec mon id= <%= session.data.userInfos.id %></h2>
     <% } %> 
@@ -22,21 +28,44 @@
            <!-- We loop through all the messages to display them -->
            
             <% for (message of messages) { %>
-           
+                  
+
                <article style="border:2px solid black;margin-bottom:1rem" class="message">
                <header style="display: flex; justify-content:space-between; border:1px solid gray" class="message__header">
                   <h3 class="message__author"><%= message.pseudo %></h3>
 
                   <% if (session.data.logguedIn && message.users_id === session.data.userInfos.id) { %>
-                     <!-- hidden form -->
+                     <!-- user can access this buttons only if he is connected and owns the message -->
+                     <!-- button to edit the message -->
+                     <button class="edit__btn">edit</button>
+
+                     <!-- hidden form to delete the post-->
                      <form action="<%= postUrl + '/delete' %>" method="POST">
                         <input type="hidden" id="deleteMessageId" name="deleteMessageId" value="<%= message.id %> ">
-                        <button type="submit" style="color:red; font-weight:bold; border:2px solid red; border-radius: 5px; padding: 0 5px"href="#"> x</button>
+                        <button type="submit" style="color:red; font-weight:bold; border:2px solid red; border-radius: 5px; padding: 0 5px"> x</button>
                      </form>
                  
                   <% } %>
 
                </header>
+               <% if (session.data.logguedIn && message.users_id === session.data.userInfos.id) { %>
+                     <!-- user can access the edit form only if he is connected and owns the message -->
+
+                  <section class="message__main message__main--hidden">
+   
+                  <form action="<%= postUrl + '/edit' %>" method="POST" class="modMessage__form">
+                       
+                     <textarea
+                        name="modMessage"
+                        class="modMessage__area"
+                        > <%= message.message_content %> </textarea>
+                     <input type="hidden" name="modMessageId" value="<%= message.id %> ">
+                     <button class="btn__submit" type="submit">Modifier</button>
+   
+                  </form>
+               </section>
+                  <% } %>
+
                <section class="message__main">
                   <%= message.message_content %>
                </section>
@@ -63,7 +92,8 @@
             <button class="btn__submit" type="submit">Poster</button>
          </form>
 <% } %>
-     
 
-      <%- include("partials/footer.ejs") %> 
+
+
+      <%- include("partials/footer.ejs", { jsFileUrl }) %> 
     
