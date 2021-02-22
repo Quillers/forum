@@ -43,13 +43,13 @@ const forumDB = {
   },
 
   createNewTopic: (newTopic, callback) => {
-    const query = `INSERT INTO forum.topic ('title', 'topic_description', 'author', 'category_id') VALUES
+    const query = `INSERT INTO forum.topic ("title", "topic_description", "author", "category_id") VALUES
         ($1, $2, $3, $4)`;
     client.query(query, [newTopic.title, newTopic.topicDesc, newTopic.author, newTopic.categoryId], callback);
   },
 
   createNewMessage: (newMessage, callback) => {
-    const query = `INSERT INTO forum.message ('author', 'message_content', 'topic_id') VALUES
+    const query = `INSERT INTO forum.message ("author", "message_content", "topic_id") VALUES
         ($1, $2, $3)`;
     client.query(query, [newMessage.author, newMessage.messageContent, newMessage.topicId], callback);
   },
