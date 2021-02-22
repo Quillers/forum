@@ -23,6 +23,7 @@ router.get('/topics/:categoryName/:topicId', forumController.getAllMessagesByTop
 
 // CONNEXION
 router.get('/connexion/google', connexionController.getUserInfoFromGoogle);
+router.get('/connexion/mailer', connexionController.sendLostPassMail)
 router.get('/connexion/:pass', connexionController.selectGET);
 
 // PROFILE

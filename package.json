@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node-dev index.js"
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +17,8 @@
     "express-session": "^1.17.1",
     "googleapis": "^67.1.0",
     "node-dev": "^6.2.0",
+    "nodemailer": "^6.4.18",
+    "nodemailer-smtp-transport": "^2.7.4",
     "nodemon": "^2.0.7",
     "pg": "^8.5.1"
   }

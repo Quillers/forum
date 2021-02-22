@@ -2,6 +2,7 @@ const connexionViews = require('../view/connexionViews');
 const connexionDB = require('../model/connexionDB');
 const mainController = require('../../main/controller/mainController');
 const bcrypt = require('bcrypt');
+const mailer = require('./mailer');
 
 const {
   url,
@@ -359,6 +360,17 @@ const connexionController = {
       response.info = 'Aïe, le profile n\'a pas été enregistré dans la base';
       connexionViews.view(request, response);
     }
+  },
+
+  sendLostPassMail: (request, response) => {
+
+    const email = `jupellin39@gmail.com`;
+    const message = `Alors ? Tu me lis ?`;
+    mailer.sendMail(email, message);
+
+    response.info = 'Alors ?';
+    request.params.pass = 'index';
+    connexionViews.view(request, response);
   }
 }
 
