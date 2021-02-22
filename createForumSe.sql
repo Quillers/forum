@@ -8,6 +8,7 @@ COMMENT ON SCHEMA forum IS 'La base du forum des quillers';
 
 CREATE TABLE forum.users (
     id SERIAL PRIMARY KEY,
+    pseudo character varying(50) NOT NULL,
     firstname character varying(50) NOT NULL,
     lastname character varying(50) NOT NULL,
     password character varying(255) NOT NULL,
@@ -47,8 +48,8 @@ CREATE TABLE forum.topic (
 ALTER TABLE forum.topic OWNER TO "quiltuuc_ju";
 
 
-INSERT INTO forum.users (firstname, lastname, password, email, status) VALUES
-('Julien', 'Pellin', '$2b$10$EUaudgeyxHm8Tl0PwEQxi.fGH.8BXR8J3aLyMCZfsDqoIqsdWAeby', 'jupellin39@gmail.com',   'dev');
+INSERT INTO forum.users (pseudo, firstname, lastname, password, email, status) VALUES
+('J-P', 'Julien', 'Pellin', '$2b$10$EUaudgeyxHm8Tl0PwEQxi.fGH.8BXR8J3aLyMCZfsDqoIqsdWAeby', 'jupellin39@gmail.com',   'dev');
 
 INSERT INTO forum.category ("name") VALUES
 ('animals'),

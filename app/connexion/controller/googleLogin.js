@@ -47,9 +47,13 @@ const getGoogleAccountFromCode = async (code) => {
       resourceName: 'people/me'
     });
 
+    const firstName = me.data.names[0].givenName;
+    const lastName = me.data.names[0].familyName;
+    const pseudo = `${firstName.subString(0,1)}-${lastName.subString(0,1)}`
     return {
-      firstName: me.data.names[0].givenName,
-      lastName: me.data.names[0].familyName,
+      pseudo,
+      firstName,
+      lastName,
       email: me.data.emailAddresses[0].value,
     };
 

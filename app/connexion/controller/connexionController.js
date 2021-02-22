@@ -201,6 +201,7 @@ const connexionController = {
                 } else {
 
                   const dataUser = {
+                    pseudo: `${formFirstName.subString(0,1)}-${formLastName.subString(0,1)}`,
                     firstName: formFirstName,
                     lastName: formLastName,
                     email: formEmail,
@@ -330,7 +331,7 @@ const connexionController = {
 
         } else {
 
-          connexionDB.insertProfilFromGoogle(dataUser, (err, res) => {
+          connexionDB.insertProfil(dataUser, (err, res) => {
 
             console.log('result', res);
 

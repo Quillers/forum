@@ -49,20 +49,9 @@ const connexionDB = {
   insertProfil: function(dataUser, callback) {
 
     const query = {
-      text: `INSERT INTO forum.users (firstname, lastname, password, email, status)
-    VALUES ($1, $2, $3, $4,'stdUser');`,
-      values: [dataUser.firstName, dataUser.lastName, dataUser.hashedPass, dataUser.email]
-    };
-
-    client.query(query, callback)
-  },
-
-  insertProfilFromGoogle: function(dataUser, callback) {
-
-    const query = {
-      text: `INSERT INTO forum.users (firstname, lastname, password, email, status)
-    VALUES ($1, $2, $3, $4, 'stdUser') RETURNING id, status;`,
-      values: [dataUser.firstName, dataUser.lastName, 'google', dataUser.email]
+      text: `INSERT INTO forum.users (pseudo, firstname, lastname, password, email, status)
+    VALUES ($1, $2, $3, $4, $5, 'stdUser');`,
+      values: [dataUser.pseudo, dataUser.firstName, dataUser.lastName, dataUser.hashedPass, dataUser.email]
     };
 
     client.query(query, callback)
