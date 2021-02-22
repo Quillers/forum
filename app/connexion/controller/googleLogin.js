@@ -53,8 +53,8 @@ const getGoogleAccountFromCode = async (code) => {
 
     return {
       pseudo,
-      firstname: firstName,
-      lastname: lastName,
+      firstName,
+      lastName,
       hashedPass: `####`,
       email: me.data.emailAddresses[0].value,
     };

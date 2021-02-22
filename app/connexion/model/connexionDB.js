@@ -50,7 +50,7 @@ const connexionDB = {
 
     const query = {
       text: `INSERT INTO forum.users (pseudo, firstname, lastname, password, email, status)
-    VALUES ($1, $2, $3, $4, $5, 'stdUser');`,
+    VALUES ($1, $2, $3, $4, $5, 'stdUser') RETURNING id;`,
       values: [dataUser.pseudo, dataUser.firstName, dataUser.lastName, dataUser.hashedPass, dataUser.email]
     };
 

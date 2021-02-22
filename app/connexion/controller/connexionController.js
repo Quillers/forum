@@ -333,19 +333,24 @@ const connexionController = {
 
           connexionDB.insertProfil(dataUser, (err, res) => {
 
-            console.log('result', res);
+            if (err) {
+              response.info = err;
+              response.redirect('/');
+            } else {
 
-            // Ici faire la connexion directement :
-            // ici mettre les valeurs d'identification dans la session
-            request.session.data.logguedIn = true;
-            request.session.data.userInfos = {
-              id: res.rows[0].id,
-              status: res.rows[0].status,
-              pseudo: `${dataUser.firstName} ${dataUser.lastName}`
+              console.log('result', res);
+
+              // Ici faire la connexion directement :
+              // ici mettre les valeurs d'identification dans la session
+              request.session.data.logguedIn = true;
+              request.session.data.userInfos = {
+                id: res.rows[0].id,
+                status: res.rows[0].status,
+                pseudo: res.rows[0].pseudo
+              }
+
+              response.redirect('/categories');
             }
-
-            response.redirect('/categories');
-
           })
         }
       })
