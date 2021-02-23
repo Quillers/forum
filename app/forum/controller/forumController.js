@@ -124,51 +124,57 @@ const forumController = {
   // code associe a la route /topics/:categoryName/post
 
 
-  createNewTopic: (request, response, next) => {
+  createNewTopic: async (request, response, next) => {
 
-    if (!request.session.data.logguedIn) {
+    // if (!request.session.data.logguedIn) {
+    //   response.redirect(`/categories/${request.params.categoryName}`);
+    //   return;
+    // }
+
+    try {
+      const newTopic = {
+        topicDesc: request.body.topic__desc.trim(),
+        users_id: +request.session.data.userInfos.id,
+        title: request.body.topic__title.trim()
+      }
+      const categoryName = request.params.categoryName;  
+    
+      //...here i just make sure author, description and content are not empty
+      if (!newTopic.topicDesc || !newTopic.title) {
+        throw new Error('Empty fields - your Topic was not created because your title or message content was empty');
+      }
+      //we search the category id by its name store in req.params
+      let results = await forumDB.getCategoryIdByName(categoryName);
+      
+      // if we have no results, then the url was wrong, changed by user
+      if (!results.rows[0]) {
+        throw new Error(`404 - no such category exists with name = ${categoryName}`);
+      }
+
+      // we get the id, add it to the object then send the info to createa the topic in the db
+      newTopic.categoryId = results.rows[0].id;
+      results = await forumDB.createNewTopic(newTopic);
+
+      //we redirect to the topic list page
       response.redirect(`/categories/${request.params.categoryName}`);
-      return;
-    }
 
-    const newTopic = {
-      topicDesc: request.body.topic__desc.trim(),
-      users_id: +request.session.data.userInfos.id,
-      title: request.body.topic__title.trim()
-    }
-    const categoryName = request.params.categoryName;
-    //TODO need to validate the data!!!! => saw a video about request header and validate from front JS
+    } catch (error) {
+      if ((error.message.includes('404 -'))) {
 
-    //...here i just make sure author, description and content are not empty
-    if (!newTopic.topicDesc || !newTopic.title) {
-      response.send(`
-            <h1>Recommencez votre topic, vous avez oublie quelque chose</h1>
-            <a href="/categories/${request.params.categoryName}">Retourner a la liste des sujets</a>
-            `);
-    } else {
-      forumDB.getCategoryIdByName(categoryName, (err, results) => {
-        if (err) {
-          // checking for server Error
-          response.status(500).send(" getCategoryIdByName createtopic error: " + err.stack);
-        } else {
-          if (!results.rows[0]) {
-            //TODO we need to implement a middleware for the 404 then we use the code
-            //next();
-            response.status(404).send(`404 NOT FOUND: no such category exists with name = ${categoryName}`);
-          } else {
-            newTopic.categoryId = results.rows[0].id;
-            forumDB.createNewTopic(newTopic, (err, results) => {
-              if (err) {
-                // checking for server Error
-                response.status(500).send("createNewTopic error: " + err.stack);
-              } else {
-                response.redirect(`/categories/${request.params.categoryName}`);
-              }
-            });
-          }
-        }
-      });
+        response.info = error.message;
+        next();
 
+      } else if ((error.message.includes('Empty fields -'))) {
+
+        request.session.data.createError = error.message;
+        
+        response.redirect(`/categories/${request.params.categoryName}`);
+
+      } else {
+
+        response.status(500).send(" 505 - createtopic error: " + error.stack);
+
+      }
     }
   },
 
