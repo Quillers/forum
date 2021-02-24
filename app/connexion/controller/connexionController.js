@@ -4,11 +4,8 @@ const bcrypt = require('bcrypt');
 const generatePassword = require('generate-password');
 const nodemailer = require('./../MW/nodemailer');
 
-
-const {
-  url,
-  getGoogleAccountFromCode
-} = require('../MW/googleLogin');
+const { githubURL } = require('../MW/githubTools');
+const { url } = require('../MW/googleTools');
 
 
 const connexionController = {
@@ -17,6 +14,8 @@ const connexionController = {
 
   stdConnexion: (request, response) => {
     response.locals.urlGoogle = url;
+    response.locals.urlGithub = githubURL;
+
     connexionViews.view(request, response)
   },
 

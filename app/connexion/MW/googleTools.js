@@ -49,7 +49,7 @@ const getGoogleAccountFromCode = async (code) => {
 
     const firstName = me.data.names[0].givenName;
     const lastName = me.data.names[0].familyName;
-    const pseudo = `${firstName.substring(0,1)}-${lastName.substring(0,1)}`;
+    const pseudo = `${firstName}-${lastName}`;
 
     return {
       pseudo,
@@ -61,6 +61,7 @@ const getGoogleAccountFromCode = async (code) => {
 
   } catch (error) {
     console.log(error)
+    return false
   }
 }
 

@@ -1,5 +1,8 @@
 const connexionController = require('../controller/connexionController');
 const mainController = require('./../../main/controller/mainController');
+const APIController = require('./../controller/APIController')
+
+
 const connexionSwitch = {
   /*-------------- ROUTE SELECTOR ------------*/
 
@@ -73,7 +76,11 @@ const connexionSwitch = {
         break;
 
       case 'google':
-        connexionController.getUserInfoFromGoogle(request, response);
+        APIController.google(request, response);
+        break;
+
+      case 'github':
+        APIController.github(request, response);
         break;
 
       case 'mailConfirm':
