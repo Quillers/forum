@@ -1,4 +1,3 @@
-module.exports =
   /**
    * After a user is identified, retrieve infos from google redirect url <code>
    * @param {Objet} request 

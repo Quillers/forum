@@ -36,7 +36,7 @@ router.post('/topics/:categoryName/post', forumController.createNewTopic);
 router.post('/topics/:categoryName/:topicId/post', forumController.createNewMessage);
 
 // CONNEXION
-router.post('/postConnexion/:pass', connexionSwitch.POST);
+router.post('/postConnexion/:view', connexionSwitch.POST);
 
 // PROFILE
 router.post('/postProfile/:pass', profileController.selectPOST);

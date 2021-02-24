@@ -13,9 +13,9 @@ const connexionSwitch = {
    */
   POST: function(request, response) {
     // Ici récupérer :pass et envoyer la suite en fonction, faire un switch
-    var pass = request.params.pass;
+    var view = request.params.view;
 
-    switch (pass) {
+    switch (view) {
       case 'stdLogin':
         connexionController.stdLoginControl(request, response);
         break;

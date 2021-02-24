@@ -70,7 +70,7 @@ const connexionDB = {
       text: `UPDATE forum.users
     SET password = $1
     WHERE id = $2 RETURNING password;`,
-      values: [data.password, data.id]
+      values: [data.hashedPassword, data.id]
     }
 
     client.query(query, callback);
