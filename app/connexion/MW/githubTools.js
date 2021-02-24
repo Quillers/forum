@@ -50,8 +50,8 @@ module.exports = {
 
       return {
         pseudo: user.data.login,
-        firstName: null,
-        lastName: null,
+        firstName: '',
+        lastName: '',
         hashedPass: accessToken,
         email: user.data.email
       };

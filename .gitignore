@@ -3,5 +3,6 @@ dist
 .env
 .vscode
 google_key.json
+google_key_local.json
 github_key_local.json
 github_key_quillers.json

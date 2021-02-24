@@ -131,7 +131,7 @@ const connexionController = {
                 } else {
 
                   const dataUser = {
-                    pseudo: `${formFirstName.substring(0,1)}-${formLastName.substring(0,1)}`,
+                    pseudo: `${formFirstName}-${formLastName}`,
                     firstName: formFirstName,
                     lastName: formLastName,
                     email: formEmail,
