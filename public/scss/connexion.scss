@@ -1,107 +1,320 @@
+@import './main.scss';
 /*-------------------------------------------------*/
 /*-------------------------------------------------*/
 /*-------------------------------------------------*/
 
 .connexion {
-  &__formContainer {
+  height: 100%;
+  position: relative;
+
+  &__container {
+    margin: auto;
+    margin-top: 20vh;
     display: flex;
     justify-content: center;
-    width: 70vw;
-    margin-top: 4vw;
+    align-items: center;
+    max-width: 800px;
+    width: 100%;
+    color: var(--color-darkblue);
+    margin-bottom: 5vh;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      margin-top: 5vh;
+    }
+  }
+
+  &__commBox {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    padding: 20px;
+
+    @media (max-width: 768px) {
+      width: 80%;
+    }
+
+    @media (max-width: 400px) {
+      padding: 10px;
+      width: 100%;
+    }
+
+    &__title {
+      padding: 10px;
+      font-size: 50px;
+      font-weight: bold;
+
+      @media (max-width: 768px) {
+        font-size: 30px;
+      }
+
+      @media (max-width: 400px) {
+        font-size: 20px;
+      }
+    }
+
+    &__text {
+      padding: 10px;
+      font-size: 30px;
+
+      @media (max-width: 768px) {
+        font-size: 20px;
+      }
+
+      @media (max-width: 400px) {
+        font-size: 15px;
+      }
+    }
+  }
+
+  &__button {
+    &__service {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: white;
+      border: 1px solid var(--color-darkblue);
+      border-radius: 5px;
+      width: 45%;
+      height: 40px;
+      margin: 15px 0;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      margin: 10px 0;
+    }
+
+    &__connexion {
+      width: 100%;
+      height: 40px;
+      margin: 15px 0;
+      border: none;
+      border-radius: 5px;
+      background-color: var(--color-darkblue);
+      color: var(--color-light);
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+
+      @media (max-width: 768px) {
+        margin: 10px 0;
+      }
+    }
+
+    &__createProfile {
+      width: 50%;
+      height: 40px;
+      margin: 15px 0;
+      border: none;
+      border-radius: 5px;
+      background-color: var(--color-grey);
+      color: var(--color-light);
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+
+      @media (max-width: 768px) {
+        margin: 10px 0;
+      }
+    }
   }
 
   &__form {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-
-    &__item {
-      padding: 0.5vw;
-      margin: 0.5vw;
-    }
-  }
-
-  &__infoDev {
-    padding: 10px;
-    position: fixed;
-    top: -100vh;
-    background-color: var(--color-mediumblue);
-    color: var(--color-lightblue);
-    font-weight: bold;
-    z-index: 1000;
-  }
-
-  &__devButton {
-    position: fixed;
-    top: 100px;
-    left: 0;
-    padding: 10px;
-    border-radius: 0 50% 50% 0;
-    background-color: var(--color-lightblue);
-    color: -var(--color-darkblue);
-    cursor: pointer;
-    z-index: 1000;
-  }
-
-  &__item {
-    margin: 5px;
-  }
-}
-
-/*-------------------------------------------------*/
-/*-------------------------------------------------*/
-/*-------------------------------------------------*/
-
-.stdLogin {
-  &__container {
     width: 100%;
-    display: flex;
-    justify-content: center;
-  }
 
-  &__formContainer {
-    width: 50%;
-    max-width: 700px;
-    padding: 80px 80px 20px 90px;
-    border: 2px solid var(--color-yellow);
-    border-radius: 10px;
-    background-color: var(--color-verylightblue);
-  }
+    &__container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 50%;
+      border: 1px solid var(--color-darkblue);
+      border-radius: 10px;
+      padding: 20px;
 
-  &__form {
-    display: flex;
-    flex-direction: column;
+      @media (max-width: 768px) {
+        width: 80%;
+      }
 
-    &__item {
-      font-family: 'PT Mono', serif;
-      font-weight: bolder;
-      color: var(--color-grey);
-      padding: 10px;
-      margin: 10px;
-
-      & type[input] {
-        border: 1px solid var(--color-grey);
+      @media (max-width: 400px) {
+        width: 100%;
+        border: none;
+        border-radius: 0;
+        border-top: 1px solid var(--color-darkblue);
+        padding: 10px;
       }
     }
 
     &__buttonRow {
+      width: 100%;
       display: flex;
-      margin: 8px;
+      justify-content: space-between;
+      margin: 15px 0;
+    }
 
-      & button {
-        border-radius: 10px;
-        background-color: var(--color-mediumblue);
-        color: var(--color-verylightblue);
+    &__hr {
+      width: 100%;
+      border: none;
+      border-top: 1px solid var(--color-darkblue);
+      color: var(--color-darkblue);
+      overflow: visible;
+      text-align: center;
+      height: 5px;
+    }
+
+    &__hr__OR:after {
+      background: var(--color-light);
+      content: 'OR';
+      padding: 0 4px;
+      position: relative;
+      top: -8px;
+    }
+
+    &__input {
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0;
+    }
+
+    &__forgotPass {
+      margin: 20px 0;
+      cursor: pointer;
+    }
+  }
+
+  &__modale {
+    position: absolute;
+    top: -200vh;
+    z-index: 2;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--color-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: top 300ms ease-in-out;
+
+    &__container {
+      position: relative;
+      max-width: 500px;
+      width: 60%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 1px solid var(--color-darkblue);
+      border-radius: 10px;
+      padding: 40px;
+
+      @media (max-width: 768px) {
+        width: 80%;
+      }
+
+      @media (max-width: 400px) {
+        width: 100%;
         border: none;
+      }
+
+    }
+
+    &__form {
+      &__container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 80%;
+
+        @media (max-width: 768px) {
+          width: 90%;
+        }
+
+        @media (max-width: 400px) {
+          width: 100%;
+        }
+      }
+
+      &__row {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
+        & input {
+          width: 48%;
+        }
+      }
+    }
+
+    &__title {
+      width: 80%;
+      font-size: 30px;
+      color: var(--color-darkblue);
+
+      @media (max-width: 768px) {
+        width: 90%;
+      }
+
+      @media (max-width: 400px) {
+        width: 100%;
+      }
+
+    }
+
+    &__quit {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      border: none;
+      background-color: transparent;
+
+      & img {
+        width: 20px;
+        cursor: pointer;
       }
     }
   }
 }
 
+/*-------------------------------------------------*/
+/*-------------------------------------------------*/
+
 /*----------------------------------------*/
 /*----------------------------------------*/
 /*----------------------------------------*/
 
+.--infoDev {
+  padding: 10px;
+  position: fixed;
+  top: -100vh;
+  background-color: var(--color-mediumblue);
+  color: var(--color-lightblue);
+  font-weight: bold;
+  z-index: 1000;
+}
+
+.--devButton {
+  position: fixed;
+  top: 100px;
+  left: 0;
+  padding: 10px;
+  border-radius: 0 50% 50% 0;
+  background-color: var(--color-lightblue);
+  color: -var(--color-darkblue);
+  cursor: pointer;
+  z-index: 1000;
+}
+
 .--showInfo {
   top: 150px;
+}
+
+.--connexion {
+
+  &__show {
+    top: 0;
+    transition: top 300ms ease-in-out;
+  }
 }

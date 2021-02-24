@@ -38,7 +38,15 @@
   font-size: 25px;
   line-height: 28px;
 }
+.header__nav__links__link:hover {
+  text-decoration: underline wavy;
+}
 .header__nav__loginButton {
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+  width: 130px;
+  height: 50px;
   font-family: "PT Mono", serif;
   font-size: 20px;
   font-style: normal;
@@ -50,4 +58,33 @@
   box-sizing: border-box;
   border-radius: 2px;
   padding: 10px;
+}
+.header__nav__loginButton:hover > a {
+  color: #EFF8FA;
+  text-decoration: underline wavy;
+}
+.header__nav__loginButton:hover:before {
+  transform: scale(18);
+}
+.header__nav__loginButton a {
+  position: absolute;
+  text-decoration: none;
+  top: 30%;
+  right: 18%;
+  z-index: 3;
+  color: #5266B0;
+  transition: color 450ms;
+}
+.header__nav__loginButton:before {
+  content: "";
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background-color: #5266B0;
+  position: absolute;
+  bottom: -18px;
+  left: -18px;
+  transition: transform 400ms ease-in-out;
+  z-index: 1;
 }

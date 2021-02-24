@@ -3,12 +3,21 @@ const connexionDB = require('../model/connexionDB');
 const mainController = require('../../main/controller/mainController');
 const bcrypt = require('bcrypt');
 
+const {
+  url,
+  getGoogleAccountFromCode
+} = require('./googleLogin');
+
 
 const connexionController = {
 
   /*-------------- VIEWS ----------------*/
 
-  stdConnexion: (request, response) => { connexionViews.view(request, response) },
+  stdConnexion: (request, response) => {
+    response.locals.urlGoogle = url;
+    connexionViews.view(request, response)
+  },
+
   createAccount: (request, response) => { connexionViews.view(request, response); },
   lostPass: (request, response) => { connexionViews.view(request, response); },
   deleteUser: (request, response) => { connexionViews.view(request, response); },
@@ -58,7 +67,6 @@ const connexionController = {
   selectGET: (request, response) => {
     // Ici récupérer :pass et envoyer la suite en fonction, faire un switch
     const pass = request.params.pass;
-    console.log('etape 0', pass);
 
     switch (pass) {
       case 'stdLogin':
@@ -90,15 +98,14 @@ const connexionController = {
    * Controls wether the user informations matches usersDatabase
    */
   stdLoginControl: (request, response) => {
-    const formPseudo = request.body.pseudo;
-    const formPassword = request.body.password;
+    const formEmail = request.body.email;
 
     // Ici on récupère les données user en BDD.
-    connexionDB.getUser(formPseudo, (err, user) => {
+    connexionDB.getUserByEmail(formEmail, (err, user) => {
 
       if (err) {
 
-        console.log('erreur dans connexionDB.getUser :', err)
+        console.log('erreur dans connexionDB.getUserByEmail :', err)
         response.info = 'Il y a eu une erreur, merci de réessayer';
         connexionViews.view(request, response);
 
@@ -127,8 +134,8 @@ const connexionController = {
               request.session.data.logguedIn = true;
               request.session.data.userInfos = user.rows[0];
 
-              response.info = 'La connexion c bon'
-              connexionViews.view(request, response);
+              response.info = 'La connexion c bon';
+              response.redirect('/categories');
 
             } else {
 
@@ -146,18 +153,25 @@ const connexionController = {
    */
   createAccountControl: (request, response, next) => {
     // On récupère les données à contrôler :
-    const formPseudo = request.body.pseudo;
+    const formFirstName = request.body.first_name;
+    const formLastName = request.body.last_name;
+    const formEmail = request.body.email;
     const formPassword_1 = request.body.password_1;
     const formPassword_2 = request.body.password_2;
-    const formEmail_1 = request.body.email_1;
-    const formEmail_2 = request.body.email_2;
+
+    // Ici on fixe la vue à afficher lors du render
+    request.params.pass = 'stdLogin';
 
     // Check empty form
-    if (formPseudo === '' || formPassword_1 === '' || formEmail_1 === '') {
+    if (
+      formFirstName === '' ||
+      formLastName === '' ||
+      formEmail === '' ||
+      formPassword_1 === ''
+    ) {
 
       response.info = 'Les champs sont mal remplis';
       connexionViews.view(request, response);
-
 
     } else {
 
@@ -166,14 +180,10 @@ const connexionController = {
         response.info = 'Les mots de passe ne sont pas identiques';
         connexionViews.view(request, response);
 
-      } else if (formEmail_1 !== formEmail_2) { // Emails check
 
-        response.info = 'Les emails ne sont pas identiques';
-        connexionViews.view(request, response);
+      } else { // Check if Email exists in DB
 
-      } else { // Check if Pseudo exists in DB
-
-        connexionDB.getPseudo(formPseudo, (error, user) => {
+        connexionDB.getEmail(formEmail, (error, user) => {
 
           if (error) {
             console.log('error de la query getPseudo : ', error);
@@ -189,8 +199,16 @@ const connexionController = {
                   console.log(err)
 
                 } else {
+
+                  const dataUser = {
+                    pseudo: `${formFirstName.substring(0,1)}-${formLastName.substring(0,1)}`,
+                    firstName: formFirstName,
+                    lastName: formLastName,
+                    email: formEmail,
+                    hashedPass: hash
+                  }
                   // Ici function avec callback pour l'insertion du profil
-                  connexionDB.insertProfil(formPseudo, hash, formEmail_1, (err, res) => {
+                  connexionDB.insertProfil(dataUser, (err, res) => {
 
                     if (err) {
                       console.log('error de la query insertProfil: ', err);
@@ -200,8 +218,9 @@ const connexionController = {
                       connexionViews.view(request, response);
 
                     } else {
-                      // Ici on renvoi vers le formulaire de connexion standard
-                      request.params.pass = 'stdLogin';
+                      // TODO: Prévoir un envoi de mail pour confirmation de l'adresse mail
+
+
                       response.info = 'Et maintenant on peut se connecter';
                       connexionViews.view(request, response);
 
@@ -288,6 +307,58 @@ const connexionController = {
 
       }
     })
+  },
+
+  /**
+   * After a user is identified, retrieve infos from google redirect url <code>
+   * @param {Objet} request 
+   * @param {Objet} response 
+   */
+  getUserInfoFromGoogle: async (request, response) => {
+
+    try {
+      const dataUser = await getGoogleAccountFromCode(request.query.code);
+
+      // Ici on vérifie si l'utilisateur existe en DBUser
+      connexionDB.getUserByEmail(dataUser.email, (err, res) => {
+
+        if (res.rows.length) {
+
+          request.session.data.logguedIn = true;
+          request.session.data.userInfos = res.rows[0];
+
+          response.redirect('/categories');
+
+        } else {
+
+          connexionDB.insertProfil(dataUser, (err, res) => {
+
+            if (err) {
+              response.info = err;
+              response.redirect('/');
+            } else {
+
+              console.log('result', res);
+
+              // Ici faire la connexion directement :
+              // ici mettre les valeurs d'identification dans la session
+              request.session.data.logguedIn = true;
+              request.session.data.userInfos = {
+                id: res.rows[0].id,
+                status: res.rows[0].status,
+                pseudo: res.rows[0].pseudo
+              }
+
+              response.redirect('/categories');
+            }
+          })
+        }
+      })
+    } catch (error) {
+      console.log(error)
+      response.info = 'Aïe, le profile n\'a pas été enregistré dans la base';
+      connexionViews.view(request, response);
+    }
   }
 }
 

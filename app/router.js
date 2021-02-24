@@ -22,6 +22,7 @@ router.get('/topics/:categoryName/:topicId', forumController.getAllMessagesByTop
 
 
 // CONNEXION
+router.get('/connexion/google', connexionController.getUserInfoFromGoogle);
 router.get('/connexion/:pass', connexionController.selectGET);
 
 // PROFILE
@@ -39,7 +40,6 @@ router.post('/postConnexion/:pass', connexionController.selectPOST);
 
 // PROFILE
 router.post('/postProfile/:pass', profileController.selectPOST);
-
 
 
 /*--------------------------------------------*/
