@@ -7,6 +7,18 @@
        }
    </style>
 
+   <% if (session.data.deleteError) { %> 
+      <div style="color: red;"><%= session.data.deleteError %></div>
+
+      <% session.data.deleteError = null;
+   } %>
+
+<% if (session.data.editError) { %> 
+   <div style="color: red;"><%= session.data.editError %></div>
+
+   <% session.data.editError = null;
+} %>
+
     <% if (session.data.userInfos !== null) {%> 
     <h2>Bonjour je suis <%= session.data.userInfos.pseudo %> avec mon id= <%= session.data.userInfos.id %></h2>
     <% } %> 
@@ -81,6 +93,11 @@
            <!-- form to post messages-->
            <% if (session.data.logguedIn) { %> 
 
+            <% if (session.data.createError) { %> 
+               <div style="color: red;"><%= session.data.createError %></div>
+
+            <% session.data.createError = null;
+            } %>
          <form method="post" action="<%= postUrl + '/post' %>" id="message-form" class="message__form">
             <label for="message">Repondre:</label>
             <textarea

@@ -82,24 +82,28 @@ const forumDB = {
 
   },
 
-  createNewMessage: (newMessage, callback) => {
-    const query = `INSERT INTO forum.message (users_id, message_content, topic_id) VALUES
-        ($1, $2, $3)`;
-    client.query(query, [newMessage.users_id, newMessage.messageContent, newMessage.topicId], callback);
+  createNewMessage: (newMessage) => {
+    return new Promise((resolve, reject) => {
+      const query = `INSERT INTO forum.message (users_id, message_content, topic_id) VALUES
+          ($1, $2, $3)`;
+      client.query(query, [newMessage.users_id, newMessage.messageContent, newMessage.topicId], forumDB.promiseCB(resolve, reject));
+    });
   },
 
   /*
   **  DELETE QUERIES
   */
 
-  delMessageById: (objParams, callback) => {
-    const preparedQuery = {
-      text: `DELETE FROM "forum"."message" WHERE id=$1 AND users_id=$2;
-      `,
-      values: [objParams.messageId, objParams.users_id]
-    }
-    client.query(preparedQuery, callback);
+  delMessageById: (objParams) => {
+    return new Promise((resolve, reject) => {
 
+      const preparedQuery = {
+        text: `DELETE FROM "forum"."message" WHERE id=$1 AND users_id=$2;`,
+
+        values: [objParams.messageId, objParams.users_id]
+      }
+      client.query(preparedQuery, forumDB.promiseCB(resolve, reject));
+    });
   },
 
   /*
@@ -107,15 +111,18 @@ const forumDB = {
   */
 
   updateMessage: (objParams, callback) => {
-    const preparedQuery = {
-      text: ` UPDATE "forum"."message"
-                SET "message_content" = $1, 
-                    "modified_at" = CURRENT_TIMESTAMP
-                WHERE id=$2 AND users_id=$3;
-      `,
-      values: [objParams.message, objParams.messageId, objParams.users_id]
-    }
-    client.query(preparedQuery, callback);
+    return new Promise((resolve, reject) => {
+
+      const preparedQuery = {
+        text: ` UPDATE "forum"."message"
+                  SET "message_content" = $1, 
+                      "modified_at" = CURRENT_TIMESTAMP
+                  WHERE id=$2 AND users_id=$3;
+        `,
+        values: [objParams.message, objParams.messageId, objParams.users_id]
+      }
+      client.query(preparedQuery, forumDB.promiseCB(resolve, reject));
+    });
   }
 
 };

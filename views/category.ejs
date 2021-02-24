@@ -41,9 +41,13 @@
 
 
 <% if (session.data.logguedIn) { %> 
+   
    <% if (session.data.createError) {%> 
    <div style="color: red;"><%= session.data.createError %></div>
-   <% } %> 
+
+   <% session.data.createError
+   } %> 
+
 <form
    method="post"
    action="/topics/<%=  currentCategory.name %>/post"

@@ -1,5 +1,6 @@
 const forumDB = require('../model/forumDB');
 const forumView = require('../view/forumView');
+const messageFormController = require('./messageFormController');
 
 const forumController = {
 
@@ -7,7 +8,7 @@ const forumController = {
    ** GET
    */
 
-  //code associe a la route /categories
+  //code for route /categories
 
   getCategories: async (request, response, next) => {
 
@@ -34,7 +35,7 @@ const forumController = {
 
   },
 
-  // code associe a la route /categories/:category
+  // code for route /categories/:category
 
   getAllTopicsByCategoryId: async (request, response, next) => {
 
@@ -74,7 +75,7 @@ const forumController = {
     }
   },
 
-  // code associe a la route /topics/:categoryName/:topicId
+  // code for la route /topics/:categoryName/:topicId
 
   getAllMessagesByTopicId: async (request, response, next) => {
 
@@ -114,14 +115,14 @@ const forumController = {
       } else {
         response.status(500).send(" getcategoryIdByName error: " + error.stack);
       }
-    } 
+    }
   },
 
   /*
    ** POST
    */
 
-  // code associe a la route /topics/:categoryName/post
+  // code for route /topics/:categoryName/post
 
 
   createNewTopic: async (request, response, next) => {
@@ -137,15 +138,15 @@ const forumController = {
         users_id: +request.session.data.userInfos.id,
         title: request.body.topic__title.trim()
       }
-      const categoryName = request.params.categoryName;  
-    
+      const categoryName = request.params.categoryName;
+
       //...here i just make sure author, description and content are not empty
       if (!newTopic.topicDesc || !newTopic.title) {
         throw new Error('Empty fields - your Topic was not created because your title or message content was empty');
       }
       //we search the category id by its name store in req.params
       let results = await forumDB.getCategoryIdByName(categoryName);
-      
+
       // if we have no results, then the url was wrong, changed by user
       if (!results.rows[0]) {
         throw new Error(`404 - no such category exists with name = ${categoryName}`);
@@ -159,6 +160,7 @@ const forumController = {
       response.redirect(`/categories/${request.params.categoryName}`);
 
     } catch (error) {
+
       if ((error.message.includes('404 -'))) {
 
         response.info = error.message;
@@ -167,7 +169,7 @@ const forumController = {
       } else if ((error.message.includes('Empty fields -'))) {
 
         request.session.data.createError = error.message;
-        
+
         response.redirect(`/categories/${request.params.categoryName}`);
 
       } else {
@@ -178,130 +180,23 @@ const forumController = {
     }
   },
 
-  // code associe a la route /topics/:categoryName/:topicId/post
+  selectPOST: (request, response, next) => {
+    const pass = request.params.pass;
 
-  createNewMessage: (request, response, next) => {
-
-    if (!request.session.data.logguedIn) {
-      response.redirect(`/topics/${request.params.categoryName}/${request.params.topicId}`);
-      return;
-    }
-
-    const newMessage = {
-      messageContent: request.body.message.trim(),
-      users_id: +request.session.data.userInfos.id,
-      topicId: +request.params.topicId
-    }
-
-    //TODO need to validate the data!!!! => saw a video about request header and validate from front JS
-
-    //...here i just make sure author and content are not empty
-    if (!newMessage.messageContent) {
-      response.send(`
-            <h1>Recommencez votre message, vous avez oublie quelque chose</h1>
-            <a href="/">Retourner a la liste des sujets</a>
-            `);
-    } else {
-      forumDB.createNewMessage(newMessage, (err, results) => {
-        if (err) {
-          // checking for server Error
-          response.status(500).send("createNewMessage error: " + err.stack);
-        } else {
-          response.redirect(`/topics/${request.params.categoryName}/${request.params.topicId}`);
-        }
-      });
-    }
-  },
-
-  // code associe a la route /topics/:categoryName/:topicId/delete
-  // middleware pour traiter la demande de suppression d un message par son id
-  deleteMessage: (request, response, next) => {
-
-
-    if (!request.session.data.logguedIn) {
-      response.redirect(`/topics/${request.params.categoryName}/${request.params.topicId}`);
-      return;
-    }
-
-    //objet de parametre qui sera envoye au datamapper
-    const deleteParams = {
-      // On recupere l id du message envoye via POST dans user form
-      messageId: +request.body.deleteMessageId,
-      // on recupere l'id de l utilisateur connecte qui a fait la demande de suppression du message 
-      //(pour s assurer que ce soit bien son msg qu on va supprimer)
-      users_id: request.session.data.userInfos.id,
-    };
-
-    //si la valeur de id envoye en post n est pas correct, erreur
-    if (!deleteParams.messageId || isNaN(deleteParams.messageId)) {
-      //
-      console.log("le message Id n est pas bon, l'utilisateur a modifie notre form cache")
-      next();
-    }
-
-    //on appelle le datamapper qui va envoyuer la requete de suppression
-    forumDB.delMessageById(deleteParams, (err, results) => {
-
-      if (err) {
-        //gestion des erreurs
-        response.status(500).send("deleteMessage error: " + err.stack);
-      } else {
-        if (!results.rowCount) {
-          console.log("Message n a pas ete supprime, l utilisateur n avait pas les droits pour supprimer le message");
-        }
-        //message supprime avec succes, on redirect sur la page des 
+    switch (pass) {
+      case 'post':
+        messageFormController.createNewMessage(request, response, next);
+        break;
+      case 'delete':
+        messageFormController.deleteMessage(request, response, next);
+        break;
+      case 'edit':
+        messageFormController.editMessage(request, response, next);
+        break;
+      default:
         response.redirect(`/topics/${request.params.categoryName}/${request.params.topicId}`);
-      }
-
-    });
-  },
-
-  // code associe a la route /topics/:categoryName/:topicId/edit
-
-  editMessage: (request, response, next) => {
-
-    if (!request.session.data.logguedIn) {
-      response.redirect(`/topics/${request.params.categoryName}/${request.params.topicId}`);
-      return;
+        break;
     }
-
-    //objet de parametre qui sera envoye au datamapper
-    const editParams = {
-
-      // On recupere l id du message envoye via POST dans user form
-      messageId: +request.body.modMessageId,
-
-      // On recupere le message modifie par l'utilisateur
-      message: request.body.modMessage.trim(),
-
-
-      // on recupere l'id de l utilisateur connecte qui a fait la demande de suppression du message 
-      //(pour s assurer que ce soit bien son msg qu on va supprimer)
-      users_id: request.session.data.userInfos.id,
-    };
-
-    //si la valeur de id envoye en post n est pas correct, erreur
-    if (!editParams.messageId || isNaN(editParams.messageId) || !editParams.message) {
-      //
-      console.log("le message Id n est pas bon, l'utilisateur a modifie notre form cache")
-      next();
-    }
-
-    console.log(editParams);
-
-    forumDB.updateMessage(editParams, (error, results) => {
-      if (error) {
-        response.status(500).send("deleteMessage error: " + err.stack);
-      } else {
-        if (!results.rowCount) {
-          console.log("Message n a pas ete supprime, l utilisateur n avait pas les droits pour supprimer le message");
-        }
-        //message supprime avec succes, on redirect sur la page des 
-        response.redirect(`/topics/${request.params.categoryName}/${request.params.topicId}`);
-      }
-
-    });
-
   },
 
 };
