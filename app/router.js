@@ -6,6 +6,7 @@ const path = require('path');
 const mainController = require('./main/controller/mainController');
 const forumController = require('./forum/controller/forumController');
 const connexionController = require('./connexion/controller/connexionController');
+const connexionSwitch = require('./connexion/MW/connexionSwitch');
 const profileController = require('./profile/controller/profileController');
 
 const router = express.Router();
@@ -22,9 +23,7 @@ router.get('/topics/:categoryName/:topicId', forumController.getAllMessagesByTop
 
 
 // CONNEXION
-router.get('/connexion/google', connexionController.getUserInfoFromGoogle);
-router.get('/connexion/mailer', connexionController.sendLostPassMail)
-router.get('/connexion/:pass', connexionController.selectGET);
+router.get('/connexion/:view', connexionSwitch.GET);
 
 // PROFILE
 router.get('/myProfile', profileController.getProfile);
@@ -37,7 +36,7 @@ router.post('/topics/:categoryName/post', forumController.createNewTopic);
 router.post('/topics/:categoryName/:topicId/post', forumController.createNewMessage);
 
 // CONNEXION
-router.post('/postConnexion/:pass', connexionController.selectPOST);
+router.post('/postConnexion/:pass', connexionSwitch.POST);
 
 // PROFILE
 router.post('/postProfile/:pass', profileController.selectPOST);

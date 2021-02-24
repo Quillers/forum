@@ -15,7 +15,7 @@ module.exports = {
    * @param {Object} response 
    */
   view: (request, response, ) => {
-    response.render(request.params.pass, {
+    response.render(request.params.view, {
       session: request.session,
       info: response.info
     })
