@@ -64,11 +64,14 @@ const connexionDB = {
     client.query(query, callback);
   },
 
-  insertDefaultPassword: (id, callback) => {
+  insertDefaultPassword: (data, callback) => {
 
-    const query = `UPDATE users
-    SET password = 'gpasdcerveau'
-    WHERE id = ${id};`
+    const query = {
+      text: `UPDATE forum.users
+    SET password = $1
+    WHERE id = $2 RETURNING password;`,
+      values: [data.password, data.id]
+    }
 
     client.query(query, callback);
   },

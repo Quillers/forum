@@ -1,12 +1,14 @@
 const connexionViews = require('../view/connexionViews');
 const connexionDB = require('../model/connexionDB');
-const mainController = require('../../main/controller/mainController');
 const bcrypt = require('bcrypt');
+const generatePassword = require('generate-password');
+const nodemailer = require('./../MW/nodemailer');
+
 
 const {
   url,
   getGoogleAccountFromCode
-} = require('./googleLogin');
+} = require('../MW/googleLogin');
 
 
 const connexionController = {
@@ -21,77 +23,6 @@ const connexionController = {
   createAccount: (request, response) => { connexionViews.view(request, response); },
   lostPass: (request, response) => { connexionViews.view(request, response); },
   deleteUser: (request, response) => { connexionViews.view(request, response); },
-
-  /*-------------- ROUTE SELECTOR ------------*/
-  /**
-   * Using ':pass', select what to do next :
-   * ':pass' can take following values :
-   *    - stdLogin,
-   *    - createAccount,
-   *    -lostPass,
-   *    -deleteUser,
-   */
-  selectPOST: (request, response) => {
-    // Ici récupérer :pass et envoyer la suite en fonction, faire un switch
-    const pass = request.params.pass;
-
-    switch (pass) {
-      case 'stdLogin':
-        connexionController.stdLoginControl(request, response);
-        break;
-      case 'createAccount':
-        connexionController.createAccountControl(request, response);
-        break;
-      case 'lostPass':
-        connexionController.lostPasswordControl(request, response);
-        break;
-      case 'deleteUser':
-        connexionController.deleteUserControl(request, response);
-        break;
-
-      default:
-        response.info = "La route post qu'elle n'existe !!";
-        mainController.index(request, response);
-        break;
-    }
-  },
-
-  /**
-   * Using ':pass', select what to do next :
-   * ':pass' can take following values :
-   *    - stdLogin,
-   *    - createAccount,
-   *    -lostPass,
-   *    -deleteUser,
-   */
-  selectGET: (request, response) => {
-    // Ici récupérer :pass et envoyer la suite en fonction, faire un switch
-    const pass = request.params.pass;
-
-    switch (pass) {
-      case 'stdLogin':
-        connexionController.stdConnexion(request, response);
-        break;
-      case 'createAccount':
-        connexionController.createAccount(request, response);
-        break;
-      case 'disconnect':
-        mainController.sessionDisconnect(request, response);
-        break;
-      case 'lostPass':
-        connexionController.lostPass(request, response);
-        break;
-      case 'deleteUser':
-        connexionController.deleteUser(request, response);
-        break;
-
-      default:
-        response.info = "La route get qu'elle n'existe !!";
-        mainController.index(request, response);
-        break;
-    }
-  },
-
 
   /*-------------- FORM CONTROL ------------*/
   /**
@@ -242,7 +173,7 @@ const connexionController = {
   },
 
   /**
-   * Controls wether the lostPass' form is correct, that's a known email in database.
+   * Performs checkings over lost password request
    */
   lostPasswordControl: (request, response) => {
 
@@ -260,8 +191,20 @@ const connexionController = {
 
         if (data.rowCount) {
           // console.log('isEmailInDB : ', data);
-          // Ici remettre un mot de passe bidon en BDD
-          connexionDB.insertDefaultPassword(data.rows[0].id, (error, results) => {
+          // Stocker les données utilisateur
+          const user = data.rows[0];
+
+          // Le mettre en DB
+          const insertData = {
+            id: user.id,
+            // Ici générer un mot de passe aléatoire
+            password: generatePassword.generate({
+              length: 8,
+              numbers: true,
+            })
+          }
+
+          connexionDB.insertDefaultPassword(insertData, (error, results) => {
 
             if (error) {
 
@@ -269,15 +212,27 @@ const connexionController = {
               response.redirect('/');
 
             } else {
-              console.log('results de insertDefaultPassword:', results);
-              // Ici envoyer un email avec ce mot de passe bidon
+              // Ici je choisi de récupérer le mdp avec le retour de la BDD,
+              // pour être sûr que ça a pas changé entre temps... overkill ? maybe...
+              user.password = results.rows[0].password;
 
-              response.info = "C'est good, on a mis 'gpasdcerveau' comme mot de passe !";
-              connexionViews.view(request, response);
+              // Sendmail personnifie le message envoyé
+              nodemailer.sendLostPassMail(user, (error, info) => {
 
+                if (error) {
+                  console.log(error);
+
+                } else {
+                  console.log('results de insertDefaultPassword:', info.response);
+
+                  response.info = "Un email est en route avec le nouveau mot de passe";
+                  request.params.view = 'index';
+                  connexionViews.view(request, response);
+
+                }
+              })
             }
           })
-
         } else {
 
           response.info = 'Cet email qu\'il n\'existe en DB';
@@ -309,56 +264,22 @@ const connexionController = {
     })
   },
 
+  //TODO................................................................
   /**
-   * After a user is identified, retrieve infos from google redirect url <code>
-   * @param {Objet} request 
-   * @param {Objet} response 
+   * When a user responds to a "reinitialize password email", 
+   * we have to make sure that everything is under control
+   * @param {*} request 
+   * @param {*} response 
    */
-  getUserInfoFromGoogle: async (request, response) => {
+  checkDataMail: (request, response) => {
 
-    try {
-      const dataUser = await getGoogleAccountFromCode(request.query.code);
+    // Ascertain code
 
-      // Ici on vérifie si l'utilisateur existe en DBUser
-      connexionDB.getUserByEmail(dataUser.email, (err, res) => {
+    // if code ok set session détails
 
-        if (res.rows.length) {
+    // redirect to profile in order to set a new password
 
-          request.session.data.logguedIn = true;
-          request.session.data.userInfos = res.rows[0];
 
-          response.redirect('/categories');
-
-        } else {
-
-          connexionDB.insertProfil(dataUser, (err, res) => {
-
-            if (err) {
-              response.info = err;
-              response.redirect('/');
-            } else {
-
-              console.log('result', res);
-
-              // Ici faire la connexion directement :
-              // ici mettre les valeurs d'identification dans la session
-              request.session.data.logguedIn = true;
-              request.session.data.userInfos = {
-                id: res.rows[0].id,
-                status: res.rows[0].status,
-                pseudo: res.rows[0].pseudo
-              }
-
-              response.redirect('/categories');
-            }
-          })
-        }
-      })
-    } catch (error) {
-      console.log(error)
-      response.info = 'Aïe, le profile n\'a pas été enregistré dans la base';
-      connexionViews.view(request, response);
-    }
   }
 }
 
