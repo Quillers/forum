@@ -1,5 +1,5 @@
 const connexionController = require('../controller/connexionController');
-
+const mainController = require('./../../main/controller/mainController');
 const connexionSwitch = {
   /*-------------- ROUTE SELECTOR ------------*/
 

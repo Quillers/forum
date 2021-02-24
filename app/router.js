@@ -5,7 +5,6 @@ const path = require('path');
 
 const mainController = require('./main/controller/mainController');
 const forumController = require('./forum/controller/forumController');
-const connexionController = require('./connexion/controller/connexionController');
 const connexionSwitch = require('./connexion/MW/connexionSwitch');
 const profileController = require('./profile/controller/profileController');
 
