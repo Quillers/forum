@@ -32,7 +32,7 @@ router.get('/myProfile', profileController.getProfile);
 
 // FORUM
 router.post('/topics/:categoryName/post', forumController.createNewTopic);
-router.post('/topics/:categoryName/:topicId/post', forumController.createNewMessage);
+router.post('/topics/:categoryName/:topicId/:pass', forumController.selectPOST);
 
 // CONNEXION
 router.post('/postConnexion/:view', connexionSwitch.POST);

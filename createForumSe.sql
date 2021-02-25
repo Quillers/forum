@@ -28,9 +28,9 @@ ALTER TABLE forum.category OWNER TO "quiltuuc_ju";
 
 CREATE TABLE forum.message (
     id SERIAL PRIMARY KEY,
-    author character varying(128) NOT NULL,
+    users_id integer,
     message_content text NOT NULL,
-    created_at timestamp without time zone DEFAULT CURRENT_DATE NOT NULL,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     modified_at timestamp without time zone,
     topic_id integer
 );
@@ -40,8 +40,8 @@ CREATE TABLE forum.topic (
     id SERIAL PRIMARY KEY,
     title character varying(128) NOT NULL,
     topic_description text NOT NULL,
-    author character varying(128) NOT NULL,
-    created_at timestamp without time zone DEFAULT CURRENT_DATE,
+    users_id integer,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     modified_at timestamp without time zone,
     category_id integer
 );
@@ -61,23 +61,14 @@ INSERT INTO forum.category ("name") VALUES
 ('videogames');
 
 
-
-INSERT INTO forum.message (author, message_content, created_at, modified_at, topic_id) VALUES
-('Un auteur' ,  'un contenu de message',   DEFAULT, DEFAULT,	1),
-('Un 2eme auteur' ,  'un 2ème contenu de message',   DEFAULT, DEFAULT,	2),
-('Un 3ème auteur' ,  'un 3ème contenu de message',   DEFAULT, DEFAULT,	3),
-('Un 4ème auteur' ,  'un 4ème contenu de message',   DEFAULT, DEFAULT,	1),
-('Un 5ème auteur' ,  'un 5ème contenu de message',   DEFAULT, DEFAULT,	1);
-
-
-INSERT INTO forum.topic (title, topic_description, author, created_at, modified_at, category_id) VALUES
-('premier topic humanitaire',	'blablablabla topic humanitaire',	'valentin',	'2021-01-31 00:00:00', NULL,	1),
-('premier topic hardware',	'blablablabla topic hardware',	'valentin',	'2021-01-31 00:00:00', NULL,	2),
-('premier topic minous',	'blablablabla topic minous',	'valentin',	'2021-01-31 00:00:00', NULL,	3);
-
-
 ALTER TABLE ONLY forum.message
     ADD CONSTRAINT message_topic_id_fkey FOREIGN KEY (topic_id) REFERENCES forum.topic(id);
 
+ALTER TABLE ONLY forum.message
+    ADD CONSTRAINT message_users_id_fkey FOREIGN KEY (users_id) REFERENCES forum.users(id);
+
 ALTER TABLE ONLY forum.topic
     ADD CONSTRAINT topic_category_id_fkey FOREIGN KEY (category_id) REFERENCES forum.category(id);
+
+ALTER TABLE ONLY forum.topic
+    ADD CONSTRAINT topic_users_id_fkey FOREIGN KEY (users_id) REFERENCES forum.users(id);
