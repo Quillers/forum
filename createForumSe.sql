@@ -2,7 +2,7 @@ DROP SCHEMA IF EXISTS forum CASCADE;
 
 
 CREATE SCHEMA forum;
-ALTER SCHEMA forum OWNER TO "quiltuuc_ju";
+ALTER SCHEMA forum OWNER TO "quiltuuc_topics";
 COMMENT ON SCHEMA forum IS 'La base du forum des quillers';
 
 
@@ -15,7 +15,7 @@ CREATE TABLE forum.users (
     email character varying(255),
     status character varying(50)
 );
-ALTER TABLE forum.users OWNER TO "quiltuuc_ju";
+ALTER TABLE forum.users OWNER TO "quiltuuc_topics";
 COMMENT ON TABLE forum.users IS 'Contient les infos utilisateurs du forum.';
 
 
@@ -23,7 +23,7 @@ CREATE TABLE forum.category (
     id SERIAL PRIMARY KEY,
     name character varying(128) NOT NULL
 );
-ALTER TABLE forum.category OWNER TO "quiltuuc_ju";
+ALTER TABLE forum.category OWNER TO "quiltuuc_topics";
 
 
 CREATE TABLE forum.message (
@@ -34,7 +34,7 @@ CREATE TABLE forum.message (
     modified_at timestamp without time zone,
     topic_id integer
 );
-ALTER TABLE forum.message OWNER TO "quiltuuc_ju";
+ALTER TABLE forum.message OWNER TO "quiltuuc_topics";
 
 CREATE TABLE forum.topic (
     id SERIAL PRIMARY KEY,
@@ -45,7 +45,7 @@ CREATE TABLE forum.topic (
     modified_at timestamp without time zone,
     category_id integer
 );
-ALTER TABLE forum.topic OWNER TO "quiltuuc_ju";
+ALTER TABLE forum.topic OWNER TO "quiltuuc_topics";
 
 
 INSERT INTO forum.users (pseudo, firstname, lastname, password, email, status) VALUES
