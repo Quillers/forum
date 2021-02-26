@@ -1,0 +1,37 @@
+{
+  "info_code": {
+    "Le code est sous la forme": "AA000",
+    "1 ère lettre": {
+      "I": "info à l'utilisateur",
+      "E": "erreur dont on est pas responsable",
+      "F": "erreur fatale, problème qui vient de chez nous..."
+    },
+    "2 ème lettre": "C, F, M ou P pour la 1 ère lettre du module",
+    "000": "le numéro d'ordre en binaire parceque c'est cool!",
+    "FATALITY": "Message supplémentaire quand erreur fatale, ajouté en fin de message"
+  },
+
+  "FATALITY": "Si le problème persiste, merci de nous contacter via le formulaire de contact en bas de la page 'About'",
+
+  "IC000": "C'est bon, ON TE CONNAIT !",
+  "IC001": "Inscription en base de donnée effectuée, merci de vous connecter...",
+  "IC010": "Cette email est déjà utilisé, merci d'en choisir un autre ou de récupérer votre mot de passe...",
+  "IC011": "Un email est en route avec le nouveau mot de passe",
+  "IC100": "Cet email qu'il n'existe en DB",
+  "IC101": "Ok, user deleted en DB",
+  "IC110": "Email non reconnu, peut-être une faute de frappe ?",
+  "IC111": "Il semblerait que les mots de passe ne soient pas identiques...",
+  "IC1000": "Il semblerait que des champs soient vides dans le formulaire...",
+  "IC1001": "Le mot de passe ne correspond pas à celui dans notre base de données...",
+
+  "EC000": "",
+  "EC001": "Erreur, aucunes infos n'ont été récupérées lors de la requête à google API",
+  "EC010": "Erreur, dans la requête à google API",
+  "EC011": "Erreur, aucunes infos n'ont été récupérées lors de la requête à l'API github",
+  "EC100": "Erreur, dans la requête à l'API github",
+
+  "FC000": "Erreur, lors de la requête à la base de données...",
+  "FC001": "Erreur, dans bcrypt.compare, ça craint...",
+  "FC010": "Erreur, dans bcrypt.hash, ça craint...",
+  "FC011": "Erreur, lors de l'envoi de l'email contenant le nouveau mot de passe, ça craint..."
+}

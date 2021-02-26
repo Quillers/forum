@@ -59,16 +59,8 @@ const connexionSwitch = {
         connexionController.stdConnexion(request, response);
         break;
 
-      case 'createAccount':
-        connexionController.createAccount(request, response);
-        break;
-
       case 'disconnect':
         mainController.sessionDisconnect(request, response);
-        break;
-
-      case 'lostPass':
-        connexionController.lostPass(request, response);
         break;
 
       case 'deleteUser':

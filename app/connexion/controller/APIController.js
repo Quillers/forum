@@ -1,6 +1,5 @@
 const googleTools = require('./../MW/googleTools');
 const githubTools = require('./../MW/githubTools');
-const connexionViews = require('./../view/connexionViews');
 const connexionDB = require('./../model/connexionDB');
 
 const APIController = {
@@ -19,26 +18,24 @@ const APIController = {
 
         APIController.manageDB(dataUser, request, response);
 
+      } else {
+
+        response.redirect('/connexion/stdLogin?msg_code=EC001');
       }
     } catch (error) {
-
       console.log(error)
-      response.info = 'Aïe, le profile n\'a pas été enregistré dans la base';
-      request.params.view = 'stdLogin';
-      connexionViews.view(request, response);
-
+      response.redirect('/connexion/stdLogin?msg_code=EC010');
     }
   },
 
   github: async (request, response) => {
 
-    console.log('github')
+    // console.log('github')
     try {
 
       const accessToken = await githubTools.getAccessTokenFromGithub(request, response)
       const dataUser = await githubTools.getUserFromToken(accessToken);
-
-      console.log(dataUser)
+      // console.log(dataUser)
 
       if (dataUser) {
 
@@ -46,18 +43,12 @@ const APIController = {
 
       } else {
 
-        response.info = 'Aïe, le profile n\'a pas été enregistré dans la base';
-        request.params.view = 'stdLogin';
-        connexionViews.view(request, response);
+        response.redirect('/connexion/stdLogin?msg_code=EC011');
 
       }
-
     } catch (error) {
       console.log(error)
-      response.info = 'Aïe, le profile n\'a pas été enregistré dans la base';
-      request.params.view = 'stdLogin';
-      connexionViews.view(request, response);
-
+      response.redirect('/connexion/stdLogin?msg_code=EC100');
     }
   },
 
@@ -65,34 +56,28 @@ const APIController = {
     // Ici on vérifie si l'utilisateur existe en DBUser
     connexionDB.getUserByEmail(dataUser.email, (err, res) => {
 
-      if (err) {
+      if (err) { // Erreur dans la requête SELECT
         console.log(err)
-        response.info = 'Aïe, le profile n\'a pas été enregistré dans la base';
-        request.params.view = 'stdLogin';
-        connexionViews.view(request, response);
+        response.redirect('/connexion/stdLogin?msg_code=FC000');
 
       } else if (res.rows.length) {
 
         request.session.data.logguedIn = true;
         request.session.data.userInfos = res.rows[0];
 
-        response.redirect('/categories');
+        response.redirect('/categories?msg_code=IC000');
 
       } else {
 
         connexionDB.insertProfil(dataUser, (err, res) => {
 
-          if (err) {
+          if (err) { // Erreur requête INSERT INTO
             console.log(err)
-            response.info = 'Aïe, le profile n\'a pas été enregistré dans la base';
-            request.params.view = 'stdLogin';
-            connexionViews.view(request, response);
+            response.redirect('/?msg_code=FC000')
 
           } else {
+            // console.log('result', res);
 
-            console.log('result', res);
-
-            // Ici faire la connexion directement :
             // ici mettre les valeurs d'identification dans la session
             request.session.data.logguedIn = true;
             request.session.data.userInfos = {
@@ -101,7 +86,7 @@ const APIController = {
               pseudo: res.rows[0].pseudo
             }
 
-            response.redirect('/categories');
+            response.redirect('/categories?msg_code=IC000');
           }
         })
       }
