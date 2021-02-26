@@ -36,16 +36,14 @@ const connexionController = {
       if (err) {
 
         console.log('erreur dans connexionDB.getUserByEmail :', err)
-        response.info = 'Il y a eu une erreur, merci de réessayer';
-        connexionViews.view(request, response);
+        response.redirect('/connexion/stdLogin?msg_code=FC000');
 
       } else {
 
         // On continue si DBUser existe
         if (!user.rowCount) {
 
-          response.info = 'Il doit y avoir une erreur de saisie...';
-          connexionViews.view(request, response);
+          response.redirect('/connexion/stdLogin?msg_code=IC110')
 
         } else {
 
@@ -55,8 +53,7 @@ const connexionController = {
             if (err) {
 
               console.log('erreur dans bcrypt hash :', err)
-              response.info = 'Il y a eu une erreur, merci de réessayer';
-              connexionViews.view(request, response);
+              response.redirect('/connexion/stdLogin?msg_code=FC001')
 
             } else if (same) {
 
@@ -64,13 +61,11 @@ const connexionController = {
               request.session.data.logguedIn = true;
               request.session.data.userInfos = user.rows[0];
 
-              response.info = 'La connexion c bon';
-              response.redirect('/categories');
+              response.redirect('/categories?msg_code=IC000');
 
             } else {
 
-              response.info = 'Les mots de passe ne correspondent pas';
-              connexionViews.view(request, response);
+              response.redirect('/connexion/stdLogin?msg_code=IC1001')
             }
           });
         }
@@ -81,7 +76,7 @@ const connexionController = {
   /**
    * Controls if form's data are good enought to create an account...
    */
-  createAccountControl: (request, response, next) => {
+  createAccountControl: (request, response) => {
     // On récupère les données à contrôler :
     const formFirstName = request.body.first_name;
     const formLastName = request.body.last_name;
@@ -100,16 +95,13 @@ const connexionController = {
       formPassword_1 === ''
     ) {
 
-      response.info = 'Les champs sont mal remplis';
-      connexionViews.view(request, response);
+      response.redirect('/connexion/stdLogin?msg_code=IC1000');
 
     } else {
 
       if (formPassword_1 !== formPassword_2) { // Passwords check
 
-        response.info = 'Les mots de passe ne sont pas identiques';
-        connexionViews.view(request, response);
-
+        response.redirect('/connexion/stdLogin?msg_code=IC111')
 
       } else { // Check if Email exists in DB
 
@@ -117,16 +109,18 @@ const connexionController = {
 
           if (error) {
             console.log('error de la query getPseudo : ', error);
+            response.redirect('/connexion/stdLogin?msg_code=FC000')
 
           } else {
 
-            if (!user.rowCount) { // If pseudo doesn't exist
+            if (!user.rowCount) { // If email doesn't exist
 
               // Ici on hash le password avant le stockage en BDD
               bcrypt.hash(formPassword_1, 10, (err, hash) => {
 
                 if (err) {
                   console.log(err)
+                  response.redirect('/connexion/stdLogin?msg_code=FC010');
 
                 } else {
 
@@ -142,28 +136,18 @@ const connexionController = {
 
                     if (err) {
                       console.log('error de la query insertProfil: ', err);
-                      console.log('result', res);
-
-                      response.info = 'Erreur, le mot de passe n\'a pas été enregistré dans la base';
-                      connexionViews.view(request, response);
+                      response.redirect('/connexion/stdLogin?msg_code=FC000');
 
                     } else {
                       // TODO: Prévoir un envoi de mail pour confirmation de l'adresse mail
-
-
-                      response.info = 'Et maintenant on peut se connecter';
-                      connexionViews.view(request, response);
-
+                      response.redirect('/connexion/stdLogin?msg_code=IC001');
                     }
                   });
                 }
               })
-
             } else {
               // le pseudo est déjà pris:
-              response.info = 'Le pseudo est déjà utilisé, il faut en choisir un autre';
-              connexionViews.view(request, response);
-
+              response.redirect('/connexion/stdLogin?msg_code=IC010');
             }
           }
         })
@@ -184,7 +168,7 @@ const connexionController = {
 
       if (error) {
         console.log('dans lostPassWordControl - isEmailInDB :', error);
-        response.redirect('/');
+        response.redirect('/connexion/stdLogin?msg_code=FC000');
 
       } else {
 
@@ -206,13 +190,12 @@ const connexionController = {
             hashedPassword: bcrypt.hashSync(newPassword, 10)
           }
 
-          //
           connexionDB.insertDefaultPassword(insertData, (error, results) => {
 
             if (error) {
 
               console.log('dans lostPassWordControl - insertDefaultPassword :', error);
-              response.redirect('/');
+              response.redirect('/connexion/stdLogin?msg_code=FC000');
 
             } else {
 
@@ -223,23 +206,17 @@ const connexionController = {
 
                 if (error) {
                   console.log(error);
+                  response.redirect('/connexion/stdLogin?msg_code=FC011');
 
                 } else {
-                  console.log('results de insertDefaultPassword:', info.response);
-
-                  response.info = "Un email est en route avec le nouveau mot de passe";
-                  request.params.view = 'index';
-                  connexionViews.view(request, response);
-
+                  // console.log('results de insertDefaultPassword:', info.response);
+                  response.redirect('/connexion/stdLogin?msg_code=IC011');
                 }
               })
             }
           })
         } else {
-
-          response.info = 'Cet email qu\'il n\'existe en DB';
-          connexionViews.view(request, response);
-
+          response.redirect('/connexion/stdLogin?msg_code=IC100')
         }
       }
     })
@@ -255,13 +232,11 @@ const connexionController = {
       if (error) {
 
         console.log('dans deleteUser :', error);
-        response.redirect('/');
+        response.redirect('/connexion/stdLogin?msg_code=FC000');
 
       } else {
 
-        response.info = "C'est good, il est plus dans la base";
-        connexionViews.view(request, response);
-
+        response.redirect('/connexion/stdLogin?msg_code=IC101');
       }
     })
   },

@@ -7,6 +7,7 @@ const mainController = require('./main/controller/mainController');
 const forumController = require('./forum/controller/forumController');
 const connexionSwitch = require('./connexion/MW/connexionSwitch');
 const profileController = require('./profile/controller/profileController');
+const getMessage = require('./main/MW/getMessage');
 
 const router = express.Router();
 
@@ -15,14 +16,13 @@ const router = express.Router();
 router.use(mainController.checkSession);
 
 // FORUM
-router.get('/', mainController.index);
-router.get('/categories', forumController.getCategories);
+router.get('/', getMessage, mainController.index);
+router.get('/categories', getMessage, forumController.getCategories);
 router.get('/categories/:categoryName', forumController.getAllTopicsByCategoryId);
 router.get('/topics/:categoryName/:topicId', forumController.getAllMessagesByTopicId);
 
-
 // CONNEXION
-router.get('/connexion/:view', connexionSwitch.GET);
+router.get('/connexion/:view', getMessage, connexionSwitch.GET);
 
 // PROFILE
 router.get('/myProfile', profileController.getProfile);
