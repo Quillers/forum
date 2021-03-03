@@ -16,6 +16,11 @@ html {
   min-height: 100vh;
 }
 
+.main__container {
+  position: relative;
+  overflow: hidden;
+}
+
 .body {
   position: relative;
   min-height: 100vh;
