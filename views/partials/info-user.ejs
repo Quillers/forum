@@ -1,0 +1,39 @@
+<!-- Utiliser en dev pour controler les valeurs des variables lièes à la session -->
+<div class="infouser__button" id="infouserButton"><i class="fas fa-user-astronaut"></i></div>
+
+<div class="infouser" id="infouser">
+
+  <% if (typeof info !== 'undefined') {%>
+
+  <p class="infouser__info">
+    <%= info %>
+  </p>
+  <% } %>
+
+  <% if (session.data.userInfos !== null) { %>
+
+  <p class="infouser__item">
+    Pseudo : <%= session.data.userInfos.pseudo %>
+  </p>
+
+  <p class="infouser__item">
+    Status : <%= session.data.userInfos.status %>
+  </p>
+
+  <p class="infouser__item">
+    Login : <%= session.data.logguedIn %>
+  </p>
+
+
+  <% } else { %>
+
+  <div class="infouser__connexion">Sign in to know more...</div>
+
+  <% } %>
+  <!-- 
+  <%# <div class="connexion__userStatus connexion__item">
+      session.data.userInfos.id : session.data.userInfos.id
+</div>
+%> -->
+
+</div>
