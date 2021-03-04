@@ -5,12 +5,12 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px;
-  
-  
+  height: 9vh;
+
   &__logo {
     color: var(--color-darkblue);
     font-size: 2rem;
-    
+
     & a>h1 {
       font-family: 'Suez One', serif;
       font-size: 47px;
@@ -19,20 +19,20 @@
       line-height: 61px;
       letter-spacing: -0.095em;
       text-align: left;
-      
+
     }
   }
-  
+
   &__nav {
     width: 60%;
     color: var(--color-mediumblue);
     display: flex;
     justify-content: space-between;
-    
+
     &__links {
       padding: 10px;
       display: flex;
-      
+
       &__link {
         font-family: 'PT Mono', serif;
         padding: 10px;
@@ -41,18 +41,19 @@
         font-weight: bold;
         font-size: 25px;
         line-height: 28px;
-        &:hover{
+
+        &:hover {
           text-decoration: underline wavy;
         }
       }
     }
-    
+
     &__loginButton {
       display: inline-block;
-      overflow:hidden;
-      position:relative;
+      overflow: hidden;
+      position: relative;
       width: 130px;
-      height:50px;
+      height: 50px;
       font-family: 'PT Mono', serif;
       font-size: 20px;
       font-style: normal;
@@ -64,34 +65,38 @@
       box-sizing: border-box;
       border-radius: 2px;
       padding: 10px;
-      &:hover>a{
-        color:#EFF8FA;
+
+      &:hover>a {
+        color: #EFF8FA;
         text-decoration: underline wavy;
       }
-      &:hover:before{
+
+      &:hover:before {
         transform: scale(18);
       }
-      a{
-        position:absolute;
-        text-decoration:none;
-        top:30%;
-        right:18%;
-        z-index:3;
+
+      a {
+        position: absolute;
+        text-decoration: none;
+        top: 30%;
+        right: 18%;
+        z-index: 3;
         color: #5266B0;
         transition: color 450ms;
       }
-      &:before{
-        content:'';
-        display:inline-block;
-        height:20px;
-        width:20px;
-        border-radius:50%;
-        background-color:#5266B0;
+
+      &:before {
+        content: '';
+        display: inline-block;
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+        background-color: #5266B0;
         position: absolute;
         bottom: -18px;
-        left:-18px;
+        left: -18px;
         transition: transform 400ms ease-in-out;
-        z-index:1;
+        z-index: 1;
       }
     }
   }

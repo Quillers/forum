@@ -3,64 +3,132 @@
 <!-- On amis les catégories dans le header, reste à
    mettre les sujets principaux dans l'accueil ? -->
 
-<div class="profile__formContainer">
-  <form action="/postProfile/pseudo" method="POST" class="profile__form">
-    <label for="pseudo" class="profile__form__item">Pseudo</label>
-    <input
-      type="text"
-      name="pseudo"
-      class="profile__form__item"
-      id="pseudo"
-      placeholder="<%= userInfos.pseudo %>"
-    />
-    <button type="submit" class="profile__form__button">Modifier mon pseudo</button>
-  </form>
-</div>
+<div class="profile__container">
 
-<div class="profile__formContainer">
-  <form action="/postProfile/password" method="POST" class="profile__form">
-    <label for="password1" class="profile__form__item">Mot de passe</label>
-    <input
-      type="password"
-      name="password1"
-      class="profile__form__item"
-      id="password1"
-      placeholder="Nouveau mot de passe"
-    />
+  <h1 class="profile__title">Mon Profil</h1>
 
-    <label for="password2" class="profile__form__item">Confirmer le mot de passe</label>
-    <input
-      type="password"
-      name="password2"
-      class="profile__form__item"
-      id="password2"
-      placeholder="Répétez le mot de passe"
-    />
-    <button type="submit" class="profile__form__button">Modifier mon mot de passe</button>
-  </form>
-</div>
+  <div class="profile__forms">
+    <div class="profile__formContainer">
 
-<div class="profile__formContainer">
-  <form action="/postProfile/email" method="POST" class="profile__form">
-    <label for="email1" class="profile__form__item">E-mail</label>
-    <input
-      type="email"
-      name="email1"
-      class="profile__form__item"
-      id="email1"
-      placeholder="<%= userInfos.email %>"
-    />
+      <div class="profile__formContainer__titleRow">
+        <div class="profile__formContainer__titleRow__name">Pseudo</div>
+        <div class="profile__formContainer__titleRow__actual"><%= userInfos.pseudo %></div>
 
-    <label for="email2" class="profile__form__item">Confirmer le nouvel e-mail</label>
-    <input
-      type="email"
-      name="email2"
-      class="profile__form__item"
-      id="email2"
-      placeholder="Répétez l'e-mail"
-    />
-    <button type="submit" class="profile__form__button">Modifier mon e-mail</button>
-  </form>
+        <div class="profile__formContainer__titleRow__modify">
+          <i class="fas fa-pen"></i>Modifier
+        </div>
+      </div>
+
+      <form action="/postProfile/pseudo" method="POST" class="profile__form">
+
+
+        <div class="profile__form__inputRow">
+
+          <label for="pseudo" class="profile__form__item">Nouveau pseudo</label>
+          <input
+          type="text"
+          name="pseudo"
+          class="profile__form__item"
+          id="pseudo"
+          placeholder="<%= userInfos.pseudo %>"
+        />
+
+      </div>
+          <div class="profile__form__buttonRow">
+            <button type="submit" class="profile__form__button">Modifier</button>
+            <button type="button" class="profile__form__close">Annuler</button>
+          </div>
+      </form>
+    </div>
+
+    <div class="profile__formContainer">
+
+      <div class="profile__formContainer__titleRow">
+        <div class="profile__formContainer__titleRow__name">Mot de passe</div>
+        <div class="profile__formContainer__titleRow__actual"></div>
+        <div class="profile__formContainer__titleRow__modify">
+          <i class="fas fa-pen"></i>Modifier
+        </div>
+      </div>
+
+      <form action="/postProfile/password" method="POST" class="profile__form">
+
+        <div class="profile__form__inputRow">
+
+          <label for="password1" class="profile__form__item">Nouveau mot de passe</label>
+          <input
+        type="password"
+        name="password1"
+        class="profile__form__item"
+        id="password1"
+        placeholder="Nouveau mot de passe"
+      />
+
+      </div>
+
+          <div class="profile__form__inputRow">
+
+            <label for="password2" class="profile__form__item">Confirmer le mot de passe</label>
+            <input
+        type="password"
+        name="password2"
+        class="profile__form__item"
+        id="password2"
+        <%# placeholder="Répétez le mot de passe" %>
+      />
+
+      </div>
+            <div class="profile__form__buttonRow">
+              <button type="submit" class="profile__form__button">Modifier</button>
+              <button type="button" class="profile__form__close">Annuler</button>
+            </div>
+      </form>
+    </div>
+
+    <div class="profile__formContainer">
+
+      <div class="profile__formContainer__titleRow">
+        <div class="profile__formContainer__titleRow__name">Email</div>
+        <div class="profile__formContainer__titleRow__actual"><%= userInfos.email %></div>
+        <div class="profile__formContainer__titleRow__modify">
+          <i class="fas fa-pen"></i>Modifier
+        </div>
+      </div>
+
+      <form action="/postProfile/email" method="POST" class="profile__form">
+
+        <div class="profile__form__inputRow">
+          <label for="email1" class="profile__form__item">Nouvel email</label>
+          <input
+        type="email"
+        name="email1"
+        class="profile__form__item"
+        id="email1"
+        placeholder="<%= userInfos.email %>"
+      />
+
+      </div>
+
+          <div class="profile__form__inputRow">
+            <label for="email2" class="profile__form__item">Confirmer le nouvel e-mail</label>
+            <input
+        type="email"
+        name="email2"
+        class="profile__form__item"
+        id="email2"
+        <%#placeholder="Répétez l'e-mail" %>
+      />
+
+      </div>
+
+            <div class="profile__form__buttonRow">
+              <button type="submit" class="profile__form__button">Modifier</button>
+              <button type="button" class="profile__form__close">Annuler</button>
+            </div>
+
+      </form>
+    </div>
+  </div>
 </div>
 
 <%- include("partials/footer.ejs") %>

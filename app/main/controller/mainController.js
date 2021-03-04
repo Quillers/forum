@@ -12,12 +12,12 @@ const mainController = {
   checkSession: function(request, response, next) {
 
     if (!request.session.data) {
-      const data = {
+      request.session.data = {
         logguedIn: false,
         userInfos: null
       }
 
-      request.session.data = data;
+      response.locals = request.session.data;
     }
 
     next();

@@ -1,0 +1,40 @@
+/*----------------------------------------*/
+/*----------------------------------------*/
+/*----------------------------------------*/
+.infouser {
+  padding: 10px;
+  position: absolute;
+  width: 25%;
+  min-height: 50px;
+  top: 0;
+  right: -100vw;
+  transition: right 1500ms;
+  border-radius: 0 0 0 25px;
+  background-color: var(--color-mediumblue);
+  color: var(--color-lightblue);
+  font-weight: bold;
+  z-index: 100;
+}
+.infouser__button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  border-radius: 0 0 0 50%;
+  background-color: var(--color-verylightblue);
+  color: var(--color-darkblue);
+  cursor: pointer;
+  z-index: 101;
+}
+.infouser__info {
+  font-size: 1.5rem;
+  margin: 10px;
+}
+.infouser__item {
+  margin: 10px 0;
+}
+
+.--showInfo {
+  right: 0;
+  transition: right 300ms;
+}
