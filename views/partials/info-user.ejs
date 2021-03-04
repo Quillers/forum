@@ -20,13 +20,10 @@
     Status : <%= session.data.userInfos.status %>
   </p>
 
-  <p class="infouser__item">
-    Login : <%= session.data.logguedIn %>
-  </p>
-
-
   <% } else { %>
-
+  <p class="infouser__item">
+    Disconnected
+  </p>
   <div class="infouser__connexion">Sign in to know more...</div>
 
   <% } %>
