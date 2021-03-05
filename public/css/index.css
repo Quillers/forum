@@ -478,7 +478,9 @@
   text-decoration: underline wavy;
 }
 .header__nav__loginButton {
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
   position: relative;
   width: 130px;
@@ -487,9 +489,6 @@
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
-  line-height: 22px;
-  letter-spacing: 0em;
-  text-align: left;
   border: 3px solid #4D5497;
   box-sizing: border-box;
   border-radius: 2px;
@@ -503,10 +502,7 @@
   transform: scale(18);
 }
 .header__nav__loginButton a {
-  position: absolute;
   text-decoration: none;
-  top: 30%;
-  right: 18%;
   z-index: 3;
   color: #5266B0;
   transition: color 450ms;
