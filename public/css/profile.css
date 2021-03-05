@@ -1,9 +1,12 @@
+/*------------------------------------------*/
+/*------------------------------------------*/
+/*------------------------------------------*/
 .profile__container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: var(--color-darkblue);
+  color: #4D5497;
 }
 .profile__title {
   width: 90%;
@@ -18,8 +21,8 @@
   padding: 10px 20px;
   flex-direction: column;
   justify-content: center;
-  background-color: var(--color-light);
-  border-top: 1px solid var(--color-darkblue);
+  background-color: #fcf9f2;
+  border-top: 1px solid #4D5497;
 }
 .profile__formContainer {
   display: block;
@@ -85,8 +88,8 @@
 .profile__form__button {
   padding: 8px;
   margin: 5px;
-  background-color: var(--color-darkblue);
-  color: var(--color-light);
+  background-color: #4D5497;
+  color: #fcf9f2;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -94,9 +97,9 @@
 .profile__form__close {
   padding: 8px;
   margin: 5px;
-  background-color: var(--color-verylightblue);
-  color: var(--color-darkblue);
-  border: 1px solid var(--color-darkblue);
+  background-color: #eff8fa;
+  color: #4D5497;
+  border: 1px solid #4D5497;
   border-radius: 5px;
   cursor: pointer;
 }

@@ -13,7 +13,7 @@
   align-items: center;
   max-width: 800px;
   width: 100%;
-  color: var(--color-darkblue);
+  color: #4D5497;
   margin-bottom: 5vh;
 }
 @media (max-width: 768px) {
@@ -75,7 +75,7 @@
   justify-content: center;
   align-items: center;
   background-color: white;
-  border: 1px solid var(--color-darkblue);
+  border: 1px solid #4D5497;
   border-radius: 5px;
   width: 45%;
   height: 40px;
@@ -93,8 +93,8 @@
   margin: 15px 0;
   border: none;
   border-radius: 5px;
-  background-color: var(--color-darkblue);
-  color: var(--color-light);
+  background-color: #4D5497;
+  color: #fcf9f2;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
@@ -110,8 +110,8 @@
   margin: 15px 0;
   border: none;
   border-radius: 5px;
-  background-color: var(--color-grey);
-  color: var(--color-light);
+  background-color: #828282;
+  color: #fcf9f2;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
@@ -132,7 +132,7 @@
   flex-direction: column;
   align-items: center;
   width: 50%;
-  border: 1px solid var(--color-darkblue);
+  border: 1px solid #4D5497;
   border-radius: 10px;
   padding: 20px;
 }
@@ -146,7 +146,7 @@
     width: 100%;
     border: none;
     border-radius: 0;
-    border-top: 1px solid var(--color-darkblue);
+    border-top: 1px solid #4D5497;
     padding: 10px;
   }
 }
@@ -159,14 +159,14 @@
 .connexion__form__hr {
   width: 100%;
   border: none;
-  border-top: 1px solid var(--color-darkblue);
-  color: var(--color-darkblue);
+  border-top: 1px solid #4D5497;
+  color: #4D5497;
   overflow: visible;
   text-align: center;
   height: 5px;
 }
 .connexion__form__hr__OR:after {
-  background: var(--color-light);
+  background: #fcf9f2;
   content: "OR";
   padding: 0 4px;
   position: relative;
@@ -187,7 +187,7 @@
   z-index: 2;
   width: 100vw;
   height: 100vh;
-  background-color: var(--color-light);
+  background-color: #fcf9f2;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -200,7 +200,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid var(--color-darkblue);
+  border: 1px solid #4D5497;
   border-radius: 10px;
   padding: 40px;
 }
@@ -242,7 +242,7 @@
 .connexion__modale__title {
   width: 80%;
   font-size: 30px;
-  color: var(--color-darkblue);
+  color: #4D5497;
 }
 @media (max-width: 768px) {
   .connexion__modale__title {

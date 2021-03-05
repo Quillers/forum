@@ -1,67 +1,72 @@
+@use './abstract/colors'as color;
+@use './abstract/sizes'as size;
 /**************************************/
 /*********  CATEGORIES   **************/
 /**************************************/
 
 .categories {
-   &__box__image {
-      display: block;
+  &__box__image {
+    display: block;
+    margin: 0 auto;
+    height: 400px;
+    width: auto;
+    padding: 20px 0;
+  }
+
+  &__main {
+    &__title {
+      font: 3rem "Suez One";
+      font-weight: 700;
+      color: color.$mediumblue;
+      text-align: center;
+      margin: 120px 0;
+    }
+
+    &__container {
+      max-width: 1200px;
       margin: 0 auto;
-      height: 400px;
-      width: auto;
-      padding: 20px 0;
-   }
-   &__main {
-      &__title {
-         font: 3rem "Suez One";
-         font-weight: 700;
-         color: var(--color-mediumblue);
-         text-align: center;
-         margin: 120px 0;
-      }
-      &__container {
-         max-width: 1200px;
-         margin: 0 auto;
-         display: flex;
-         justify-content: space-between;
-         flex-wrap: wrap;
-      }
-   }
-   &__box {
-      background-color: #fff;
-      width: 48%;
-      height: 610px;
-      border-radius: 14px;
-      margin-bottom: 45px;
       display: flex;
-      flex-direction: column;
-      justify-content: space-evenly;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+  }
 
-      &__title {
-         position: absolute;
-         top: 50%;
-         bottom: 0;
-         font-size: 2.5rem;
-         padding-left: 60px;
-         color: var(--color-mediumblue);
+  &__box {
+    background-color: #fff;
+    width: 48%;
+    height: 610px;
+    border-radius: 14px;
+    margin-bottom: 45px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
 
-         &__container {
-            position: relative;
-            height: 210px;
-            background: no-repeat url(/assets/browse/canvas.png) left;
-            background-size: 100%;
-         }
+    &__title {
+      position: absolute;
+      top: 50%;
+      bottom: 0;
+      font-size: 2.5rem;
+      padding-left: 60px;
+      color: color.$mediumblue;
+
+      &__container {
+        position: relative;
+        height: 210px;
+        background: no-repeat url(/assets/browse/canvas.png) left;
+        background-size: 100%;
       }
+    }
 
-      &__title:hover {
-         text-decoration: underline;
-         font-weight: 600;
-         text-decoration-style: wavy;
-      }
+    &__title:hover {
+      text-decoration: underline;
+      font-weight: 600;
+      text-decoration-style: wavy;
+    }
 
-      &__title::first-letter {
-         text-transform: uppercase;
-      }
-   }
+    &__title::first-letter {
+      text-transform: uppercase;
+    }
+  }
 }
 
 /**************************************/
@@ -69,107 +74,107 @@
 /**************************************/
 
 .categorypage__main__container {
-   display: flex;
+  display: flex;
 }
 
 .categories {
 
-   &__container {
+  &__container {
+    margin-top: 100px;
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__category {
+
+    &__image {
+      width: 200px;
+      margin: 100px auto 50px;
+    }
+
+    &__title {
+      font: 2rem "PT Mono";
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-weight: 800;
+      color: color.$mediumblue;
       margin-top: 100px;
-      height: 85vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-   }
+    }
+  }
 
-   &__category {
+  &__list__element {
+    font: 1.4rem "PT Mono";
+    border-radius: 5px;
+    font-weight: bold;
+    margin-left: 20px;
+    color: color.$mediumblue;
+    text-align: center;
+    width: 180px;
+    background-color: #fff;
+    padding: 5px 15px;
+    border: 1px solid #ea8c8c;
+    margin-bottom: 10px;
+  }
 
-      &__image {
-         width: 200px;
-         margin: 100px auto 50px;
-      }
-
-      &__title {
-         font: 2rem "PT Mono";
-         text-transform: uppercase;
-         letter-spacing: 3px;
-         font-weight: 800;
-         color: var(--color-mediumblue);
-         margin-top: 100px;
-      }
-   }
-
-   &__list__element {
-      font: 1.4rem "PT Mono";
-      border-radius: 5px;
-      font-weight: bold;
-      margin-left: 20px;
-      color: var(--color-mediumblue);
-      text-align: center;
-      width: 180px;
-      background-color: #fff;
-      padding: 5px 15px;
-      border: 1px solid #ea8c8c;
-      margin-bottom: 10px;
-   }
-
-   &__list__element:hover {
-      font-size: 1.5rem;
-      transition: font-size 250ms ease-in;
-   }
+  &__list__element:hover {
+    font-size: 1.5rem;
+    transition: font-size 250ms ease-in;
+  }
 }
 
 .topics__container {
-   margin-left: 15%;
-   padding: 20px 20px;
+  margin-left: 15%;
+  padding: 20px 20px;
 }
 
 .topic {
 
-   &__container {
-      background-color: #fff;
-      width: 740px;
-      border-radius: 5px;
-      border: 4px solid var(--color-yellow);
-      overflow: hidden;
-      margin: 50px auto 0;
-   }
+  &__container {
+    background-color: #fff;
+    width: 740px;
+    border-radius: 5px;
+    border: 4px solid color.$yellow;
+    overflow: hidden;
+    margin: 50px auto 0;
+  }
 
-   &__header {
-      display: flex;
-      height: 300px;
-      align-items: center;
-      justify-content: center;
-   }
+  &__header {
+    display: flex;
+    height: 300px;
+    align-items: center;
+    justify-content: center;
+  }
 
-   &__header img {
-      height:200px;
-   }
+  &__header img {
+    height: 200px;
+  }
 
-   &__description {
-      font: 3rem "PT Mono";
-      color: var(--color-mediumblue);
-      padding-left: 50px;
-      width: 50%;
-   }
+  &__description {
+    font: 3rem "PT Mono";
+    color: color.$mediumblue;
+    padding-left: 50px;
+    width: 50%;
+  }
 
-   &__title {
-      font: 2rem "Suez One";
-      color: var(--color-mediumblue);
-      padding-top: 25%;
+  &__title {
+    font: 2rem "Suez One";
+    color: color.$mediumblue;
+    padding-top: 25%;
 
-      &__container {
-         height: 270px;
-         background: no-repeat url(/assets/browse/canvas.png) left;
-         background-size: 100%;
-         padding-left: 8%;
-      }
+    &__container {
+      height: 270px;
+      background: no-repeat url(/assets/browse/canvas.png) left;
+      background-size: 100%;
+      padding-left: 8%;
+    }
 
-      &__author {
-         font: 1rem "Suez One";
-         color: var(--color-mediumblue);
-      }
-   }
+    &__author {
+      font: 1rem "Suez One";
+      color: color.$mediumblue;
+    }
+  }
 }
 
 /**************************************/
@@ -178,12 +183,12 @@
 /**************************************/
 
 .topic__form {
-   display: flex;
-   flex-direction: column;
-   width: 50%;
-   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin: 0 auto;
 }
 
-.topic__form > * {
-   margin-top: 1rem;
+.topic__form>* {
+  margin-top: 1rem;
 }

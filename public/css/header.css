@@ -1,6 +1,6 @@
 .header {
   position: relative;
-  background-color: var(--color-verylightblue);
+  background-color: #eff8fa;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -8,7 +8,7 @@
   height: 9vh;
 }
 .header__logo {
-  color: var(--color-darkblue);
+  color: #4D5497;
   font-size: 2rem;
 }
 .header__logo a > h1 {
@@ -22,7 +22,7 @@
 }
 .header__nav {
   width: 60%;
-  color: var(--color-mediumblue);
+  color: #5267B0;
   display: flex;
   justify-content: space-between;
 }

@@ -1,29 +1,17 @@
-:root {
+@use './abstract/colors'as color;
+@use './abstract/sizes'as size;
 
-  --color-light: rgb(252, 249, 242);
-  --color-light-hover: rgb(249, 246, 239);
-  --color-verylightblue: rgb(239, 248, 250);
-  --color-lightblue: #D9F8FF;
-  --color-mediumblue: #5267B0;
-  --color-darkblue: #4D5497;
-  --color-yellow: rgb(255, 202, 65);
-  --color-bubblegumpink: #EA8C8C;
-  --color-grey: rgb(130, 130, 130);
-}
+/*-------------------------------------------*/
+/*-------------------------------------------*/
+/*-------------------------------------------*/
 
 html {
   font-family: 'Domine', serif;
-  background-color: var(--color-light);
+  background-color: color.$light;
   min-height: 100vh;
 }
 
-.main__container {
-  position: relative;
-  overflow: hidden;
-  min-height: 82vh;
-}
-
-.body {
+body {
   position: relative;
   min-height: 100vh;
   display: flex;
@@ -36,11 +24,18 @@ a {
   text-decoration: none;
 }
 
+.main__container {
+  position: relative;
+  overflow: hidden;
+  min-height: 82vh;
+}
+
+
 .footer {
   margin-top: 4vh;
   width: 100%;
   height: 5vh;
-  background-color: var(--color-darkblue);
+  background-color: color.$darkblue;
   display: flex;
   align-items: center;
 }

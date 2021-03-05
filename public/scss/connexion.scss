@@ -1,3 +1,5 @@
+@use './abstract/colors'as color;
+@use './abstract/sizes'as size;
 /*-------------------------------------------------*/
 /*-------------------------------------------------*/
 /*-------------------------------------------------*/
@@ -14,7 +16,7 @@
     align-items: center;
     max-width: 800px;
     width: 100%;
-    color: var(--color-darkblue);
+    color: color.$darkblue;
     margin-bottom: 5vh;
 
     @media (max-width: 768px) {
@@ -74,7 +76,7 @@
       justify-content: center;
       align-items: center;
       background-color: white;
-      border: 1px solid var(--color-darkblue);
+      border: 1px solid color.$darkblue;
       border-radius: 5px;
       width: 45%;
       height: 40px;
@@ -92,8 +94,8 @@
       margin: 15px 0;
       border: none;
       border-radius: 5px;
-      background-color: var(--color-darkblue);
-      color: var(--color-light);
+      background-color: color.$darkblue;
+      color: color.$light;
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
@@ -109,8 +111,8 @@
       margin: 15px 0;
       border: none;
       border-radius: 5px;
-      background-color: var(--color-grey);
-      color: var(--color-light);
+      background-color: color.$grey;
+      color: color.$light;
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
@@ -132,7 +134,7 @@
       flex-direction: column;
       align-items: center;
       width: 50%;
-      border: 1px solid var(--color-darkblue);
+      border: 1px solid color.$darkblue;
       border-radius: 10px;
       padding: 20px;
 
@@ -144,7 +146,7 @@
         width: 100%;
         border: none;
         border-radius: 0;
-        border-top: 1px solid var(--color-darkblue);
+        border-top: 1px solid color.$darkblue;
         padding: 10px;
       }
     }
@@ -159,15 +161,15 @@
     &__hr {
       width: 100%;
       border: none;
-      border-top: 1px solid var(--color-darkblue);
-      color: var(--color-darkblue);
+      border-top: 1px solid color.$darkblue;
+      color: color.$darkblue;
       overflow: visible;
       text-align: center;
       height: 5px;
     }
 
     &__hr__OR:after {
-      background: var(--color-light);
+      background: color.$light;
       content: 'OR';
       padding: 0 4px;
       position: relative;
@@ -192,7 +194,7 @@
     z-index: 2;
     width: 100vw;
     height: 100vh;
-    background-color: var(--color-light);
+    background-color: color.$light;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -205,7 +207,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      border: 1px solid var(--color-darkblue);
+      border: 1px solid color.$darkblue;
       border-radius: 10px;
       padding: 40px;
 
@@ -250,7 +252,7 @@
     &__title {
       width: 80%;
       font-size: 30px;
-      color: var(--color-darkblue);
+      color: color.$darkblue;
 
       @media (max-width: 768px) {
         width: 90%;

@@ -1,6 +1,9 @@
+@use './abstract/colors'as color;
+@use './abstract/sizes'as size;
+
 .header {
   position: relative;
-  background-color: var(--color-verylightblue);
+  background-color: color.$verylightblue;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -8,7 +11,7 @@
   height: 9vh;
 
   &__logo {
-    color: var(--color-darkblue);
+    color: color.$darkblue;
     font-size: 2rem;
 
     & a>h1 {
@@ -25,7 +28,7 @@
 
   &__nav {
     width: 60%;
-    color: var(--color-mediumblue);
+    color: color.$mediumblue;
     display: flex;
     justify-content: space-between;
 
